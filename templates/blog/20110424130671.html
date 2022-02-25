@@ -1,37 +1,35 @@
-
-<h2>パラメーターをハッシュリファレンスに変換する</h2>
-
+<h2> Convert parameters to hash references </ h2>
 
 
-パラメーターをハッシュリファレンスに変換するには、Mojo::Parametersクラスの<strong>to_hash</strong>メソッドを使用します。
 
-<pre>
-my $hash_data = $params->to_hash;
-</pre>
-
-Mojolicious::Liteのサンプルです。パラメーター(クエリ文字列、POSTデータ、URLの中でキャプチャされたもの)を、ハッシュリファレンスに変換しています。
+To convert the parameters to a hash reference, use the <strong> to_hash </ strong> method of the Mojo :: Parameters class.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  my $param = $self->req->params->to_hash;
-};
-</pre>
+my $ hash_data = $ params-> to_hash;
+</ pre>
 
-Mojolicious::ControllerオブジェクトのreqメソッドでMojo::Message::Requestオブジェクトを取得し、Mojo::Message::RequestオブジェクトのparamsメソッドでMojo::Parametersオブジェクトを取得し、Mojo::Parametersオブジェクトからto_hashメソッドを呼び出しています。
-
-Mojoliciousのサンプルです。
+This is a sample of Mojolicious :: Lite. Converting parameters (query string, POST data, captured in URL) to hash reference.
 
 <pre>
-# Mojolicious
-package MyApp::Book;
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  my $ param = $ self-> req-> params-> to_hash;
+};;
+</ pre>
 
-use Mojo::Base 'Mojolicious::Controller';
+Get the Mojo :: Message :: Request object with the req method of the Mojolicious :: Controller object, get the Mojo :: Parameters object with the params method of the Mojo :: Message :: Request object, and the to_hash method from the Mojo :: Parameters object. Is calling.
+
+This is a sample of Mojolicious.
+
+<pre>
+#Mojolicious
+package MyApp :: Book;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub register {
-  my $self = shift;
-  my $param = $self->req->params->to_hash;
+  my $ self = shift;
+  my $ param = $ self-> req-> params-> to_hash;
 }
-</pre>
-
+</ pre>

@@ -1,70 +1,68 @@
-
-<h2>Mojoliciousをサブディレクトリで運用する</h2>
-
+<h2> Operate Mojolicious in a subdirectory </ h2>
 
 
-本番環境で複数のアプリケーションをデプロイするときには、サブドメイン運用ができるのであれば、リバースプロキシ + サブドメインでのデプロイをお勧めします。難しいことを考えないでも、サブドメインごとにバーチャルホストを設定してあげれば、アプリケーションの変更がいらないからです。
 
-でもMojoliciousを使えばサブディレクトリで運用することも可能です。リバースプロキシ + サブディレクトリで運用する方法を紹介します。httpサーバーはApacheとします。
+When deploying multiple applications in a production environment, it is recommended to deploy with reverse proxy + subdomain if subdomain operation is possible. Even if you don't think it's difficult, if you set up a virtual host for each subdomain, you don't need to change the application.
 
-まずApacheの設定ファイルです。
+But if you use Mojolicious, you can operate it in a subdirectory. I will introduce how to operate with reverse proxy + subdirectory. The http server is Apache.
+
+First is the Apache configuration file.
 
 <pre>
-  <VirtualHost *:80>
+  <VirtualHost *: 80>
     ServerName perlcodesample.com
     <Proxy *>
-      Order deny,allow
+      Order deny, allow
       Allow from all
-    </Proxy>
+    </ Proxy>
     ProxyRequests Off
     ProxyPreserveHost On
 
-    ProxyPass /app1 http://localhost:3000/app1 keepalive=On
-    ProxyPassReverse /app1 http://localhost:3000/app1
+    ProxyPass / app1 http: // localhost: 3000 / app1 keepalive = On
+    ProxyPassReverse / app1 http: // localhost: 3000 / app1
 
-    ProxyPass /app2 http://localhost:3001/app2 keepalive=On
-    ProxyPassReverse /app2 http://localhost:3001/app2
+    ProxyPass / app2 http: // localhost: 3001 / app2 keepalive = On
+    ProxyPassReverse / app2 http: // localhost: 3001 / app2
 
     RequestHeader set X-ProxyPassReverse-UsePrefix "On"
     RequestHeader set X-Forwarded-HTTPS "0"
-  </VirtualHost>
-</pre>
+  </ VirtualHost>
+</ pre>
 
-サブディレクトリごとにリバースプロキシの設定をしています。X-ProxyPassReverse-UsePrefixはアプリケーション独自のHTTPヘッダになります。
+The reverse proxy is set for each subdirectory. X-ProxyPassReverse-UsePrefix is ​​an application-specific HTTP header.
 
-以下はアプリケーションです。before_dispatchを使って、URLの書き換えを行っています。これはMojoliciousのルーターやurl_forなどのメソッドが正しいURLを認識するために必要です。
+Below is the application. I am rewriting the URL using before_dispatch. This is necessary for methods such as Mojolicious's router and url_for to recognize the correct URL.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-app->hook(before_dispatch => sub {
-  my $self = shift;
+app-> hook (before_dispatch => sub {
+  my $ self = shift;
   
-  my $use_prefix
-    = $self->req->headers->header('X-ProxyPassReverse-UsePrefix');
+  my $ use_prefix
+    = $ self-> req-> headers-> header ('X-ProxyPassReverse-UsePrefix');
   
-  if (defined $use_prefix && lc $use_prefix eq 'on') {
-    my $prefix = shift @{$self->req->url->path->parts};
-    $self->req->url->base->path->parse("/$prefix");
+  if (defined $ use_prefix && lc $ use_prefix eq'on') {
+    my $ prefix = shift @ {$ self-> req-> url-> path-> parts};
+    $ self-> req-> url-> base-> path-> parse ("/ $ prefix");
   }
 });
 
-get '/' => 'index';
+get'/' =>'index';
 
-get '/foo' => 'foo';
+get'/ foo' =>'foo';
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 
-URL: <a href="<%= url_for '/foo' %>">Foo</a>
+URL: <a href="<%=url_for'/foo'%> "> Foo </a>
 
 @@ foo.html.ep
 
 Foo
-</pre>
+</ pre>
 
-このようにアプリケーションを記述しておけば、サブディレクトリでの運用が可能になります。
-
+If you write the application in this way, you can operate it in a subdirectory.

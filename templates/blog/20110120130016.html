@@ -1,19 +1,17 @@
-
-<h2>Apacheのmod_proxyを使った場合に"Service Temporarily Unavailable"エラーが出る場合の対処法</h2>
-
+<h2> What to do if you get a "Service Temporarily Unavailable" error when using Apache mod_proxy </ h2>
 
 
-MojoliciousアプリケーションをApacheのmod_proxyを使って、アクセスしようとした場合に、"Service Temporarily Unavailable"がでることがあります。考えられる原因のひとつは、SELinuxが有効になっているということです。プロジェクトとしてSELinuxを無効にしてもよいのであれば、無効にするのが楽な対処方です。
 
-SELinuxの設定ファイルを編集します。
+If you try to access a Mojolicious application using Apache mod_proxy, you may get "Service Temporarily Unavailable". One possible cause is that SELinux is enabled. If you can disable SELinux as a project, disabling it is an easy solution.
+
+Edit the SELinux configuration file.
 <pre>
-vi /etc/selinux/config
-</pre>
+vi / etc / selinux / config
+</ pre>
 
-以下の項目に変更してください。
+Please change to the following items.
 <pre>
-SELINUX=disabled
-</pre>
+SELINUX = disabled
+</ pre>
 
-変更後はサーバーを再起動してください。
-
+Please restart the server after making changes.

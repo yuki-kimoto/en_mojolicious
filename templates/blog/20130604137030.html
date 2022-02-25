@@ -1,41 +1,39 @@
+<h2> Non-blocking IO understands which part is non-blocking </ h2>
 
-<h2>ノンブロッキングIOはどの部分がノンブロッキングなのかを理解する</h2>
 
+The web server that Mojolicious has supports non-blocking IO. However, when it comes to non-blocking, I think that each person has various images, and I feel that there are many misunderstandings, so I will explain briefly.
 
-Mojoliciousが持っているWebサーバーはノンブロッキングIOに対応しています。でもノンブロッキングといったときには、人それぞれにいろんなイメージを抱いていると思いますし、誤解がたくさんある気がするので簡単に解説します。
+<h3> The non-blocking part is the part that reads and writes the HTTP request </ h3>
 
-<h3>ノンブロッキングなのは、HTTPリクエストを読み取る部分と書き込む部分</h3>
+What makes Mojolicious non-blocking is the part that reads and writes HTTP requests. So, for example, if you want to return multiple 10MB files as a response, you can process them in parallel. Also, when uploading multiple 10MB files as a request, they can be processed in parallel.
 
-Mojoliciousがノンブロッキングなのは、HTTPリクエストを読み取る部分と書き込む部分です。ですので、たとえば複数の10Mバイトのファイルをレスポンスとして返す場合は、並列で処理することができます。またアップロードで複数の10Mバイトのファイルをリクエストとして受け取るときは、並列に処理することができます。
+<h3> Database access is not non-blocking </ h3>
 
-<h3>データベースアクセスはノンブロッキングではない</h3>
+Database access is generally not non-blocking. Accessing MySQL and SQLite is a blocking process.
 
-一般的にデータベースアクセスはノンブロッキングではありません。MySQLやSQLiteへのアクセスはブロッキングな処理になります。
+So, just because you're using Mojolicious doesn't mean that everything is non-blocking, it blocks the part that accesses the database.
 
-ですから、Mojoliciousを使っているからといって、単純に全部がノンブロッキングになってくれるわけではなくって、データベースへアクセスする部分はブロッキングします。
+For example, if there is a process that takes 30 seconds to process, it will block for 30 seconds at that part. Subsequent processing cannot be performed while waiting for this.
 
-たとえば処理に30秒かかる処理が、あるとすれば、その部分で30秒ブロッキングします。後続の処理はこれを待っている間は処理を行うことができません。
-
-もしそういう処理がある場合は、ノンブロッキングIOのWebサーバーとしてではなくって、純粋なプリフォークサーバーとして運用するのがおそらくよいでしょう(まだ試していません)。並列処理のクライアント(clients)の数を減らして、プリフォークする数(workers)を増やします。
+If so, it's probably better to run it as a pure prefolk server rather than as a non-blocking IO web server (I haven't tried it yet). Decrease the number of clients in parallel processing and increase the number of workers.
 
 <pre>
 hypnotoad => {
   clients => 1,
   workers => 10
 }
-</pre>
+</ pre>
 
-Mojoliciousを使うときは、処理の中に長くブロックする処理があると、デフォルトの設定では、後続の処理がとまってしまうということを覚えておきましょう。
+When using Mojolicious, keep in mind that if there is a long blocking process in the process, the default settings will cause subsequent processing to stop.
 
-<h3>データベースアクセスをノンブロッキングにするにはどうすればよいか</h3>
+<h3> How to make database access non-blocking </ h3>
 
-これは難しい問題で、一般的な方法では簡単に解決することができません。アーキテクチャー的には、フレームワークが内部で利用しているひとつのIOループの中に、処理を組み込むしかないのですが、これは非常に困難ですし、各データベースモジュールが対応している必要があります。
+This is a difficult problem and cannot be easily solved by common methods. In terms of architecture, there is no choice but to incorporate the processing in one IO loop used internally by the framework, but this is very difficult and each database module must support it. I have.
 
-一番簡単なのはMojoliciousの作者が提供しているMangoというMongoDBへアクセスするためのモジュールを使うことです(まだ実験的な段階)。Mojolicious + MongoDBという組み合わせであれば、すべての処理をノンブロッキングで行うことが比較的簡単です。
+The easiest way is to use the module provided by the author of Mojolicious to access MongoDB called Mango (still experimental). With the combination of Mojolicious + MongoDB, it is relatively easy to do all the processing non-blocking.
 
-<h3>ファイルを読み込む処理はノンブロッキングではない</h3>
+<h3> The process of reading a file is not non-blocking </ h3>
 
-通常Perlでファイルを読み込む処理を書く場合は、ノンブロッキングな処理ではなくてブロックする処理になります。ですから、大量に処理が必要となるコンテンツ配信サーバーを書きたい場合は、普通のファイル入出力の処理を書いてはいません。
+Normally, when writing a process to read a file in Perl, it is not a non-blocking process but a blocking process. Therefore, if you want to write a content distribution server that requires a large amount of processing, you are not writing normal file input / output processing.
 
-AEをインストールして、AnyEventを使って、ファイルを読み込む部分を、ノンブロッキングで書く必要があります。こうしないと、HTTPリクエストとレスポンスの処理が並列化できても、内部がブロックしてしまうことになるからです。
-
+You need to install AE and use AnyEvent to write the part that reads the file non-blocking. If you don't do this, even if you can parallelize the HTTP request and response processing, it will block internally.

@@ -1,49 +1,47 @@
-
-<h2>SQLiteの情報を見るためのMojoliciousプラグイン Mojolicious::Plugin::SQLiteViewerLite</h2>
+<h2> Mojolicious plugin for viewing SQLite information Mojolicious :: Plugin :: SQLiteViewerLite </ h2>
 
 <blockquote>
-<big><big><b>お知らせ</b></big></big>
-Mojolicious::Plugin::SQLiteViewerLiteは<a href="/blog/20130419136633.html">Mojolicious::Plugin::DBViewer</a>に統合されました。
-</blockquote>
+<big> <big> <b> Notice </ b> </ big> </ big>
+Mojolicious :: Plugin :: SQLiteViewerLite has been integrated into <a href="/blog/20130419136633.html"> Mojolicious :: Plugin :: DBViewer </a>.
+</ blockquote>
 
-Mojolicious::Plugin::SQLiteViewerLiteをCPANで公開しました。Mojoliciousのプラグインで、SQLiteのテーブル一覧やテーブルの定義をブラウザで表示させて観覧することができます。phpMyAdminの観覧専用のSQLiteのPerlバージョンだと思ってくれるとわかりやすいかもしれません。機能はずっとシンプルです。
-先日公開した便利なMojolicious::Plugin::MySQLViewerLiteのSQLiteバージョンです。同じインターフェースで利用することができます。
+Mojolicious :: Plugin :: SQLiteViewerLite has been released on CPAN. With the Mojolicious plugin, you can view the SQLite table list and table definitions in your browser. It may be helpful to think of it as a Perl version of SQLite dedicated to viewing phpMyAdmin. The function is much simpler.
+This is the SQLite version of the useful Mojolicious :: Plugin :: MySQLViewerLite that was released the other day. It can be used with the same interface.
 
 <ul>
   <li>
-    <big><big><a href="http://search.cpan.org/dist/Mojolicious-Plugin-SQLiteViewerLite/lib/Mojolicious/Plugin/SQLiteViewerLite.pm">Mojolicious::Plugin::SQLiteViewerLite</a></big></big>
-  </li>
-</ul>
+    <big> <big> <a href="http://search.cpan.org/dist/Mojolicious-Plugin-SQLiteViewerLite/lib/Mojolicious/Plugin/SQLiteViewerLite.pm"> Mojolicious :: Plugin :: SQLiteViewerLite </a> > </ big> </ big>
+  </ li>
+</ ul>
 
-<h3>使い方</h3>
+<h3> How to use </ h3>
 
 <pre>
-# Mojolicious::Lite
-plugin 'SQLiteViewerLite', dbh => $dbh;
+#Mojolicious :: Lite
+plugin'SQLiteViewerLite', dbh => $ dbh;
 
-# Mojolicious
-$app->plugin('SQLiteViewerLite', dbh => $dbh);
+#Mojolicious
+$ app-> plugin ('SQLiteViewerLite', dbh => $ dbh);
 
-# Access
-http://localhost:3000/SQLiteviewerlite
-</pre>
+#Access
+http: // localhost: 3000 / SQLiteviewerlite
+</ pre>
 
-<h3>機能</h3>
+<h3> Functions </ h3>
 
-Mojolicious::Plugin::SQLiteViewerLiteは次のような機能をもっています。
+Mojolicious :: Plugin :: SQLiteViewerLite has the following functions.
 
 <ul>
   <li>
-    すべてのテーブル名の表示
-  </li>
+    Show all table names
+  </ li>
   <li>
-    <b>show create table</b>の表示
-  </li>
+    Show <b> show create table </ b>
+  </ li>
   <li>
     select * from TABLE limit 0, 1000
-  </li>
+  </ li>
   <li>
-    すべてのテーブルのプライマリーキー、Nullが許可された列を表示
-  </li>
-</ul>
-
+    Show primary key for all tables, nullable columns
+  </ li>
+</ ul>

@@ -1,127 +1,124 @@
-
-<h2>パラメーターの受け取り方</h2>
-
+<h2> How to receive parameters </ h2>
 
 
-では基本のアプリケーションに機能を追加していきましょう。今回はMojoliciousにおける<strong>パラメーターの受け取り方</strong>を解説したいと思います。ここで、パラメーターとは、ユーザーから送信されるデータのことだと考えてください。パラメーターの受け取り方には、三つの方法があります。
+
+Now let's add functionality to the basic application. This time I would like to explain how to receive <strong> parameters </ strong> in Mojolicious. Think of a parameter as the data sent by the user. There are three ways to receive the parameters.
 
 <ol>
   <li>
-    URLの一部
-  </li>
+    Part of the URL
+  </ li>
   <li>
-    クエリ文字列
-  </li>
+    Query string
+  </ li>
   <li>
-    POSTデータ
-  </li>
-</ol>
+    POST data
+  </ li>
+</ ol>
 
-今回はこのうち「URLの一部」として受け取る方法と、「クエリ文字列」として受け取る方法の二つを解説したいと思いま。POSTデータとしてデータを送信する方法は、フォームの利用を解説するときに、改めて解説したいと思います。今のところは、みっつの方法があることを頭に入れておいてください。
+This time, I would like to explain two of these, one is to receive it as a "part of the URL" and the other is to receive it as a "query string". I would like to explain how to send data as POST data again when explaining the use of forms. Keep in mind that there are three ways to do this for now.
 
-<h3>URLの一部としてパラメーターを受け取る</h3>
+<h3> Receive parameters as part of the URL </ h3>
 
-最初に、URLの一部としてパラメーターを受け取る方法を解説します。たとえば次のようなURLを考えてみてください。
-
-<pre>
-/date/20131016
-/date/20140203
-</pre>
-
-これは、URLの一部に日付が含まれています。このようなURLでアクセスしてきたときに、日付の値の部分を取得する方法を見てみましょう。コードを書いてみます。
+First, I'll show you how to receive the parameters as part of the URL. For example, consider the following URL:
 
 <pre>
-use Mojolicious::Lite;
+/ date / 20131016
+/ date / 20140203
+</ pre>
 
-# ルーティングのパターンの指定
-get '/date/:date' => sub {
-  my $self = shift;
+It contains the date as part of the URL. Let's see how to get the part of the date value when accessing with such a URL. Let's write the code.
+
+<pre>
+use Mojolicious :: Lite;
+
+# Specifying a routing pattern
+get'/ date /: date' => sub {
+  my $ self = shift;
   
-  # パラメーターの受け取り
-  my $date = $self->param('date');
+  #Receiving parameters
+  my $ date = $ self-> param ('date');
 
-  $self->render(text => "Data: $date");
-};
+  $ self-> render (text => "Data: $ date");
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-このアプリケーションを実行して「/date/20131016」のようにアクセスすると、日付の値が表示されると思います。
+If you run this application and access it like "/ date / 20131016", you should see the date value.
 
-<h4>ルーティングのパターンの指定</h4>
+<h4> Specifying a routing pattern </ h4>
 
-パラメーターを受け取るためには、ルーティングのパターンを定義する必要があります。
-
-<pre>
-# ルーティングのパターンの指定
-get '/date/:date' => sub { ... };
-</pre>
-
-「:date」という部分に注目してください。URLの一部をパラメーターにしたい場合は、その部分を「:名前」と書きます。このように記述すると<strong>param</strong>メソッドを使って、その値をパラメーターとして受け取ることができます。
+In order to receive the parameters, you need to define a routing pattern.
 
 <pre>
-# パラメーターの受け取り
-my $date = $self->param('date');
-</pre>
+# Specifying a routing pattern
+get'/ date /: date' => sub {...};
+</ pre>
 
-<h4>paramメソッドの注意点</h4>
-
-paramメソッドを使うときは、注意がひとつ必要です。それはparamメソッドは、スカラコンテキストとリストコンテキストで、異なる結果を返却するからです。スカラコンテキストでは、ひとつのパラメーターの値が返却されます。パラメーターに複数の値がある場合は、最初の値が返却されます。パラメーターが複数になるのは、フォームのチェックボックスなどで、複数の値が選択されている場合などです。
-
-一方リストコンテキストで受け取ると、パラメーターの値が複数あった場合には、複数の値を取得します。
+Notice the ": date" part. If you want to make a part of the URL a parameter, write that part as ": name". If you write it like this, you can use the <strong> param </ strong> method to receive the value as a parameter.
 
 <pre>
-# スカラコンテキスト
-my $value = $self->param('foo');
+#Receiving parameters
+my $ date = $ self-> param ('date');
+</ pre>
 
-# リストコンテキスト
-my @values = $self->param('foo');
-</pre>
+<h4> Notes on the param method </ h4>
 
-このような理由で、paramメソッドを直接呼び出して値を利用しようとすると、思わぬ結果になってしまうことがあります。ミスをあらかじめ防ぐには、変数に代入してから利用するのが安心です。
+One thing to be careful about when using the param method. That's because the param method returns different results in the scalar context and the list context. In scalar context, the value of one parameter is returned. If the parameter has multiple values, the first value is returned. Multiple parameters are used, for example, when multiple values ​​are selected, such as in a checkbox on a form.
 
-<h3>クエリ文字列としてパラメーターを受け取る</h3>
-
-次は<strong>クエリ文字列</strong>としてパラメーターを受け取る方法を解説します。クエリ文字列とは、URLの後ろに続く、パラメーターを指定する部分のことです。次のURLを見てください。
+On the other hand, when received in the list context, if there are multiple values ​​for the parameter, multiple values ​​will be acquired.
 
 <pre>
-/diary/?date=20131016&user=kimoto
-/diary/?date=20121013&user=kimoto
-</pre>
+#Scalar context
+my $ value = $ self-> param ('foo');
 
-「?」の後ろからクエリ文字列は始まります。パラメーター名と値は「=」で区切られます。「&」を使うことで、複数のパラメーターを連結することができます。ひとつの目のURLでは、パラメーター名は二つあり「date」と「user」です。それぞれに対応する値は「20131016」と「kimoto」になっています。
+#List context
+my @values ​​= $ self-> param ('foo');
+</ pre>
 
-ではパラメーターの値を取得してみましょう。
+For this reason, if you try to use the value by calling the param method directly, you may get unexpected results. To prevent mistakes in advance, it is safe to assign to a variable before using it.
+
+<h3> Receive parameters as query string </ h3>
+
+Next, I will explain how to receive the parameter as a <strong> query string </ strong>. The query string is the part that follows the URL and specifies the parameters. Please see the following URL.
 
 <pre>
-use Mojolicious::Lite;
+/ diary /? date = 20131016 & user = kimoto
+/ diary /? date = 20121013 & user = kimoto
+</ pre>
 
-# ルーティングのパターンの指定
-get '/diary' => sub {
-  my $self = shift;
+The query string starts after the "?". Parameter names and values ​​are separated by "=". You can concatenate multiple parameters by using "&". In the first URL, there are two parameter names, "date" and "user". The corresponding values ​​are "20131016" and "kimoto".
+
+Now let's get the value of the parameter.
+
+<pre>
+use Mojolicious :: Lite;
+
+# Specifying a routing pattern
+get'/ diary' => sub {
+  my $ self = shift;
   
-  # パラメーターの受け取り
-  my $date = $self->param('date');
-  my $user = $self->param('user');
+  #Receiving parameters
+  my $ date = $ self-> param ('date');
+  my $ user = $ self-> param ('user');
 
-  $self->render(text => "Date: $date, User: $user");
-};
+  $ self-> render (text => "Date: $ date, User: $ user");
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-このアプリケーションを起動して「/diary/?date=20131016&user=kimoto」というURLでアクセスすると「Date: 20131016, User: kimoto」と表示され、パラメーターを取得できていることがわかります。
+When you start this application and access it with the URL "/ diary /? Date = 20131016 & user = kimoto", "Date: 20131016, User: kimoto" is displayed, and you can see that the parameters have been acquired.
 
-<h4>パラメーターの取得</h4>
+<h4> Get parameters </ h4>
 
-パラメーターの取得は<strong>param</strong>を使います。paramメソッドは汎用的に設計されていて、パラメーターは、URLの一部としても受け取ることができますし、クエリ文字列から受け取ることもできます。
+Use <strong> param </ strong> to get the parameters. The param method is generically designed and parameters can be received as part of a URL or from a query string.
 
 <pre>
-# パラメーターの受け取り
-my $date = $self->param('date');
-my $user = $self->param('user');
-</pre>
+#Receiving parameters
+my $ date = $ self-> param ('date');
+my $ user = $ self-> param ('user');
+</ pre>
 
-このようにパラメーターを使うと、ユーザーから送信されたデータを、プログラムの中で利用することができます。
-
-
+These parameters allow the data sent by the user to be used in the program.

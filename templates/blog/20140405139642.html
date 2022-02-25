@@ -1,69 +1,68 @@
-
-<h2>Mojoliciousの「テンプレート」の使い方</h2>
-
+<h2> How to use Mojolicious's "template" </ h2>
 
 
-<strong>テンプレート</strong>について解説したいと思います。今までは、簡単なテキストを出力してきただけでしたが、Webアプリケーションなので、HTMLを出力したいですね。Mojoliciousのテンプレートという機能を使うと、HTMLを出力することができます。
+
+I would like to explain about <strong> templates </ strong>. Until now, I've only output simple text, but since it's a web application, I want to output HTML. You can output HTML by using a function called template of Mojolicious.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
   
-  # テンプレートの指定
-  $self->render('index');
-};
+  #Specify template
+  $ self-> render ('index');
+};;
 
-get '/company/info' => sub {
-  my $self = shift;
+get'/ company / info' => sub {
+  my $ self = shift;
 
-  # テンプレートの指定
-  $self->render('company/info');
-};
+  #Specify template
+  $ self-> render ('company / info');
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1>Index</h1>
-  </body>
-</html>
+    <h1> Index </ h1>
+  </ body>
+</ html>
 
-@@ company/info.html.ep
+@@ company / info.html.ep
 <html>
   <head>
-    <title>Company Information</title>
-  </head>
+    <title> Company Information </ title>
+  </ head>
   <body>
     Company Information
-  </body>
-</html>
-</pre>
+  </ body>
+</ html>
+</ pre>
 
-アプリケーションを起動して「/」と「/company/info」にアクセスしてみてください。それぞれ「Index」「Company Informatiomn」が太字で表示されます。
+Try launching the application and accessing "/" and "/ company / info". "Index" and "Company Informatiomn" are displayed in bold, respectively.
 
-<h3>テンプレートの指定方法</h3>
+<h3> How to specify a template </ h3>
 
-まずテンプレートの指定部分についてみてみましょう。テンプレートは<strong>render</strong>メソッドで指定することができます。
+First, let's look at the specified part of the template. Templates can be specified with the <strong> render </ strong> method.
 
 <pre>
-# テンプレートの指定
-$self->render('index');
-$self->render('company/info');
-</pre>
+#Specify template
+$ self-> render ('index');
+$ self-> render ('company / info');
+</ pre>
 
-二番目の例のように「<b>/</b>」を使ってディレクトリ階層を表現することも可能です。
+You can also use "<b> / </ b>" to represent the directory hierarchy, as in the second example.
 
-<h3>テンプレートの記述方法</h3>
+<h3> How to write a template </ h3>
 
-次にテンプレートの記述方法を見てみましょう。
+Next, let's see how to write a template.
 
 <pre>
 __DATA__
@@ -71,504 +70,502 @@ __DATA__
 @@ index.html.ep
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1>Index</h1>
-  </body>
-</html>
+    <h1> Index </ h1>
+  </ body>
+</ html>
 
-@@ company/info.html.ep
+@@ company / info.html.ep
 <html>
   <head>
-    <title>Company Information</title>
-  </head>
+    <title> Company Information </ title>
+  </ head>
   <body>
-    <h1>Company Information</h1>
-  </body>
-</html>
-</pre>
+    <h1> Company Information </ h1>
+  </ body>
+</ html>
+</ pre>
 
-テンプレートは<storng>__DATA__</strong>という記述をした行の下に書く必要があります。この部分はデータセクションと呼ばれます。
+The template should be written below the line that says <storng> __DATA__ </ strong>. This part is called the data section.
 
-次にテンプレート名は次のような表現で記述します。
+Next, describe the template name in the following expression.
 
 <pre>
-@@ テンプレート名.html.ep
-</pre>
+@@ Template name.html.ep
+</ pre>
 
-「<b>@@</b>」の後ろに半角の空白が必要なことに注意してください。Mojoliciousのテンプレート名の拡張子は、特別なことを行わない限りは「<b>html.ep</b>」になります。
+Please note that a half-width space is required after "<b> @@ </ b>". The extension of the Mojolicious template name will be "<b> html.ep </ b>" unless you do something special.
 
-今回のサンプルでは、テンプレートはふたつありますが、それぞれ次のような記述になっています。
+In this sample, there are two templates, but each has the following description.
 
 <pre>
 @@ index.html.ep
-@@ company/info.html.ep
-</pre>
+@@ company / info.html.ep
+</ pre>
 
-そしてテンプレート名の後ろにHTMLを記述します。
+Then write HTML after the template name.
 
 <pre>
 @@ index.html.ep
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1>Index</h1>
-  </body>
-</html>
-</pre>
+    <h1> Index </ h1>
+  </ body>
+</ html>
+</ pre>
 
-これが表示される内容になります。
+This will be what you see.
 
-<h3>テンプレート内にはPerlが書ける</h3>
+<h3> Perl can be written in the template </ h3>
 
-MojoliciousのテンプレートにはPerlを記述することができます。少しだけ記法を覚えてしまえば、特別な文法を覚える必要がないので便利です。
+You can write Perl in Mojolicious templates. It's convenient if you learn a little notation because you don't have to learn any special grammar.
 
-Perlを記述するには先頭に「<b>%</b>」を記述します。
+To write Perl, write "<b>% </ b>" at the beginning.
 
 <pre>
-% my $name = 'kimoto';
-</pre>
+% my $ name ='kimoto';
+</ pre>
 
-また複数にわたってPerlを記述するときは「<b>&lt;% %&gt;</b>」という記法を使うことができます。
+You can also use the notation "<b> & lt; %% & gt; </ b>" when writing multiple Perls.
 
 <pre>
 <%
-  my $title = 'kimoto';
-  my $age = 19;
+  my $ title ='kimoto';
+  my $ age = 19;
 %>
-</pre>
+</ pre>
 
-<h4>値の埋め込み</h4>
+<h4> Embedding values ​​</ h4>
 
-また「<b>%=</b>」あるいは「<b><%= %></b>」を使って、直接、値をHTMLに埋め込むことができます。
-
-<pre>
-%= $title;
-<%= $title %>
-</pre>
-
-<h4>Perlの記述を使ったサンプル</h4>
-
-では、実際にテンプレート内でPerlを使ったサンプルを書いてみましょう。サンプルの中では、if文やfor文を使っています。
+You can also use "<b>% = </ b>" or "<b> <% =%> </ b>" to embed the value directly in the HTML.
 
 <pre>
-use Mojolicious::Lite;
+% = $ title;
+<% = $ title%>
+</ pre>
 
-get '/' => sub {
-  my $self = shift;
+<h4> Sample using Perl description </ h4>
+
+Now, let's actually write a sample using Perl in the template. In the sample, if statement and for statement are used.
+
+<pre>
+use Mojolicious :: Lite;
+
+get'/' => sub {
+  my $ self = shift;
   
-  $self->render('index');
-};
+  $ self-> render ('index');
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 <%
-  my $name = 'kimoto';
-  my $age = 19;
+  my $ name ='kimoto';
+  my $ age = 19;
   my @nums = (1, 2, 3);
 %>
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1>Index</h1>
-    % if ($name eq 'kimoto') {
+    <h1> Index </ h1>
+    % if ($ name eq'kimoto') {
       Kimoto
-    % } else {
-      Other
-    % }
+    %} else {
+      Other Other
+    %}
     <br>
-    He is <%= $age %> years old.<br>
+    He is <% = $ age%> years old. <br>
     
-    % for my $num (@nums) {
-      <%= $num %><br>
-    % }
-  </body>
-</html>
-</pre>
+    % for my $ num (@nums) {
+      <% = $ num%> <br>
+    %}
+  </ body>
+</ html>
+</ pre>
 
-こんな風にテンプレートの中にPerlを記述することができるので便利です。
+It's convenient because you can write Perl in the template like this.
 
-<h4>値は自動的にHTMLエスケープされる</h4>
-
-<pre>
-%= 値
-<%= 値 %>
-</pre>
-
-上記の記述で埋め込んだ値は、自動的にXMLエスケープされます。XMLエスケープは、HTMLの中で危険な文字列を安全な文字に置き換える処理のことです。以下の変換が行われます。
+<h4> Values ​​are automatically HTML escaped </ h4>
 
 <pre>
-&  => &amp;
-<  => &lt;
->  => &gt;
-"  => &quot;
-'  => &#39;
-</pre>
+% = Value
+<% = value%>
+</ pre>
 
-もし「&lt;」などが、置き換えられないとすれば「<script></script>」のような文字列を、ユーザーから送り込まれた場合に、javascriptが実行される危険性を持つことになります。ですので、Mojoliciousでは、このような危険性を下げるために、デフォルトでXMLエスケープ処理を行うようになっています。
-
-もしXMLエスケープを行いたくない場合は「<b><%==</b>」あるいは「<b><%== %></b>」という記法を使います。
+The values ​​embedded in the above description are automatically XML escaped. XML escaping is the process of replacing dangerous strings with safe characters in HTML. The following conversions are done:
 
 <pre>
-%== 値
-<%== 値 %>
-</pre>
+& => & amp;
+<=> & lt;
+> => & gt;
+"=> & quot;
+'=> & # 39;
+</ pre>
 
-<h3>データの受け渡しはスタッシュと呼ばれる変数を使う</h3>
+If "& lt;" etc. cannot be replaced, there is a risk that javascript will be executed if a string such as "<script> </ script>" is sent from the user. increase. Therefore, Mojolicious uses XML escaping by default to reduce this risk.
 
-コントローラーとテンプレートではスタッシュと呼ばれる変数を共有しています。データをテンプレート側に渡したい場合はstashメソッドを使って、値を設定することができます。
-
-<pre>
-# コントローラーでのスタッシュの値の設定
-$c->stash('name' => 'Kimoto');
-
-# コントローラーでのスタッシュの値の取得
-my $name = $c->stash('name')
-</pre>
-
-またテンプレートの中ではstashヘルパーを使って、値の設定と取得を行うことができます。テンプレートの中で利用できる関数のことをヘルパーと呼びますので、覚えておいてください。
+If you don't want to do XML escaping, use the notation "<b> <% == </ b>" or "<b> <% ==%> </ b>".
 
 <pre>
-# テンプレートでのスタッシュの値の設定
-stash('name' => 'Kimoto');
+% == Value
+<% == value%>
+</ pre>
 
-# テンプレートでのスタッシュの値の取得
-my $name = stash('name');
-</pre>
+<h3> Data is passed using a variable called stash </ h3>
 
-また<b>render</b>メソッドの第二引数以降を利用すると、スタッシュの値を設定できるので、便利です。短く書けるので、これを利用しましょう。
+The controller and template share a variable called a stash. If you want to pass the data to the template side, you can set the value using the stash method.
 
 <pre>
-# renderメソッド
-$c->render($template, 'name' => 'Kimoto', 'age' => 19);
+# Setting the stash value on the controller
+$ c-> stash ('name' =>'Kimoto');
 
-# これと同じ
-$c->stash('name' => 'Kimoto');
-$c->stash('age' => 19);
-$c->render($template);
-</pre>
+#Get stash value with controller
+my $ name = $ c-> stash ('name')
+</ pre>
 
-<h4>スタッシュの予約語</h4>
+You can also use the stash helper in the template to set and get values. Keep in mind that the functions available in the template are called helpers.
 
-スタッシュのキーとしては、次のものは予約語になっているので、値を保存したい場合には、使わないでください。もし使えば、予測外の挙動を起こして、正しい処理が行われなくなるので、気をつけてください。
+<pre>
+#Setting stash values ​​in templates
+stash ('name' =>'Kimoto');
+
+#Get stash value in template
+my $ name = stash ('name');
+</ pre>
+
+It is also convenient to use the second and subsequent arguments of the <b> render </ b> method to set the stash value. You can write it short, so let's use this.
+
+<pre>
+#render method
+$ c-> render ($ template,'name' =>'Kimoto','age' => 19);
+
+# Same as this
+$ c-> stash ('name' =>'Kimoto');
+$ c-> stash ('age' => 19);
+$ c-> render ($ template);
+</ pre>
+
+<h4> Stash reserved words </ h4>
+
+As stash keys, the following are reserved words, so don't use them if you want to save the value. If you use it, it will cause unexpected behavior and the correct processing will not be performed, so please be careful.
 
 <pre>
 action app cb controller data extends format handler json layout
 namespace partial path status template text variant
-</pre>
+</ pre>
 
-<h4>スタッシュを使ったサンプル</h4>
+<h4> Sample using stash </ h4>
 
-スタッシュを使ったサンプルを書いてみます。
+I will write a sample using stash.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-# コントローラー
-get '/' => sub {
-  my $self = shift;
+#Controller
+get'/' => sub {
+  my $ self = shift;
   
-  # スタッシュに値を設定してindexを描画
-  $self->render('index', 'name' => 'Kimoto', age => 19);
-};
+  # Set a value for stash and draw index
+  $ self-> render ('index','name' =>'Kimoto', age => 19);
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 <%
-  # スタッシュから値を取得
-  my $name = stash('name');
-  my $age = stash('age');
+  #Get value from stash
+  my $ name = stash ('name');
+  my $ age = stash ('age');
 %>
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1><%= $name %>:<%= $age %></h1>
-  </body>
-</html>
-</pre>
+    <h1> <% = $ name%>: <% = $ age%> </ h1>
+  </ body>
+</ html>
+</ pre>
 
-コントローラー内でrenderメソッドを使ってスタッシュを設定しています。
-
-<pre>
-# スタッシュに値を設定してindexを描画
-$self->render('index', 'name' => 'Kimoto', age => 19);
-</pre>
-
-テンプレート内でstashヘルパーを使ってスタッシュの値を取得しています。
+I'm using the render method in my controller to set the stash.
 
 <pre>
+# Set a value for stash and draw index
+$ self-> render ('index','name' =>'Kimoto', age => 19);
+</ pre>
 
-</pre>
+I'm using the stash helper in the template to get the stash value.
 
-<h3>レイアウト</h3>
+<pre>
 
-次に<strong>レイアウト</strong>という機能を解説します。もう一度最初のサンプルを見てみましょう。
+</ pre>
+
+<h3> Layout </ h3>
+
+Next, I will explain the function called <strong> layout </ strong>. Let's take a look at the first sample again.
 
 <pre>
 @@ index.html.ep
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-    <h1>Index</h1>
-  </body>
-</html>
+    <h1> Index </ h1>
+  </ body>
+</ html>
 
-@@ company/info.html.ep
+@@ company / info.html.ep
 <html>
   <head>
-    <title>Company Information</title>
-  </head>
+    <title> Company Information </ title>
+  </ head>
   <body>
     Company Information
-  </body>
-</html>
-</pre>
+  </ body>
+</ html>
+</ pre>
 
-htmlタグやbodyタグというのは、二つのテンプレートで共通のものとなっていますね。bodyの中身は異なりますが、骨格となっているhtmlタグやbodyタグは同じです。こういう場合は、レイアウトという機能を使えば、記述の繰り返しを避けることができます。
+The html tag and body tag are common to the two templates. The contents of the body are different, but the html tags and body tags that form the skeleton are the same. In such cases, you can avoid repeating the description by using a function called layout.
 
-最初のサンプルをレイアウトを使って書き直してみましょう。
+Let's rewrite the first sample with a layout.
 
 <pre>
-@@ layouts/common.html.ep
+@@ layouts / common.html.ep
 <html>
   <head>
-    <title><%= stash('title') %></title>
-  </head>
+    <title> <% = stash ('title')%> </ title>
+  </ head>
   <body>
-    %= content;
-  </body>
-</html>
+    % = content;
+  </ body>
+</ html>
 
 @@ index.html.ep
-% layout 'common', title => 'Index';
-  <h1>Index</h1>
+% layout'common', title =>'Index';
+  <h1> Index </ h1>
 
-@@ company/info.html.ep
-% layout 'common', title => 'Company Information';
-  <h1>Company Information</h1>
-</pre>
+@@ company / info.html.ep
+% layout'common', title =>'Company Information';
+  <h1> Company Information </ h1>
+</ pre>
 
-<h4>レイアウト名</h4>
+<h4> Layout name </ h4>
 
-まずレイアウトを定義してみましょう。まずテンプレート名を見てください。
+Let's define the layout first. Look at the template name first.
 
 <pre>
-layouts/common.html.ep
-</pre>
+layouts / common.html.ep
+</ pre>
 
-「layouts/」で始まっています。これはレイアウトを作成するときの規則です。その後ろにレイアウト名「common」が続きます。そして、拡張子は、テンプレートと同じ「.html.ep」です。
+It starts with "layouts /". This is the rule when creating a layout. It is followed by the layout name "common". And the extension is ".html.ep" which is the same as the template.
 
-<h4>レイアウトの内容</h4>
+<h4> Layout contents </ h4>
 
-次にレイアウトの内容を見てみましょう。
+Next, let's take a look at the contents of the layout.
 
 <pre>
 <html>
   <head>
-    <title><%= stash('title') %></title>
-  </head>
+    <title> <% = stash ('title')%> </ title>
+  </ head>
   <body>
-    %= content;
-  </body>
-</html>
-</pre>
+    % = content;
+  </ body>
+</ html>
+</ pre>
 
-すべてのテンプレートで共有する部分をレイアウトには記述します。htmlタグとbodyタグを書いています。レイアウトに埋め込む内容は、<b>contentヘルパー</b>で取得することができます。contentヘルパーの部分が、実際の内容に置き換わります。
+Describe the part shared by all templates in the layout. I am writing an html tag and a body tag. The content to be embedded in the layout can be obtained with the <b> content helper </ b>. The content helper part replaces the actual content.
 
-レイアウトの中でも、stashを利用することができますので、テンプレートからレイアウトにstashを通してデータを渡すことができます。これを利用すれば、タイトルだけを変更するということも簡単です。
+You can use stash in the layout, so you can pass data from the template to the layout through stash. With this, it's easy to change just the title.
 
-<h4>レイアウトの呼び出し</h4>
+<h4> Call layout </ h4>
 
-次に、実際のテンプレートでレイアウトを呼び出している記述を見てみましょう。
+Next, let's take a look at the description that calls the layout in the actual template.
 
 <pre>
 @@ index.html.ep
-% layout 'common', title => 'Index';
-  <h1>Index</h1>
-</pre>
+% layout'common', title =>'Index';
+  <h1> Index </ h1>
+</ pre>
 
-<b>layoutヘルパー</b>を使えば、レイアウトを呼び出すことができます。第一引数にはレイアウト名を指定します。第二引数以降の値は、stashの値として設定されます。
+You can call the layout using the <b> layout helper </ b>. Specify the layout name in the first argument. The values ​​after the second argument are set as stash values.
 
-実際にこれは以下のようなHTMLに展開されます。
+Actually this will be expanded to HTML like below.
 
 <pre>
 <html>
   <head>
-    <title>Index</title>
-  </head>
+    <title> Index </ title>
+  </ head>
   <body>
-      <h1>Index</h1>
-  </body>
-</html>
-</pre>
+      <h1> Index </ h1>
+  </ body>
+</ html>
+</ pre>
 
-「&lt;h1&gt;Index&lt;/h1&gt;」が、呼び出したレイアウトに埋め込まれていることを確認してください。レイアウトは必須で使う機能になると思います。ぜひ覚えてください。
+Make sure that "& lt; h1 & gt; Index & lt; / h1 & gt;" is embedded in the layout you called. I think that layout is an essential function to use. Please remember.
 
-<h3>他のテンプレートをインクルードする</h3>
+<h3> Include other templates </ h3>
 
-次に他のテンプレートを「インクルード」できる機能を紹介します。「ヘッダ」や「フッタ」などの共通部品を作成して読み込むことができます。
-他の<strong>テンプレート</strong>を<strong>インクルード</strong>するには<strong>include</strong>関数を使用します。複数の部分で利用するコンポートネントを共通の部品として定義しておいて読み込むのに利用できます。
+Next, I will introduce the function that can "include" other templates. You can create and load common parts such as "headers" and "footers".
+Use the <strong> include </ strong> function to <strong> include </ strong> other <strong> templates </ strong>. It can be used to define and load components used in multiple parts as common parts.
 
-<h4>インクルードされるテンプレートの記述</h4>
+<h4> Description of included template </ h4>
 
-インクルードされるテンプレートを記述します。名前はcomponent.html.epとします。
+Describes the template to be included. Name it component.html.ep.
 
 <pre>
-コンポーネント
-%= $name
-</pre>
+component
+% = $ name
+</ pre>
 
-$nameという部分に注目してみてください。このようにしておくと、テンプレートをインクルードするときに、一部分だけ内容を変更することができます。
+Notice the part called $ name. This way, when you include the template, you can change only part of it.
 
-<h4>テンプレートのインクルード</h4>
+<h4> Template inclusion </ h4>
 
-テンプレートをインクルードするには、include関数を使用します。
+Use the include function to include the template.
 <pre>
-%= include 'component', name => 'Ken';
-</pre>
+% = include'component', name =>'Ken';
+</ pre>
 
-第一引数はインクルードしたいテンプレート名です。「.html.ep」は省略することができます。第二引数以降はインクルードされるテンプレートに渡したいデータをハッシュで指定することができます。
+The first argument is the template name you want to include. ".Html.ep" can be omitted. After the second argument, you can specify the data you want to pass to the included template with a hash.
 
-<h3>テンプレートの外部化</h3>
+<h3> Template externalization </ h3>
 
-Mojolicious::Liteのサンプルでは、テンプレートは、ファイルの中に記述しましたが、「ファイル」として配置することもできます。規模が大きくなってきた場合は、ファイルとして外部に保存すると、見通しがよくなります。
+In the Mojolicious :: Lite sample, the template was written inside a file, but it can also be placed as a "file". If it grows larger, you can save it externally as a file for better visibility.
 
-「templates」ディレクトリを作成して、その中に配置すると、Mojoliciousはそれを読み込んでくれます。
+Create a "templates" directory, place it in it, and Mojolicious will load it for you.
 
 <pre>
 templates / index.html.ep
           / list.html.ep
-</pre>
+</ pre>
 
-<h3>テンプレートで使うテクニック</h3>
+<h3> Techniques used in templates </ h3>
 
-テンプレートでよく使うテクニックを紹介します。
+Here are some techniques you often use in templates.
 
-<h4>テキストをHTMLエスケープから保護する</h4>
+<h4> Protect text from HTML escaping </ h4>
 
-テキストをHTMLエスケープから保護するには、文字列をMojo::ByteStreamオブジェクトに変換してからテンプレートに渡します。
-
-<pre>
-<%= Mojo::ByteStream->new('<p>test</p>') %>
-</pre>
-
-タグなどをHTMLエスケープしたくない場合は、Mojo::ByteStreamオブジェクトに変換して、テンプレートに渡します。
-
-また<b>b</b>というヘルパーもあり、こちらを使うと短くかけます。
+To protect the text from HTML escaping, convert the string to a Mojo :: ByteStream object and then pass it to the template.
 
 <pre>
-<%= b('<p>test</p>') %>
-</pre>
+<% = Mojo :: ByteStream-> new ('<p> test </ p>')%>
+</ pre>
 
-<h4>コントローラーオブジェクトの取得</h4>
+If you don't want to HTML escape tags etc., convert it to a Mojo :: ByteStream object and pass it to the template.
 
-テンプレートの中でコントローラーオブジェクを取得するには<strong>$self</strong>という変数にアクセスします。
-
-<pre>
-% my $controller = $self;
-</pre>
-
-$selfはテンプレートの中で暗黙的に宣言される変数です。これがMojolicious::Controllerオブジェクトになっています。
-
-このオブジェクトからコントローラクラスのメソッドを呼び出すことができます。
+There is also a helper called <b> b </ b>, which can be used for a short time.
 
 <pre>
-# コントローラークラスのメソッドの呼び出し
-my $req = $self->req;
-</pre>
+<% = b ('<p> test </ p>')%>
+</ pre>
 
-<h4>テンプレートブロックを作成する</h4>
+<h4> Get controller object </ h4>
 
-テンプレートの中で「テンプレートブロック」を作成することができます。テンプレートブロックは再利用可能なテンプレートの部品として利用することができます。
-
-<pre>
-# Template block
-<% my $div = begin %>
-  % my ($id, $text) = @_;
-  <div id="<%= $id %>" >
-    %= $text
-  </div>
-<% end %>
-</pre>
-
-テンプレートブロックは実質的にはサブルーチンのリファレンスですが、HTMLの内容をテンプレートにおけるのと同じように記述できるのがポイントです。テンプレートブロックはbeginで始まりendで終わります。
-
-テンプレートブロックはPerlのサブルーチンのリファレンスとして利用することができます。
+To get the controller object in the template, access the variable <strong> $ self </ strong>.
 
 <pre>
-<%= $div->('foo', 'Hello') %>
-</pre>
+% my $ controller = $ self;
+</ pre>
 
-以下はMojolicious::Liteでのサンプルです。
+$ self is a variable that is implicitly declared in the template. This is the Mojolicious :: Controller object.
+
+You can call methods of the controller class from this object.
 
 <pre>
-use Mojolicious::Lite;
-get '/' => 'index';
-app->start;
+#Call a method of the controller class
+my $ req = $ self-> req;
+</ pre>
+
+<h4> Create a template block </ h4>
+
+You can create a "template block" in a template. Template blocks can be used as part of a reusable template.
+
+<pre>
+#Template block
+<% my $ div = begin%>
+  % my ($ id, $ text) = @_;
+  <div id = "<% = $ id%>">
+    % = $ text
+  </ div>
+<% end%>
+</ pre>
+
+The template block is essentially a subroutine reference, but the point is that you can write the HTML content as you would in a template. Template blocks start with begin and end with end.
+
+Template blocks can be used as a reference for Perl subroutines.
+
+<pre>
+<% = $ div-> ('foo','Hello')%>
+</ pre>
+
+Below is a sample from Mojolicious :: Lite.
+
+<pre>
+use Mojolicious :: Lite;
+get'/' =>'index';
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
-<% my $div = begin %>
-  % my ($id, $text) = @_;
-  <div id="<%= $id %>" >
-    %= $text
-  </div>
-<% end %>
+<% my $ div = begin%>
+  % my ($ id, $ text) = @_;
+  <div id = "<% = $ id%>">
+    % = $ text
+  </ div>
+<% end%>
 
-<%= $div->('foo', 'Hello') %>
-</pre>
+<% = $ div-> ('foo','Hello')%>
+</ pre>
 
-<h4>タグの前後の空白を取り除く</h4>
+<h4> Remove blanks before and after tags </ h4>
 
-Mojoliciousのテンプレートを使っているときに、タグの前後の空白を取り除きたい場合があります。前後の空白を取り除きたい場合は次のような特別なタグを利用します。
-
-<pre>
-<%= 内容 =%>
-</pre>
-
-通常のタグの場合はは「<%= 内容 %>」です。後ろの%の前に<b>=</b>がついているところがポイントです。
-
-<h4>テンプレートでは関数の名前空間が共有される</h4>
-
-Mojoliciousのテンプレートの中でPerlのコードを自由に書くことができますが、ひとつだけ注意するべきことがあります。それは、すべての<strong>テンプレート</strong>で、関数の<strong>名前空間が共有される</strong>ということです。
+When using Mojolicious templates, you may want to remove the white space before and after the tag. If you want to remove the leading and trailing spaces, use the following special tags.
 
 <pre>
-# テンプレートA
-use Encode 'encode';
-</pre>
+<% = Content =%>
+</ pre>
+
+In the case of a normal tag, it is "<% = content%>". The point is that <b> = </ b> is attached before the% at the back.
+
+<h4> Templates share function namespaces </ h4>
+
+You are free to write Perl code in Mojolicious templates, but there is one caveat. That is, all <strong> templates </ strong> share the <strong> namespace </ strong> of the function.
 
 <pre>
-# テンプレートB
-encode('UTF-8', $str);
-</pre>
+#Template A
+use Encode'encode';
+</ pre>
 
-テンプレートBではencode関数をインポートしていないのですが、テンプレートAでインポートしているのでテンプレートBで利用することができます。これはMojoliciousがすべてのテンプレートをひとつの名前空間の中に作成しているからです。
+<pre>
+#Template B
+encode ('UTF-8', $ str);
+</ pre>
 
-ですので、混乱したくないのであれば、テンプレートの中では関数のインポートを行わないで、完全修飾名で利用するのが安全でしょう。
+Template B does not import the encode function, but template A imports it, so it can be used in template B. This is because Mojolicious creates all the templates in one namespace.
+
+So if you don't want to get confused, it's safe to use the fully qualified name instead of importing the function in the template.
 
 <pre>
 use Encode ();
-Encode::encode('UTF-8', $str);
-</pre>
+Encode :: encode ('UTF-8', $ str);
+</ pre>
 
-<h3>まとめ</h3>
+<h3> Summary </ h3>
 
-MojoliciousのテンプレートはPerlが使えるのがとてもよい! 「if」も「for」もテンプレート用の構文をいちいち覚える必要がないしね。「レイアウト」と「インクルード」の記述を使えば、ヘッダやフッタの記述を共有化できる。コピペしまくらなくっていいから、便利だ。
-
-
+It's great that you can use Perl for Mojolicious templates! Neither "if" nor "for" need to remember the syntax for templates. You can share the header and footer descriptions by using the "layout" and "include" descriptions. It's convenient because you don't have to copy and paste.

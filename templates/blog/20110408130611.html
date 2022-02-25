@@ -1,269 +1,268 @@
-
-<h2>MojoliciousでのテンプレートやJSONの描画 renderメソッドの解説</h2>
-
+<h2> Explanation of template and JSON rendering render method in Mojolicious </ h2>
 
 
 
-<h3>テキストを描画する</h3>
 
-テキストを描画するにはMojolicious::Controllerクラスのrenderメソッドの<strong>text</strong>オプションを使用します。
+<h3> Draw text </ h3>
 
-<pre>
-$c->render(text => 'Hi there!');
-</pre>
-
-内部文字列が自動的にUTF-8バイト文字列に変換されます。引数はPerlの内部文字列であるということに注意してください。
-
-以下はMojoliciousとMojolicious::Liteのサンプルです。
+To render the text, use the <strong> text </ strong> option of the render method of the Mojolicious :: Controller class.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  $self->render(text => 'Hi there!');
-};
+$ c-> render (text =>'Hi there!');
+</ pre>
 
-# Mojolicious
-package MyApp::Picture;
+The internal string is automatically converted to a UTF-8 byte string. Note that the argument is a Perl internal string.
 
-use Mojo::Base 'Mojolicious::Controller';
+Below is a sample of Mojolicious and Mojolicious :: Lite.
+
+<pre>
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  $ self-> render (text =>'Hi there!');
+};;
+
+#Mojolicious
+package MyApp :: Picture;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub list {
-  my $self = shift;
-  $self->render(text => 'Hi there!');
+  my $ self = shift;
+  $ self-> render (text =>'Hi there!');
 }
-</pre>
+</ pre>
 
-注:render_textメソッドはMojolicious 4.0で削除されました。
+Note: The render_text method has been removed in Mojolicious 4.0.
 
-<h3>バイナリデータを描画する</h3>
+<h3> Draw binary data </ ​​h3>
 
-バイナリデータを描画するにはMojolicious::Controllerクラスrenderメソッドの<strong>data</strong>オプションを使用します。
-
-<pre>
-$c->render(data => 'some data');
-</pre>
-
-バイナリデータというのは画像(jpeg, png, gif)や音声(mp3)や動画などのデータのことです。
-
-以下はMojoliciousとMojolicious::Liteのサンプルです。
+Use the <strong> data </ ​​strong> option of the Mojolicious :: Controller class render method to render the binary data.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  $self->render(data => 'some data');
-};
+$ c-> render (data =>'some data');
+</ pre>
 
-# Mojolicious
-package MyApp::Picture;
+Binary data is data such as images (jpeg, png, gif), audio (mp3), and videos.
 
-use Mojo::Base 'Mojolicious::Controller';
+Below is a sample of Mojolicious and Mojolicious :: Lite.
+
+<pre>
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  $ self-> render (data =>'some data');
+};;
+
+#Mojolicious
+package MyApp :: Picture;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub image {
-  my $self = shift;
-  $self->render(data => 'some data');
+  my $ self = shift;
+  $ self-> render (data =>'some data');
 }
-</pre>
+</ pre>
 
-注:render_dataメソッドはMojolicious 4.0で削除されました。
+Note: The render_data method has been removed in Mojolicious 4.0.
 
 
-<h3>JSONを描画する</h3>
+<h3> Draw JSON </ h3>
 
-JSONを描画するにはMojolicious::Controllerクラスのrenderメソッドの<strong>json</strong>オプションを使用します。
+To render the JSON, use the <strong> json </ strong> option of the render method of the Mojolicious :: Controller class.
 
 <pre>
-my $data = {name => 'Ken', age => 19};
-$c->render(json => $data);
-</pre>
+my $ data = {name =>'Ken', age => 19};
+$ c-> render (json => $ data);
+</ pre>
 
-Perlのデータを渡すとJSONとして描画されます。
+If you pass Perl data, it will be rendered as JSON.
 
 <pre>
 // JSON
-{"name" : "Ken", "age" : 19}
-</pre>
+{"name": "Ken", "age": 19}
+</ pre>
 
-Perlのデータに含む文字列は内部文字列である必要があることに注意してください。Perlの内部文字列は自動的にUTF-8バイト文字列に変換されます。
+Note that the string contained in Perl's data must be an internal string. Perl's internal strings are automatically converted to UTF-8 byte strings.
 
-以下はMojoliciousとMojolicious::Liteのサンプルです。
+Below is a sample of Mojolicious and Mojolicious :: Lite.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  my $data = {name => 'Ken', age => 19};
-  $self->render(json => $data);
-};
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  my $ data = {name =>'Ken', age => 19};
+  $ self-> render (json => $ data);
+};;
 
-# Mojolicious
-package MyApp::Picture;
+#Mojolicious
+package MyApp :: Picture;
 
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub json_data {
-  my $self = shift;
-  my $data = {name => 'Ken', age => 19};
-  $self->render(json => $data);
+  my $ self = shift;
+  my $ data = {name =>'Ken', age => 19};
+  $ self-> render (json => $ data);
 }
-</pre>
+</ pre>
 
-注:render_jsonメソッドはMojolicious 4.0で削除されました。
+Note: The render_json method has been removed in Mojolicious 4.0.
 
-<h3>テンプレートを描画する</h3>
+<h3> Draw template </ h3>
 
-テンプレートを描画するにはMojolicious::Controllerクラスの<strong>render</strong>メソッドを使用します。templateをキーに使用します。
-
-<pre>
-$c->render(template => $file);
-</pre>
-
-引数を与えない場合は、ルート名に対応するテンプレート、あるいはコントローラー名とアクション名に対応するテンプレートが描画されます。
+Use the <strong> render </ strong> method of the Mojolicious :: Controller class to render the template. Use template as a key.
 
 <pre>
-# ルート名に対応するテンプレート、
-# あるいはコントローラー名とアクション名に対応するテンプレートを描画
-$c->render;
-</pre>
+$ c-> render (template => $ file);
+</ pre>
 
-たとえばMojolicious::Liteの場合ははルート名を指定すると、それに対応するテンプレート「index.html.ep」が描画されます。
+If no arguments are given, the template corresponding to the root name or the template corresponding to the controller name and action name will be drawn.
 
 <pre>
-get '/' => sub {
-  my $self = shift;
-  $self->render(template => 'index');
-};
+#Template corresponding to the root name,
+# Or draw a template corresponding to the controller name and action name
+$ c-> render;
+</ pre>
 
-app->start;
+For example, in the case of Mojolicious :: Lite, if you specify the root name, the corresponding template "index.html.ep" will be drawn.
+
+<pre>
+get'/' => sub {
+  my $ self = shift;
+  $ self-> render (template =>'index');
+};;
+
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 <html>
 ...
-</html>
-</pre>
+</ html>
+</ pre>
 
-Mojoliciousの場合はコントローラー名とアクション名に対応するテンプレート「picture/list.html.ep」が描画されます。
+In the case of Mojolicious, the template "picture / list.html.ep" corresponding to the controller name and action name is drawn.
 
 <pre>
-package MyApp::Controller::Picture;
+package MyApp :: Controller :: Picture;
 
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub list {
-  my $self = shift;
-  $self->render;
+  my $ self = shift;
+  $ self-> render;
 }
-</pre>
+</ pre>
 
-<h4>Mojolicious 6での変更</h4>
+<h4> Changes in Mojolicious 6 </ h4>
 
-コントローラークラスの名前空間のデフォルトの場所は「MyApp」から「MyApp::Controller」になりました。MyAppは、まだ利用できますが、将来的には、廃止されるかもしれませんので、コントローラークラスは「MyApp::Controller::」のプレフィックスで、作成するようにしてください。
+The default location for controller class namespaces has changed from "MyApp" to "MyApp :: Controller". MyApp is still available, but it may be deprecated in the future, so be sure to create your controller class with the "MyApp :: Controller ::" prefix.
 
-<h3>メモリ上のZIPデータを描画する</h3>
+<h3> Draw ZIP data in memory </ h3>
 
-メモリ上のZIPデータを描画(HTTPレスポンスとして返す)するには以下のようにします。
-
-<pre>
-use Mojolicious::Lite;
-get '/' => sub {
-  # ZIPの作成
-  my $zip = Archive::Zip->new;
-  $zip->addDirectory('dir1');
-  
-  # スカラ変数にZIPの内容を出力
-  my $content;
-  open my $fh, '>', \$content;
-  binmode $fh;
-  $zip->writeToFileHandle($fh);
-  close $fh;
-  
-  # ZIPファイルの名前を指定
-  $self->res->headers->content_disposition("attachment; filename=foo.zip");
-  
-  # ZIPとして描画
-  return $self->render(data => $content, format => 'zip');
-};
-app->start;
-</pre>
-
-ZIPデータの作成にはArchive::Zipモジュールを使用します。Archive::ZipモジュールのaddDirectoryメソッドを使用してディレクトリを追加しています。
-
-Archive::Zipにはスカラ変数に出力する機能はなく、ファイルハンドルに出力する機能しかないので、Perlのスカラ入出力の機能を使って、スカラ変数に出力しています。
-
-Content-Dispositionヘッダを使うとファイルに名前をつけることができます。
-
-描画するときはZIPはバイナリデータなのでdataオプションを使用します。formatにzipを指定すれば、Content-Typeに自動的に「application/zip」を設定してくれます。
-
-<h3>CSVデータを描画する</h3>
-
-CSVデータを描画(HTTPレスポンスとして返す)するには以下のようにします。
+To draw ZIP data in memory (return as HTTP response):
 
 <pre>
-use Mojolicious::Lite;
-use Text::CSV::Encoded;
+use Mojolicious :: Lite;
+get'/' => sub {
+  #ZIP creation
+  my $ zip = Archive :: Zip-> new;
+  $ zip-> addDirectory ('dir1');
+  
+  #Output the contents of ZIP to a scalar variable
+  my $ content;
+  open my $ fh,'>', \ $ content;
+  binmode $ fh;
+  $ zip-> writeToFileHandle ($ fh);
+  close $ fh;
+  
+  #Specify the name of the ZIP file
+  $ self-> res-> headers-> content_disposition ("attachment; filename = foo.zip");
+  
+  #Draw as ZIP
+  return $ self-> render (data => $ content, format =>'zip');
+};;
+app-> start;
+</ pre>
+
+Use the Archive :: Zip module to create the ZIP data. I am adding a directory using the addDirectory method of the Archive :: Zip module.
+
+Archive :: Zip does not have a function to output to a scalar variable, only a function to output to a file handle, so I use Perl's scalar input / output function to output to a scalar variable.
+
+You can name the file using the Content-Disposition header.
+
+When drawing, ZIP is binary data, so use the data option. If you specify zip for format, "application / zip" will be set automatically for Content-Type.
+
+<h3> Draw CSV data </ ​​h3>
+
+To draw CSV data (return as HTTP response):
+
+<pre>
+use Mojolicious :: Lite;
+use Text :: CSV :: Encoded;
 use utf8;
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
   
-  # Create Text::CSV::Encoded object
-  my $csv = Text::CSV::Encoded->new({encoding_out => 'UTF-8'});
+  #Create Text :: CSV :: Encoded object
+  my $ csv = Text :: CSV :: Encoded-> new ({encoding_out =>'UTF-8'});
   
-  # Rows
-  my $rows = [
-    ['Perl', 'Ken'],
-    ['Ruby', 'Tom']
-  ];
+  #Rows
+  my $ rows = [
+    ['Perl','Ken'],
+    ['Ruby','Tom']
+  ];;
   
-  # Scalar I/O
-  my $content = '';
-  open my $fh, '>>', \$content;
+  # Scalar I / O
+  my $ content ='';
+  open my $ fh,'>>', \ $ content;
   
-  # Print csv data to scalar variable
-  for my $row (@$rows) {
-    $csv->print($fh, $row);
-    print $fh "\n";
+  #Print csv data to scalar variable
+  for my $ row (@ $ rows) {
+    $ csv-> print ($ fh, $ row);
+    print $ fh "\ n";
   }
   
-  # HTTP Headers
-  my $headers = $self->res->headers;
-  $headers->content_disposition('attachment; filename=pictures.csv');
-  $headers->content_type('text/csv;charset=UTF-8');
+  #HTTP Headers
+  my $ headers = $ self-> res-> headers;
+  $ headers-> content_disposition ('attachment; filename = pictures.csv');
+  $ headers-> content_type ('text / csv; charset = UTF-8');
   
-  # Render data
-  return $self->render(data => $content);
-};
-app->start;
-</pre>
+  #Render data
+  return $ self-> render (data => $ content);
+};;
+app-> start;
+</ pre>
 
-CSVデータの作成にはText::CSV::Encodedモジュールを使用します。ひとつのレコードのデータを行に変換するためにはprintメソッドを利用するしかありませんが、これはファイルハンドルへの出力のためのメソッドです。そのためPerlのスカラ入出力の機能を使って、スカラ変数に出力しています。
+Use the Text :: CSV :: Encoded module to create CSV data. The only way to convert the data of one record to a row is to use the print method, which is a method for printing to a filehandle. Therefore, Perl's scalar input / output function is used to output to scalar variables.
 
-Content-Dispositionヘッダを使うとファイルに名前をつけることができます。CSVデータであることがわかるようにContent-Typeも指定しましょう。描画するときはCSVデータはバイナリデータ(内部文字列ではない)のでdataオプションを使用します。
+You can name the file using the Content-Disposition header. Let's also specify the Content-Type so that we can see that it is CSV data. When drawing, CSV data is binary data (not an internal string), so use the data option.
 
-<h3>描画のときにテンプレートを記述するクラスを指定する</h3>
+<h3> Specify the class that describes the template when drawing </ h3>
 
-描画のときにテンプレートを記述するクラスをrenderメソッドの引数で<strong>template_class</strong>を指定することができます。
-
-<pre>
-$c->render(template_class => $class);
-</pre>
-
-これはプラグインなどの中に直接テンプレートを記述したい場合にとても便利でしょう。Mojoliciousのプラグインはとても柔軟でWebアプリケーション自体を記述して取り込ませることができます。
+You can specify <strong> template_class </ strong> in the argument of the render method for the class that describes the template when drawing.
 
 <pre>
-package Mojolicious::Plugin::Viewer;
-use Mojo::Base 'Mojolicious::Plugin';
+$ c-> render (template_class => $ class);
+</ pre>
+
+This is a template written directly in a plugin etc.It will be very convenient if you want to mention it. Mojolicious plugins are very flexible and allow you to write and incorporate the web application itself.
+
+<pre>
+package Mojolicious :: Plugin :: Viewer;
+use Mojo :: Base'Mojolicious :: Plugin';
 
 sub register {
-  my ($self, $app, $conf) = @_;
+  my ($ self, $ app, $ conf) = @_;
   
-  my $r = $app->route;
-  $r->get('/viewer', sub {
-     my $self = shift;
-     # テンプレートクラスの指定
-     return $self->render(template_class => __PACKAGE__);
+  my $ r = $ app-> route;
+  $ r-> get ('/ viewer', sub {
+     my $ self = shift;
+     #Specify template class
+     return $ self-> render (template_class => __PACKAGE__);
   });
 }
 
@@ -274,128 +273,126 @@ __DATA__
 @@ viewer.html.ep
 <html>
   <head>
-    <title>Viewer</title>
+    <title> Viewer </ title>
   <body>
-     Viewer <%= lc 'A' %>
-  </body>
-</html>
-</pre>
+     Viewer <% = lc'A'%>
+  </ body>
+</ html>
+</ pre>
 
-<h3>動的に大きなファイルを配信する</h3>
+<h3> Dynamically deliver large files </ h3>
 
-Webアプリケーションで、動的に大きなファイルを配信したいときにどうすればよいでしょうか。たとえば、データサイズがわからないので、一部づつ配信したい場合ですね。全部をメモリの上に乗せてしまうと、メモリが圧迫されてしまう可能性があるので、全部をメモリ上に乗せるというのは避けたいですね。
+What if you want to dynamically deliver large files in your web application? For example, if you don't know the data size and want to distribute it part by part. If you put everything on the memory, the memory may be overwhelmed, so I don't want to put everything on the memory.
 
-こんなときはHTTPのチャンクエンコーディングを使って、一部づつ配信しましょう。ブラウザから見ると最終的にはひとつのファイルに見えるので問題はないです。
+In such a case, use HTTP chunk encoding and deliver part by part. From the browser's point of view, it looks like one file in the end, so there is no problem.
 
-write_chunkというメソッドとコールバックをうまく組み合わせれば実現できます。
+This can be achieved by combining a method called write_chunk with a callback.
 
 <pre>
-get '/sizeunknowndata' => sub {
-  my $self = shift;
+get'/ sizeunknowndata' => sub {
+  my $ self = shift;
 
-  my $file = 'foo.tar.gz';
-  open my $fh, '<', $file
+  my $ file ='foo.tar.gz';
+  open my $ fh,'<', $ file
     or die "Error";
 
-  # Write chunk
-  $self->res->headers->content_type('application/gzip');
-  $self->res->headers->content_disposition(qq/attachment; filename="$file"/);
-  my $cb;
-  $cb = sub {
-    my $c = shift;
-    my $size = 500 * 1024;
-    my $length = sysread($fh, my $buffer, $size);
-    unless (defined $length) {
-      close $fh;
-      undef $cb;
+  #Write chunk
+  $ self-> res-> headers-> content_type ('application / gzip');
+  $ self-> res-> headers-> content_disposition (qq / attachment; filename = "$ file" /);
+  my $ cb;
+  $ cb = sub {
+    my $ c = shift;
+    my $ size = 500 * 1024;
+    my $ length = sysread ($ fh, my $ buffer, $ size);
+    unless (defined $ length) {
+      close $ fh;
+      undef $ cb;
       return;
     }
-    $c->write_chunk($buffer, $cb);
-  };
-  $self->$cb;
-};
-</pre>
+    $ c-> write_chunk ($ buffer, $ cb);
+  };;
+  $ self-> $ cb;
+};;
+</ pre>
 
-読み込むデータがなくなったら、ファイルハンドルを閉じて、$cbを未定義にして、参照を取り除きます。
+When there is no more data to read, close the filehandle, make $ cb undefined, and remove the reference.
 
-<h4>追記</h4>
+<h4> Addition </ h4>
 
-タイトルの「大きなファイルを配信する」というタイトルは誤解がありました。「動的に大きなファイルを配信する」というタイトルに変更しました。
+The title "Deliver a large file" was misunderstood. Changed the title to "Deliver dynamically large files".
 
-大きな静的ファイルは通常は「public」以下においておけば、メモリを圧迫することなく、配信できます。またMojoliciousは非同期I/Oですので、処理がブロッキングするということもありません。
+Large static files can usually be delivered under "public" without straining memory. Also, since Mojolicious is an asynchronous I / O, processing will not be blocked.
 
 
-<h3>404 Not Foundのページを描画する</h3>
+<h3> Draw a 404 Not Found page </ h3>
 
-404 Not foundのページ(ページが見つからないときに表示するページ)を描画するには<strong>reply->not_found</strong>を使用します。　
+Use <strong> reply-> not_found </ strong> to draw a 404 Not found page (the page to display when the page is not found). It was
 
 <pre>
-get '/' => sub {
-  my $sefl =shift;
+get'/' => sub {
+  my $ sefl = shift;
   
-  # 404 not foundのページを描画したい場合
+  If you want to draw a # 404 not found page
   if (...) {
-    return $self->reply->not_found;
+    return $ self-> reply-> not_found;
   }
 
-  $self->render;
+  $ self-> render;
 }
-</pre>
+</ pre>
 
-<h4>Mojolicious 6での変更点</h4>
+<h4> Changes in Mojolicious 6 </ h4>
 
-404 Not Foundページの描画は、render_not_foundから、reply->not_foundに変更されました。
+The rendering of the 404 Not Found page has changed from render_not_found to reply-> not_found.
 
 
-<h3>例外(エラー)ページを描画する</h3>
+<h3> Draw an exception (error) page </ h3>
 
-意図していない処理で何らかのエラーが発生した場合に、ユーザーにエラーページを見せたい場合があります。そのようなページを描画するには<strong>reply->exception</strong>を使用します。　
+You may want to show the error page to the user if something goes wrong with unintended processing. Use <strong> reply-> exception </ strong> to draw such a page. It was
 
 <pre>
-get '/' => sub {
-  my $sefl =shift;
+get'/' => sub {
+  my $ sefl = shift;
   
-  # 例外(エラー)ページを描画する
+  #Draw an exception (error) page
   if (...) {
-    return $self->reply->exception;
+    return $ self-> reply-> exception;
   }
 
-  $self->render;
+  $ self-> render;
 }
-</pre>
+</ pre>
 
-<h4>Mojolicious 6での変更点</h4>
+<h4> Changes in Mojolicious 6 </ h4>
 
-例外ページを描画するための、render_exceptionメソッドは、reply->exceptionに変更されました。
+The render_exception method for rendering exception pages has been changed to reply-> exception.
 
 
-<h3>JSONの描画にJSON::XSを利用する方法</h3>
+<h3> How to use JSON :: XS to draw JSON </ h3>
 
-MojoliciousはMojo::JSONという自前でJSONを描画するモジュールを持っていますが、これはピュアPerlで書かれています。JSONを高速に描画するために、JSON::XSを使いたいという場合は、次のようにしてJSONのためのハンドラを置き換えるのがよいと思います。
+Mojolicious has its own module that draws JSON called Mojo :: JSON, which is written in pure Perl. If you want to use JSON :: XS to render JSON fast, I think it's a good idea to replace the handler for JSON as follows:
 
 <pre>
-use Mojolicious::Lite;
-use Mojo::JSON::XS;
+use Mojolicious :: Lite;
+use Mojo :: JSON :: XS;
 
-# jsonの描画のためのハンドラを置き換える
-app->renderer->add_handler(json => sub {
-  my ($self, $c, $output, $options) = @_;
-  $$output = Mojo::JSON::XS->new->encode($options->{json});
+Replace handler for drawing # json
+app-> renderer-> add_handler (json => sub {
+  my ($ self, $ c, $ output, $ options) = @_;
+  $$ output = Mojo :: JSON :: XS-> new-> encode ($ options-> {json});
 });
 
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
   
-  $self->render(json => {name => 'kimoto'});
-};
+  $ self-> render (json => {name =>'kimoto'});
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-Mojo::JSON::XSはMojo::JSONと同じインターフェースを持っていて、内部的にJSON::XSを利用しているモジュールです。Mojo::JSON::Anyというパッケージに含まれているので、使うときにはこれをインストールしましょう。
+Mojo :: JSON :: XS is a module that has the same interface as Mojo :: JSON and uses JSON :: XS internally. It's included in a package called Mojo :: JSON :: Any, so install it when you use it.
 
 <pre>
-cpan Mojo::JSON::Any
-</pre>
-
-
+cpan Mojo :: JSON :: Any
+</ pre>

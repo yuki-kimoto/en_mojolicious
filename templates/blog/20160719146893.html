@@ -1,65 +1,64 @@
-
-<h2>人気のWebフレームワーク Mojoliciousのバージョン7がリリースされました</h2>
-Perlの人気のWebフレームワーク Mojoliciousのバージョン7がリリースされました。
+<h2> Version 7 of the popular web framework Mojolicious has been released </ h2>
+Version 7 of Perl's popular web framework Mojolicious has been released.
 
 <blockquote>
-<a href="http://blog.kraih.com/post/147632979106/mojolicious-70-released-perl-real-time-web">Mojolicious 7.0 released: Perl real-time web framework</a>
-</blockquote>
+<a href="http://blog.kraih.com/post/147632979106/mojolicious-70-released-perl-real-time-web"> Mojolicious 7.0 released: Perl real-time web framework </a>
+</ blockquote>
 
-<h3>翻訳</h3>
+<h3> Translation </ h3>
 
-私は、Mojolicious 7.0 (Doughnut)のリリースを報告できることに、とても興奮しています。
+I'm very excited to report the release of Mojolicious 7.0 (Doughnut).
 
-Mojoliciousのコミュニティは、成長し続けている一方、ディスビューションのサイズは、実際に小さくなり続けている。あなたはびっくりするでしょう。これは、とてもよいことです。私たちが数年で追加したすべての機能が存在するにもかかわらず、コードサイズを、2010年の11247行から、今日の8490行まで、減らし続けてきました。
+While the Mojolicious community continues to grow, the size of the division is actually getting smaller. You will be surprised. This is a very good thing. Despite all the features we've added in the last few years, we've continued to reduce the code size from 11247 lines in 2010 to 8490 lines today.
 
-<img src="http://66.media.tumblr.com/ffdd41342d502bf03fd5cf4b8e4de4da/tumblr_inline_oaj2zo7He21qcosu5_500.png">
+<img src = "http://66.media.tumblr.com/ffdd41342d502bf03fd5cf4b8e4de4da/tumblr_inline_oaj2zo7He21qcosu5_500.png">
 
-あなたが見ることができるように、それは、新しい傾向ではないので、わたしたちは、反復の改善を強調します。すでに解決された問題に対して、より効率的な解決策が見つかることが含まれます。
+As you can see, it's not a new trend, so we emphasize iterative improvement. It involves finding a more efficient solution to a problem that has already been resolved.
 
-同時に、テストの数は、すべてのリリースで増加しており、11245個のテストで、とても快適な95%のテストカバレッジスコアに到達しています。
+At the same time, the number of tests has increased in all releases, with 11245 tests reaching a very comfortable 95% test coverage score.
 
-<img src="http://66.media.tumblr.com/8cb9c26b75d30ced3996f7971597ebf7/tumblr_inline_oaj3ocko311qcosu5_500.png">
+<img src = "http://66.media.tumblr.com/8cb9c26b75d30ced3996f7971597ebf7/tumblr_inline_oaj3ocko311qcosu5_500.png">
 
-すべてのリリースで、私たちは、大きなパフォーマンスの改善を見ることができています。最適化の機会を見つけることが、難しくなり続けているにもかかわらず、これは、7.0における場合も再び見ることができます。
-日常的に行っているベンチマークである「秒あたりのリクエスト数」において特に傾向を見ることができます。
+With every release, we can see significant performance improvements. This can be seen again in 7.0, even though finding optimization opportunities continues to be difficult.
+You can see a particular trend in the daily benchmark of "requests per second".
 
-<img src="http://66.media.tumblr.com/67062a94174a9c39742c9c22be7d758f/tumblr_inline_oaj525etyB1qcosu5_500.png">
+<img src = "http://66.media.tumblr.com/67062a94174a9c39742c9c22be7d758f/tumblr_inline_oaj525etyB1qcosu5_500.png">
 
-追加で、少しの内部的なリファクタリングを行いました。組み込みのHTTPとWebSocketサーバーが、大きな数のCPUコアにおいても、効率的にスケールすることができるようにするためにです。大きな数のCPUは、より一般的に利用されるようになることでしょう。
+In addition, we've done some internal refactoring. This is so that the built-in HTTP and WebSocket servers can scale efficiently, even with a large number of CPU cores. Large numbers of CPUs will become more commonly used.
 
-今年の主なフォーカスは、安定性であったのですが、新しい機能もまた追加されています。ここに、ハイライトのリストを記述します。
+The main focus of the year was stability, but new features have also been added. Here is a list of highlights.
 
 <ul>
   <li>
-    <b>すべてのテンプレートにおける名前つき変数</b>: Mojo::Templateはネイティブで、名前つき変数をサポート
-  </li>
+    <b> Named variables in all templates </ b>: Mojo :: Template is native and supports named variables
+  </ li>
   <li>
-    <b>HTTP methods:</b> 「_method」クエリパラメータはリクエストメソッドをオーバーライドするのに利用できる
-  </li>
+    <b> HTTP methods: </ b> "_method" query parameters can be used to override request methods
+  </ li>
   <li>
-    <b>SNI:</b>サーバーサイドで利用できる
-  </li>
+    <b> SNI: </ b> Available on the server side
+  </ li>
   <li>
-    <b>Windows:</b>Ubuntu on Windosの完全なサポート。これは、ゼロダウンタイムのソウトウェアのアップグレードを含みます
-  </li>
+    <b> Windows: </ b> Full support for Ubuntu on Windos. This includes zero downtime software upgrades
+  </ li>
   <li>
-    <b>バリデーションのフィルター:</b>パラメータはバリデーションを行う前にフィルターをかけることができる
-  </li>
+    <b> Validation Filters: </ b> Parameters can be filtered before validation
+  </ li>
   <li>
-    <b>Web Socketサブプロトコル:</b>WebSocketのサブプロトコルネゴシエーションをサポート
-  </li>
+    <b> WebSocket subprotocol: </ b> Supports WebSocket subprotocol negotiation
+  </ li>
   <li>
-    <b>Minion:</b>私たちの小さなジョブキューはより早くなり、並列のプロセッシング、複数の名前つきキュー、失敗したジョブの自動再実行、ジョブディペンデンシーをサポート。
-  </li>
+    <b> Minion: </ b> Our small job queues are faster, supporting parallel processing, multiple named queues, automatic reruns of failed jobs, and job dependency.
+  </ li>
   <li>
-    <b>コードコンダクト:</b>多様性がわたしたちを悩ませており、それゆえ、わたしたちはコードコンダクトを適用することに決定した
-  </li>
-</ul>
+    <b> Code Conduct: </ b> Diversity is bothering us, so we decided to apply Code Conduct.
+  </ li>
+</ ul>
 
-改善の完全なリストについては、より多くのことがGitHub上のChangesを見ることで確認できます。
+More can be found by looking at Changes on GitHub for a complete list of improvements.
 
-追加:わたしたちは今、ステッカーを持っています。
+Add: We now have a sticker.
 
-<img src="http://66.media.tumblr.com/a0922e1b0ddf33bdc07562afafb81db0/tumblr_inline_oajl9gcJQn1qcosu5_500.jpg">
+<img src = "http://66.media.tumblr.com/a0922e1b0ddf33bdc07562afafb81db0/tumblr_inline_oajl9gcJQn1qcosu5_500.jpg">
 
-楽しんで!
+enjoy!

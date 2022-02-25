@@ -1,176 +1,174 @@
-
-<h2>一番小さなMojoliciousアプリケーション</h2>
-
+<h2> The smallest Mojolicious application </ h2>
 
 
-Mojoliciousのインストールが完了したので、さっそく小さなWebアプリケーションを作成してみましょう。まず最初に、<b>webapp.pl</b>というファイルを作成してください。このファイルの中に以下のコードを書いてみてください。
+
+Now that Mojolicious is installed, let's create a small web application. First of all, create a file called <b> webapp.pl </ b>. Try writing the following code in this file.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
 
-  $self->render(text => 'Hello World');
-};
+  $ self-> render (text =>'Hello World');
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-おなじみハローワールドアプリケーションです。
+The familiar Hello World application.
 
-<h3>アプリケーションの実行</h3>
+<h3> Run application </ h3>
 
-まずこのWebアプリケーションを実行してみましょう。アプリケーションを実行するには<a href="/blog/20120406133367.html">morbo</a>コマンドを使用します。
+Let's run this web application first. Use the <a href="/blog/20120406133367.html"> morbo </a> command to run the application.
 
 <pre>
 morbo webapp.pl
-</pre>
+</ pre>
 
-すると、次のように表示されると思います。
+Then, you should see the following.
 
 <pre>
-[Tue Mar 25 14:08:11 2014] [info] Listening at "http://*:3000".
+[Tue Mar 25 14:08:11 2014] [info] Listening at "http: // *: 3000".
 Server available at http://127.0.0.1:3000.
-</pre>
+</ pre>
 
-これは「http://127.0.0.1:3000」でサーバーが利用できますという意味です。さっそく以下のURLにアクセスしてみましょう。
+This means that the server is available at "http://127.0.0.1:3000". Let's access the following URL immediately.
 
 <pre>
 http://127.0.0.1:3000
-</pre>
+</ pre>
 
-「Hello World」と表示されましたか。表示されたら成功です。これで、あなたも、Webアプリケーションエンジニアの仲間入りです。だって、Webアプリケーションを作っちゃったんですから。
+Did you see "Hello World"? If it is displayed, it is successful. You are now a web application engineer. Because I made a web application.
 
-停止する場合は「Ctrl + c」を押してください。
+Press "Ctrl + c" to stop.
 
-<h4>Windowsでの問題点</h4>
+<h4> Problems with Windows </ h4>
 
-Windowsの場合は「Ctrl + c」の割り込みが認識されにくいようです。何回も「Ctrl + c」を押していると止まります。これは少し不便ですので、startコマンドを使って別ウインドウで立ち上げるのがよいでしょう。別ウインドウを立ち上げれば「×」ボタンで、morboを停止できます。
+In case of Windows, it seems that the interrupt of "Ctrl + c" is hard to be recognized. It will stop if you press "Ctrl + c" many times. This is a bit inconvenient, so it's a good idea to use the start command to launch it in a separate window. If you open another window, you can stop morbo with the "x" button.
 
 <pre>
 start morbo webapp.pl
-</pre>
+</ pre>
 
-<h3>morboコマンドの解説</h3>
+<h3> Explanation of morbo command </ h3>
 
-<b>morbo</b>コマンドは、Mojoliciousをインストールしたときに、一緒にインストールされたものです。morboコマンドは、Webアプリケーションを読み込んで、開発用のサーバーを起動します。デフォルトでは3000番ポートを使って待機します。そしてローカルホスト(127.0.0.1)の3000番ポートへのアクセスがあると、応答を返します。
+The <b> morbo </ b> command was installed when you installed Mojolicious. The morbo command loads the web application and starts the development server. By default, it listens on port 3000. And if there is access to port 3000 on the local host (127.0.0.1), it will return a response.
 
-morboは開発用の便利なサーバーで、ファイルを変更すると自動的に検知してくれます。つまり、morboを再起動しなくっても、ファイルを変更するだけで大丈夫ということです。このために、開発効率がとてもよいです。
+morbo is a convenient server for development, which automatically detects when you change a file. This means that you don't have to restart morbo, just change the file. Because of this, the development efficiency is very good.
 
-morboは開発サーバーですが、本番用のサーバーはhypnotoadコマンドで立ち上げることができます。hypnotoadコマンドは、本番環境でアプリケーションを起動する方法を解説するときに解説したいと思います。
+morbo is a development server, but you can start a production server with the hypnotoad command. I would like to explain the hypnotoad command when explaining how to start an application in a production environment.
 
-<h3>アプリケーションの解説</h3>
+<h3> Application description </ h3>
 
-ではこれからアプリケーションの意味を解説したいと思います。
+Now I would like to explain the meaning of the application.
 
 <pre>
-# Mojolicious::Liteの読み込み
-use Mojolicious::Lite;
+Loading #Mojolicious :: Lite
+use Mojolicious :: Lite;
 
-# ルーティングの設定
-get '/' => sub {
-  my $self = shift;
+# Routing settings
+get'/' => sub {
+  my $ self = shift;
   
-  # 内容の描画
-  $self->render(text => 'Hello World');
-};
+  #Drawing the contents
+  $ self-> render (text =>'Hello World');
+};;
 
-# Mojoliciousアプリケーションの開始
-app->start;
-</pre>
+#Starting the Mojolicious application
+app-> start;
+</ pre>
 
-<h4>Mojolicious::Liteの読み込み</h4>
+<h4> Loading Mojolicious :: Lite </ h4>
 
-Mojoliciousには、<b>Mojolicious::Lite</b>というモジュールが含まれています。Mojolicious::Liteを使えば、ファイルひとつのWebアプリケーションを作成することができます。
-
-<pre>
-# Mojolicious::Liteの読み込み
-use Mojolicious::Lite;
-</pre>
-
-<b>use</b>はPerlにおいて、モジュールを読み込むためのものです。「use Mojolicious::Lite」と記述することで、Mojolicious::Liteモジュールを読み込むことができます。
-
-Mojolicious::Liteを読み込めば、get関数やapp関数などいくつかの関数を利用することができるようになります。またstrictとwarningsが自動的に有効になる効果があります。Mojolicious::Liteを利用するときは「use strict」と「use warnings」を記述する必要がありません。
-
-<h4>ルーティングの記述</h4>
-
-まずWebアプリケーションを記述するために、最初に<strong>ルーティング</strong>を記述します。
+Mojolicious includes a module called <b> Mojolicious :: Lite </ b>. With Mojolicious :: Lite, you can create a web application with a single file.
 
 <pre>
-# ルーティングの設定
-get '/' => sub {
-  my $self = shift;
+Loading #Mojolicious :: Lite
+use Mojolicious :: Lite;
+</ pre>
+
+<b> use </ b> is for loading modules in Perl. You can load the Mojolicious :: Lite module by writing "use Mojolicious :: Lite".
+
+If you load Mojolicious :: Lite, you will be able to use some functions such as get function and app function. It also has the effect of automatically enabling strict and warnings. When using Mojolicious :: Lite, it is not necessary to write "use strict" and "use warnings".
+
+<h4> Routing description </ h4>
+
+To write a web application, first write <strong> routing </ strong>.
+
+<pre>
+# Routing settings
+get'/' => sub {
+  my $ self = shift;
   
-  ...  
-};
-</pre>
+  ...
+};;
+</ pre>
 
-get関数を使用すればルーティングを記述することができます。get関数の第一引数は、URLのパターンです。たとえば<b>/</b>や<b>/info</b>などを記述します。最後の引数には、実行する処理を記述します。これはサブルーチンのリファレンスとして記述します。
-
-<pre>
-get(URLのパターン, 実行する処理を記述するサブルーチンのリファレンス)
-</pre>
-
-この記述を行うとURLのパターンにマッチした場合に、サブルーチンのリファレンスの中に記述された処理が実行されます。
-
-Perlでは、関数の括弧を省略することができます。またカンマ「,」は「=>」を使って記述することができます。それで上記は以下と同じ意味になります。
+You can write the routing using the get function. The first argument of the get function is the URL pattern. For example, write <b> / </ b> or <b> / info </ b>. The last argument describes the process to be executed. Write this as a subroutine reference.
 
 <pre>
-get URLのパターン => 実行する処理を記述するサブルーチンのリファレンス
-</pre>
+get (URL pattern, reference to subroutine that describes the process to be executed)
+</ pre>
 
-一見すると不思議な記述に見えますが、実体は単なる関数です。サンプルコードのように、省略記法で書くことが多いので覚えてしまいましょう。
+If this description is made and the URL pattern is matched, the process described in the subroutine reference will be executed.
 
-<h4>コントローラーオブジェクトの受け取り</h4>
-
-次に実行する処理の内容を見ていきましょう。まずサブルーチンの第一引数として、コントローラーオブジェクトを取得しましょう。コントローラーオブジェクトとは、HTTPリクエスト毎に生成されるオブジェクトで、このオブジェクトを使って、さまざまな処理を実行することができます。実体は<b>Mojolicious::Controller</b>オブジェクトです。
+In Perl, you can omit the parentheses in the function. Also, the comma "," can be described using "=>". So the above has the same meaning as below.
 
 <pre>
-get '/' => sub {
+get URL pattern => Subroutine reference that describes the process to be executed
+</ pre>
+
+At first glance, it may seem strange, but the entity is just a function. Like the sample code, it is often written in abbreviated notation, so let's remember it.
+
+<h4> Receiving controller object </ h4>
+
+Let's take a look at the content of the next process to be executed. First, let's get the controller object as the first argument of the subroutine. A controller object is an object that is created for each HTTP request, and you can use this object to perform various processes. The entity is a <b> Mojolicious :: Controller </ b> object.
+
+<pre>
+get'/' => sub {
   
-  # コントローラーオブジェクトの受けとり
-  my $self = shift;
+  #Receiving a controller object
+  my $ self = shift;
   
-  $self->render(text => 'Hello World');
-};
-</pre>
+  $ self-> render (text =>'Hello World');
+};;
+</ pre>
 
-shiftってなんだろうと、最初見た方は思うと思います。Perlではshift関数を使うと、サブルーチンの第一引数を取得することができます。ですから$selfに代入されるのは、サブルーチンの第一引数です。この第一引数にコントローラーオブジェクトが渡されてきます。
+I think those who first saw what shift is. In Perl you can use the shift function to get the first argument of a subroutine. So what is assigned to $ self is the first argument of the subroutine. A controller object is passed as this first argument.
 
-この後の解説では、このサブルーチンの部分をコントローラーと呼ぶことがあるので尾母いておいてください。またコントローラーオブジェクトは<b>$c</b>のように表現することがありますので、覚えておいてください。
-
-<pre>
-$c->render(...);
-</pre>
-
-<h4>テキストの描画</h4>
-
-次にテキストの描画の部分を見てみましょう。
+In the explanation that follows, this subroutine part is sometimes called a controller, so please keep it as a tail. Also, keep in mind that controller objects can be represented as <b> $ c </ b>.
 
 <pre>
-get '/' => sub {
-  my $self = shift;
+$ c-> render (...);
+</ pre>
+
+<h4> Drawing text </ h4>
+
+Next, let's look at the drawing part of the text.
+
+<pre>
+get'/' => sub {
+  my $ self = shift;
   
-  # テキストの描画
-  $self->render(text => 'Hello World');
-};
-</pre>
+  #Drawing text
+  $ self-> render (text =>'Hello World');
+};;
+</ pre>
 
-テキストを描画するには、renderメソッドを使用して第一引数に<b>text</b>、第二引数に描画したい内容を指定します。renderメソッドはMojolicious::Controllerクラスのメソッドで、内容を描画するときに使用します。
+To render the text, use the render method and specify <b> text </ b> in the first argument and the content you want to render in the second argument. The render method is a method of the Mojolicious :: Controller class and is used when rendering the contents.
 
-この記述によって、ブラウザ上に「Hello World」と表示されます。
+This description will display "Hello World" on your browser.
 
-<h4>アプリケーションの開始</h4>
+<h4> Start application </ h4>
 
-最後に忘れてはならない記述が、アプリケーションの開始の記述です。
+The last thing to remember is the start of the application.
 
 <pre>
-# Mojoliciousアプリケーションの開始
-app->start;
-</pre>
+#Starting the Mojolicious application
+app-> start;
+</ pre>
 
-この記述を行うことで、サーバーが起動して、HTTPリクエストを受け付けるようになります。
+By making this description, the server will start and accept HTTP requests.
 
-これで、一番小さなWebアプリケーションの解説は終わりです。次回からは、この小さなWebアプリケーションを成長させていってみましょう。
-
+This concludes the discussion of the smallest web application. Next time, let's grow this little web application.

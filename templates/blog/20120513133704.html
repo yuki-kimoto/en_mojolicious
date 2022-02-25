@@ -1,59 +1,57 @@
-
-<h2>Mojo::UserAgentでWeb上のコンテンツをファイルとして保存する</h2>
-
+<h2> Save content on the web as a file with Mojo :: UserAgent </ h2>
 
 
 
-Mojo::UserAgentでWeb上からファイルを取得して、保存してみましょう。次のように記述します。
+
+Let's get the file from the web with Mojo :: UserAgent and save it. Write as follows.
 
 <pre>
-use Mojo::UserAgent;
+use Mojo :: UserAgent;
 
-my $ua = Mojo::UserAgent->new;
-my $file = 'google.html';
-my $url = 'http://www.google.co.jp/';
-$ua->get($url)->res->content->asset->move_to($file);
-</pre>
+my $ ua = Mojo :: UserAgent-> new;
+my $ file ='google.html';
+my $ url ='http://www.google.co.jp/';
+$ ua-> get ($ url)-> res-> content-> asset-> move_to ($ file);
+</ pre>
 
-Mojo::UserAgentにはdownloadするためのメソッドがありませんので、自力でがんばる必要があります。
+Mojo :: UserAgent doesn't have a method to download, so you have to do your best on your own.
 
 <ol>
   <li>
-    <b>get</b>メソッドでHTTPリクエストを発行する。戻り値は<b>Mojo::Transaction::HTTP</b>オブジェクト。
-  </li>
+    Issue an HTTP request with the <b> get </ b> method. The return value is a <b> Mojo :: Transaction :: HTTP </ b> object.
+  </ li>
   <li>
-    <b>res</b>メソッドでHTTPレスポンスを取得。戻り値は、<b>Mojo::Message::Request</b>オブジェクト。
-  </li>
+    Get HTTP response with <b> res </ b> method. The return value is a <b> Mojo :: Message :: Request </ b> object.
+  </ li>
   <li>
-    <b>content</b>メソッドで、コンテンツを取得。戻り値は<b>Mojo::Content::Single</b>オブジェクト。
-  </li>
+    Get the content with the <b> content </ b> method. The return value is a <b> Mojo :: Content :: Single </ b> object.
+  </ li>
   <li>
-    <b>asset</b>メソッドで、コンテンツが実際に持っている内容を取得。戻り値は<b>Mojo::Asset::Memory</b>オブジェクトか<b>Mojo::Asset::File</b>オブジェクト。
-  </li>
+    Get what the content actually has with the <b> asset </ b> method. The return value is a <b> Mojo :: Asset :: Memory </ b> object or a <b> Mojo :: Asset :: File </ b> object.
+  </ li>
   <li>
-    <b>move_to</b>メソッドで、ファイルに保存。
-  </li>
-</ol>
+    Save to a file with the <b> move_to </ b> method.
+  </ li>
+</ ol>
 
-という流れになります。ちょっと複雑かな。
+It will be the flow. Is it a little complicated?
 
-<h3>Test::Mojoからファイルの保存を行う場合。</h3>
+<h3> When saving a file from Test :: Mojo. </ h3>
 
-Mojoliciousのテストをするときに、ファイルをダウンロードしたい場合がありますね。そういう場合は以下のように記述します。一時ディレクトリの記述もいれてみました。
+When testing Mojolicious, you may want to download a file. In such a case, write as follows. I also included a description of the temporary directory.
 
 <pre>
-use Test::Mojo;
-use File::Temp 'tempdir';
+use Test :: Mojo;
+use File :: Temp'tempdir';
 use YourApp;
 
-my $app = YourApp->new;
-my $t = Test::Mojo->new($app);
-my $tmpdir = tempdir(CLEANUP => 1);
-my $tmpfile = "$tmpdir/tmp.tar.gz";
+my $ app = YourApp-> new;
+my $ t = Test :: Mojo-> new ($ app);
+my $ tmpdir = tempdir (CLEANUP => 1);
+my $ tmpfile = "$ tmpdir / tmp.tar.gz";
 
-$t->get_ok('http://somehost.com');
-  ->tx->res->content->asset->move_to($tmpfile);
-</pre>
+$ t-> get_ok ('http://somehost.com');
+  -> tx-> res-> content-> asset-> move_to ($ tmpfile);
+</ pre>
 
-仕組みは同じですが、Test::Mojoから<b>tx</b>メソッドを使って、<b>Mojo::Transaction::HTTP</b>を取得している点が異なりますね。
-
+The mechanism is the same, except that the <b> Mojo :: Transaction :: HTTP </ b> is obtained from Test :: Mojo using the <b> tx </ b> method.

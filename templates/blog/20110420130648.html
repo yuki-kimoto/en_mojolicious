@@ -1,50 +1,47 @@
-
-<h2>HTTPメソッドを取得する</h2>
-
+<h2> Get HTTP method </ h2>
 
 
-HTTPメソッドを取得するにはMojo::Message::Requestクラスの<strong>method</strong>メソッドを使用します。
 
-<pre>
-my $method = $req->method;
-</pre>
-
-以下はMojolicious::Liteでの例です。Mojo::Message::RequestオブジェクトにはMojolicious::Controllerオブジェクトのreqメソッドを使ってアクセスすることができます。
+To get the HTTP method, use the <strong> method </ strong> method of the Mojo :: Message :: Request class.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  my $method = $self->req->method;
-};
-</pre>
+my $ method = $ req-> method;
+</ pre>
 
-以下はMojoliciousでの例です。
+The following is an example with Mojolicious :: Lite. You can access the Mojo :: Message :: Request object using the req method of the Mojolicious :: Controller object.
 
 <pre>
-# Mojolicious
-package MyApp::Picture;
+#Mojolicious :: Lite
+get'/' => sub {
+   my $ self = shift;
+   my $ method = $ self-> req-> method;
+};;
+</ pre>
 
-use Mojo::Base 'Mojolicious::Controller';
+The following is an example from Mojolicious.
+
+<pre>
+#Mojolicious
+package MyApp :: Picture;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 use utf8;
 
-# ログイン画面
+# Login screen
 sub list {
-  my $self = shift;
-  my $method = $self->req->method;
+   my $ self = shift;
+   my $ method = $ self-> req-> method;
 }
-</pre>
+</ pre>
 
-HTTPメソッドによって分岐させるときは次のようにlc関数で小文字にしてから判定するとよいでしょう。
+When branching by the HTTP method, it is better to make a judgment after making it lowercase with the lc function as follows.
 
 <pre>
-if (lc $self->req->method eq 'post') {
-  ...
+if (lc $ self-> req-> method eq'post') {
+   ...
 }
 else {
-  ...
+   ...
 }
-</pre>
-
-
+</ pre>

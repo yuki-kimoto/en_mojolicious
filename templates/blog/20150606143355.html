@@ -1,136 +1,134 @@
-
-<h2>Kent WebのASKA BBSをMojoliciousを使った実装に移植しました。</h2>
-
+<h2> Ported ASKA BBS from Kent Web to an implementation using Mojolicious. </ h2>
 
 
-Kent WebのASKA BBSをMojoliciousを使った実装に移植しました。
 
-<blockquote>
-<a href="https://github.com/yuki-kimoto/kent-aska-mojo">ASKA BBS(Mojoliciosu version)</a>
-</blockquote>
-
-もともとのASKA BBSのページとサンプルはこちらです。
+Ported ASKA BBS from Kent Web to an implementation using Mojolicious.
 
 <blockquote>
-<a href="http://www.kent-web.com/bbs/aska.html">ASKA BBS</a>
-<a href="http://www.kent-web.com/bbs/aska/aska.cgi">サンプル</a>
-</blockquote>
+<a href="https://github.com/yuki-kimoto/kent-aska-mojo"> ASKA BBS (Mojoliciosu version) </a>
+</ blockquote>
 
-プログラムの利用規定です。Kent Webのものを引き継いでいます。
+The original ASKA BBS page and sample are here.
 
 <blockquote>
-<a href="http://www.kent-web.com/pubc/kitei.html">プログラム利用規定</a>
-</blockquote>
-移植版のASKA BBSは以下のような特徴があります。
+<a href="http://www.kent-web.com/bbs/aska.html"> ASKA BBS </a>
+<a href="http://www.kent-web.com/bbs/aska/aska.cgi"> Samples </a>
+</ blockquote>
 
-<h3>特徴</h3>
+This is the program usage policy. It inherits the one from Kent Web.
 
-特徴は以下のようになっています。
+<blockquote>
+<a href="http://www.kent-web.com/pubc/kitei.html"> Program Terms of Use </a>
+</ blockquote>
+The ported version of ASKA BBS has the following features.
+
+<h3> Features </ h3>
+
+The features are as follows.
 
 <ul>
   <li>
-    WebフレームワークMojoliciousを使った掲示板の実装
-  </li>
+    Implementation of bulletin boards using the web framework Mojolicious
+  </ li>
   <li>
-    cpanmが内部的には利用され、ワンコマンドで、セットアップが完了
-  </li>
+    cpanm is used internally, and setup is completed with one command.
+  </ li>
   <li>
-    Perl 5.10.1以上であることだけが要件。
-  </li>
+    The only requirement is Perl 5.10.1 or higher.
+  </ li>
   <li>
-    CGIと組み込みのWebサーバーで実行が可能。たとえば、さくらのレンタルサーバー・スタンダードで動かすことができます。
-  </li>
-</ul>
+    Can be run with CGI and an embedded web server. For example, you can run it on Sakura Rental Server Standard.
+  </ li>
+</ ul>
  
-内部実装の具体的な改善は以下のとおりです。
+The specific improvements in the internal implementation are:
 
 <ul>
   <li>
-    WebフレームワークとしてMojoliciousを利用。 
-  </li>
+    Use Mojolicious as a web framework.
+  </ li>
   <li>
-    -HTTPリクエスの解析、パラーメータの受け取り、クッキーの取得処理
-  </li>
+    -HTTP request analysis, parameter reception, cookie acquisition processing
+  </ li>
   <li>
-    -URLのルーティングの改善、テンプレートの記述を改善、ヘッダ、フッタを部品に
-  </li>
+    -Improved URL routing, improved template description, headers and footers as parts
+  </ li>
   <li>
-    グローバルなファイルハンドルは利用せずに、レキシカル変数を使用
-  </li>
+    Use lexical variables instead of global filehandles
+  </ li>
   <li>
-    必要モジュールのインストールのシステムとしてcpanmを使用
-  </li>
+    Use cpanm as a system for installing required modules
+  </ li>
   <li>
-    Emailの送信にMIME::Liteを使用して簡潔にした
-  </li>
+    Simplified using MIME :: Lite to send emails
+  </ li>
   <li>
-    ページ送りの処理にData::PageとData::Page::Navigationを利用して簡潔にした。
-  </li>
+    Data :: Page and Data :: Page :: Navigation were used to simplify the page feed process.
+  </ li>
   <li>
-    文字コードのエンコードにはEncodeモジュールを使用。JCodeの使用をなくした。
-  </li>
+    Use the Encode module to encode the character code. Removed the use of JCode.
+  </ li>
   <li>
-    データ保存のときのエンコード処理のロジックを共通化して改善
-  </li>
+    Improved by standardizing the logic of encoding processing when saving data
+  </ li>
   <li>
-    CGIに加えて組み込みWebサーバーで起動ができるので、非常に高速でスケーラビリティがある。
-  </li>
+    It can be started with an embedded web server in addition to CGI, so it is extremely fast and scalable.
+  </ li>
   <li>
-    開発サーバーが利用できるので、開発が非常に楽になった。
-  </li>
-</ul>
+    With the development server available, development has become much easier.
+  </ li>
+</ ul>
 
-<h3>目的</h3>
+<h3> Purpose </ h3>
 
-このプロジェクトの目的は、古きよきPerl/CGIを、現代的な記述で、記述しなおすことです。レンタルサーバーで、簡単に動かすことができる完成されたWebアプリケーションを、現代的な記述することです。
+The purpose of this project is to rewrite the good old Perl / CGI in a modern way. It is a modern description of a completed web application that can be easily run on a rental server.
 
-ひとつのサンプルを示すことによって、それをお手本にして書き直すことで、現代的なPerlの記述を覚えることができます。古きよきPerlの記述と比較することで、どのような部分が、簡潔で改善されたのかを理解することができるでしょう。
+By showing a sample, you can rewrite it as a model to learn modern Perl descriptions. By comparing it to the good old Perl description, you'll understand what's concise and improved.
 
-<h3>改善点の詳細</h3>
+<h3> Details of improvements </ h3>
 
-このプロジェクトにおけるいくつかの改善点を、もう少し説明しておきます。
+Here are a few more improvements in this project.
 
-<h4>スケーラビリティ</h4>
+<h4> Scalability </ h4>
 
-まずCGIの最大の問題点として、スケーラビリティがないことがあげられます。CGIは、毎回プロセスを起動するので、ある程度のアクセス数が増えてきたところで、パフォーマンスがネックになってきます。
+First of all, the biggest problem with CGI is its lack of scalability. Since CGI starts the process every time, performance becomes a bottleneck when the number of accesses increases to some extent.
 
-Mojoliciousを使った、今回の実装においては、CGIで利用できますが、パフォーマンスネックがもし現れてきたならば、組み込みサーバーやPlack/PSGI対応サーバーを使って、スケールアップすることができます。
+In this implementation using Mojolicious, it can be used with CGI, but if a performance bottleneck appears, it can be scaled up using an embedded server or a Plack / PSGI compatible server.
 
-これは、PHPの利点によくにています。まず最初は、PHP/CGIで設置するのですが、もしパフォーマンスネックがあらわれるならば、mod_phpを使って、動かせばスケールアップすることができます。
+This is often the advantage of PHP. First of all, it is installed with PHP / CGI, but if a performance bottleneck appears, you can scale it up by using mod_php and moving it.
 
-CGIの欠点は、そう簡単には、スケープアップできないのですが、今回改良されたCGIにおいては、スケープアップを行うことができます。
+The downside of CGI is that you can't scape up so easily, but with this improved CGI you can scape up.
 
-<h4>CPANの利用</h4>
+<h4> Use CPAN </ h4>
 
-CPANはPerlとはきっても切り離せない存在です。Perlのライブラリの宝庫であるCPANという存在を利用できることが、Perlの大きな利点のひとつです。
+CPAN is inseparable from Perl. One of the great advantages of Perl is that you can take advantage of the existence of CPAN, a treasure trove of Perl libraries.
 
-CGIアプリケーションにおいても、CPANを簡単に利用できたら、どんなにうれしいことでしょう。
+How happy it would be if CPAN could be easily used in CGI applications as well.
 
-現代的なPerlにおいては、cpanmというツールとcpanfileという設定ファイルを利用することで、CPANにあるモジュールを簡単に利用することができるのです。
+In modern Perl, you can easily use the modules on CPAN by using a tool called cpanm and a configuration file called cpanfile.
 
-cpanfileの中には、モジュールの一覧を記述しています。そして、これらのモジュールをcpanmというツールを使って、プロジェクトのディレクトリ以下に簡単にインストールすることができます。
+A list of modules is described in the cpanfile. You can then easily install these modules under your project's directory using a tool called cpanm.
 
-このプロジェクトでは、たとえば、MIME::Liteを使って、メール送信の記述を簡略にしたり、Data::Pageというモジュールを使って、ページ送りの記述を簡潔に記述しています。
+In this project, for example, MIME :: Lite is used to simplify the description of sending an email, and a module called Data :: Page is used to briefly describe the page feed.
 
-<h3>文字コードをUTF-8、利用するモジュールをEncodeに</h3>
+<h3> Character code is UTF-8, module to be used is Encode </ h3>
 
-古きよきPerlの時代は、まだUTF-8が存在していませんでしたから、文字コードといえば、EUC-jpやShift_JISでありました。
+In the good old Perl era, UTF-8 did not exist yet, so the character codes were EUC-jp and Shift_JIS.
 
-そして、文字コードの変換処理といえば、Jcodeでした。
+And speaking of character code conversion processing, it was Jcode.
 
-けれども、現代的なPerlの記述においては、文字コードはUTF-8を、文字コードの扱いには、Encodeモジュールを使うのが、もっともよいです。
+However, in modern Perl writing, it is best to use UTF-8 for the character code and the Encode module for handling the character code.
 
-そうすることで、文字列を統一的に扱うことができますし、正規表現も完全に正しく動きます。
+By doing so, you can handle strings in a unified way, and regular expressions will work perfectly correctly.
 
-<h3>ルーティングとテンプレートをWebフレームワークで</h3>
+<h3> Routing and templates in a web framework </ h3>
 
-ルーティングとテンプレートはMojoliciousというWebフレームワークで行っています。
+Routing and templates are done in a web framework called Mojolicious.
 
-古きよき時代のPerlにおいては、ルーティングとテンプレートは、コードに、べた書きということも少なくありません。非常に記述が、複雑なものになっていました。
+In good old Perl, routing and templates are often solid in code. The description was very complicated.
 
-ルーティングとテンプレートをWebフレームワークのものを利用することで、記述が簡潔になっています。
+By using the routing and template from the web framework, the description is simplified.
 
-PHPの利点は、HTMLの中にPHPの記述をかけることですが、Mojoliciousのテンプレートを利用すれば、HTMLの中にPerlの記述を行うことができます。
+The advantage of PHP is that you can write PHP in HTML, but you can use Mojolicious templates to write Perl in HTML.
 
-ぜひコードを読んで、古きよきPerlと、現代的なPerlの差について、学んでみてください。
-
+Be sure to read the code to learn about the differences between good old Perl and modern Perl.

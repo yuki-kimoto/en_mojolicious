@@ -1,193 +1,191 @@
-
-<h2>フォームの利用</h2>
-
+<h2> Using forms </ h2>
 
 
-ユーザーからのデータを受け取るには、<strong>フォーム</strong>を利用します。フォームの使い方を学びましょう。
 
-<h3>簡単なフォーム</h3>
+Use <strong> forms </ strong> to receive data from users. Learn how to use forms.
 
-まず最初に簡単なフォームを作成してみましょう。テキストボックス、ラジオボタン、テキストエリアに値を入力してもらって、受け取って表示するプログラムを作成してみます。
+<h3> Simple form </ h3>
+
+First, let's create a simple form. Let's create a program that receives and displays values ​​by asking them to enter values ​​in text boxes, radio buttons, and text areas.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-# トップページ
-get '/' => sub {
-  my $self = shift;
+# top page
+get'/' => sub {
+  my $ self = shift;
   
-  $self->render('index');
-};
+  $ self-> render ('index');
+};;
 
-# データを受け取って処理
-post '/' => sub {
-  my $self = shift;
+#Receive and process data
+post'/' => sub {
+  my $ self = shift;
   
-  # パラメーターの取得
-  my $name = $self->param('name');
-  my $private = $self->param('private');
-  my $message = $self->param('message');
+  #Get parameters
+  my $ name = $ self-> param ('name');
+  my $ private = $ self-> param ('private');
+  my $ message = $ self-> param ('message');
 
-  # メッセージがない場合はトップページを表示
-  unless (length $message) {
-    $self->render('index', error => 'Message is empty');
+  # Display the top page if there is no message
+  unless (length $ message) {
+    $ self-> render ('index', error =>'Message is empty');
     return;
   }
-  # フラッシュに保存
-  $self->flash(name => $name);
-  $self->flash(private => $private);
-  $self->flash(message => $message);
+  #Save to flash
+  $ self-> flash (name => $ name);
+  $ self-> flash (private => $ private);
+  $ self-> flash (message => $ message);
   
-  $self->redirect_to('/');
-};
+  $ self-> redirect_to ('/');
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ index.html.ep
 <%
-  my $error = stash('error');
+  my $ error = stash ('error');
 %>
 
-% if ($error) {
-  <div style="color:red">
-    <%= $error %>
-  </div>
-% }
+% if ($ error) {
+  <div style = "color: red">
+    <% = $ error%>
+  </ div>
+%}
 
-<form action="<%= url_for %>" method="post" style="border:1px solid gray">
-  <b>Form</b><br>
-  <b>Name:</b> <%= text_field 'name' %><br>
-  <b>Private:</b> Yes<%= radio_button private => 1 %> / No <%= radio_button private => 0, checked => 'checked' %><br>
-  <b>Message:</b><br>
-  <%= text_area 'message', style => "width:400px; height:100px" %><br>
-  <input type="submit" value="Post">
-</form>
+<form action = "<% = url_for%>" method = "post" style = "border: 1px solid gray">
+  <b> Form </ b> <br>
+  <b> Name: </ b> <% = text_field'name'%> <br>
+  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0, checked =>'checked'%> <br>
+  <b> Message: </ b> <br>
+  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
+  <input type = "submit" value = "Post">
+</ form>
 
 <div>
-  <b>Name</b>: <%= flash('name') // '' %><br>
-  <b>Private</b>: <%= flash('private') // '' %><br>
-  <b>Message</b>: <%= flash('message') // '' %>
-</div>
-</pre>
+  <b> Name </ b>: <% = flash ('name') //''%> <br>
+  <b> Private </ b>: <% = flash ('private') //''%> <br>
+  <b> Message </ b>: <% = flash ('message') //''%>
+</ div>
+</ pre>
 
-このプログラムを実行して、フォームに値を入力してPostボタンを押すと、画面に入力した内容が表示されます。画面の下の部分は次のように表示されると思います。
+Run this program, enter a value in the form and press the Post button to see what you have entered on the screen. The bottom part of the screen should look like this:
 
 <pre>
 Name: kimoto
 Private: 0
 Message: Hello
-</pre>
+</ pre>
 
-このプログラムはサンプルのプログラムです。本来ならばユーザーから受け取ったデータは、データベースに保存します。まだデータベースについては解説していませんので、データを保存せずに、そのまま表示するプログラムにしています。
+This program is a sample program. The data normally received from the user is stored in the database. I haven't explained about the database yet, so I'm using a program that displays the data as it is without saving it.
 
-プログラムの各部分を解説します。
+I will explain each part of the program.
 
 <pre>
-# トップページ
-get '/' => sub {
-  my $self = shift;
+# top page
+get'/' => sub {
+  my $ self = shift;
   
-  $self->render('index');
-};
-</pre>
+  $ self-> render ('index');
+};;
+</ pre>
 
-これはトップページを表示するルーティングの記述です。いつもどおりの記述です。このページにフォームを記述します。
+This is a description of the routing that displays the top page. The description is as usual. Write the form on this page.
 
-<h4>フォームの記述</h4>
+<h4> Form description </ h4>
 
-フォームは以下のようになっています。
-
-<pre>
-<form action="<%= url_for %>" method="post" style="border:1px solid gray">
-  <b>Form</b><br>
-  <b>Name:</b> <%= text_field 'name' %><br>
-  <b>Private:</b> Yes<%= radio_button private => 1 %> / No <%= radio_button private => 0, checked => 'checked' %><br>
-  <b>Message:</b><br>
-  <%= text_area 'message', style => "width:400px; height:100px" %><br>
-  <input type="submit" value="Post">
-</form>
-</pre>
-
-formタグの中には<b>action</b>と<b>method</b>と<b>style</b>という属性がありますね。style属性はスタイルシートを設定するもので、フォームを囲む枠を設定しています。
-
-フォームでデータを送信するときには、一般的にはmethodに<b>post</b>を指定します。postを指定すれば、どんなに大きなデータであっても送信することができます。getを指定した場合は、フォームの値はURLのクエリ文字列として送信されますが、postを指定した場合は、HTTPボディと呼ばれる部分に記述されて、送信されます。
-
-actionには処理をするURLを指定します。今回は同一のURLにしました。同一のURLにしておくと簡単です。
-
-フォームの部品を使う部分で<strong>text_field</strong>ヘルパー、<strong>radio_button</strong>ヘルパー、strong>text_area</strong>ヘルパーを使用しています。
+The form looks like this:
 
 <pre>
-  <b>Name:</b> <%= text_field 'name' %><br>
-  <b>Private:</b> Yes<%= radio_button private => 1 %> / No <%= radio_button private => 0 %><br>
-  <b>Message:</b><br>
-  <%= text_area 'message', style => "width:400px; height:100px" %><br>
-</pre>
+<form action = "<% = url_for%>" method = "post" style = "border: 1px solid gray">
+  <b> Form </ b> <br>
+  <b> Name: </ b> <% = text_field'name'%> <br>
+  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0, checked =>'checked'%> <br>
+  <b> Message: </ b> <br>
+  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
+  <input type = "submit" value = "Post">
+</ form>
+</ pre>
 
-これらは、タグヘルパーと呼ばれます。利用可能なタグヘルパーについては「<a href="/blog/20110616130993.html">「Mojoliciousのタグヘルパーの一覧</a>」を見てください。
+There are attributes <b> action </ b>, <b> method </ b> and <b> style </ b> in the form tag. The style attribute sets the stylesheet and sets the frame that surrounds the form.
 
-タグヘルパーは、以下のような実際のタグに展開されます。
+When submitting data in a form, you typically specify <b> post </ b> for method. If you specify post, you can send even the largest amount of data. If get is specified, the form value will be sent as a query string in the URL, but if post is specified, it will be written in a part called the HTTP body and sent.
 
-<pre>
-<form action="/" method="post" style="border:1px solid gray">
-  <b>Form</b><br>
-  <b>Name:</b> <input name="name" type="text" /><br>
-  <b>Private:</b> Yes<input name="private" type="radio" value="1" /> / No <input name="private" type="radio" value="0" /><br>
-  <b>Message:</b><br>
-  <textarea name="message" style="width:400px; height:100px"></textarea><br>
-  <input type="submit" value="Post">
-</form>
-</pre>
+For action, specify the URL to process. This time I used the same URL. It is easy to keep the same URL.
 
-タグヘルパーを使うと便利な一番の理由は、フォームを送信した後でも、フォームの値を復元してくれることです。
-
-今回は、メッセージが入力されていない場合は、エラーメッセージを表示するようにしているのですけれど、その場合にでも、フォームの値が保存されます。
-
-<h4>フォームの処理</h4>
-
-次にフォームを処理する部分です。フォームではmethodにpostを指定しました。このリクエストはpost関数を使って、受け取ることができます。
+I use the <strong> text_field </ strong> helper, <strong> radio_button </ strong> helper, and <strong> text_area </ strong> helper where I use the parts of the form.
 
 <pre>
-# データを受け取って処理
-post '/' => sub { ... };
-</pre>
+  <b> Name: </ b> <% = text_field'name'%> <br>
+  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0%> <br>
+  <b> Message: </ b> <br>
+  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
+</ pre>
 
-では、処理を見ていきましょう。まずフォームから渡された値をパラメーターとして受け取っています。paramメソッドは、HTTPのGETメソッドであっても、POSTメソッドであっても、どちらでも値を受け取ることができます。
+These are called tag helpers. See <a href="/blog/20110616130993.html"> "List of Mojolicious Tag Helpers </a>" for available tag helpers.
 
-<pre>
-# パラメーターの取得
-my $name = $self->param('name');
-my $private = $self->param('private');
-my $message = $self->param('message');
-</pre>
-
-次にメッセージがない場合は、処理をエラーにしています。スタッシュのerrorという値を設定して、indexを描画します。途中で処理を抜けたい場合は、returnを返しましょう。
+The tag helper expands to the actual tag, such as:
 
 <pre>
-  # メッセージがない場合はトップページを表示
-  unless (length $message) {
-    $self->render('index', error => 'Message is empty');
+<form action = "/" method = "post" style = "border: 1px solid gray">
+  <b> Form </ b> <br>
+  <b> Name: </ b> <input name = "name" type = "text" /> <br>
+  <b> Private: </ b> Yes <input name = "private" type = "radio" value = "1" /> / No <input name = "private" type = "radio" value = "0" /> <br>
+  <b> Message: </ b> <br>
+  <textarea name = "message" style = "width: 400px; height: 100px"> </ textarea> <br>
+  <input type = "submit" value = "Post">
+</ form>
+</ pre>
+
+The main reason why tag helpers are useful is that they restore the form's values ​​even after you submit the form.
+
+This time, if no message is entered, an error message is displayed, but even in that case, the value of the form is saved.
+
+<h4> Form processing </ h4>
+
+Next is the part that processes the form. In the form, I specified post as method. This request can be received using the post function.
+
+<pre>
+#Receive and process data
+post'/' => sub {...};
+</ pre>
+
+Let's take a look at the process. First, it receives the value passed from the form as a parameter. The param method can receive a value, whether it is an HTTP GET method or a POST method.
+
+<pre>
+#Get parameters
+my $ name = $ self-> param ('name');
+my $ private = $ self-> param ('private');
+my $ message = $ self-> param ('message');
+</ pre>
+
+If there is no message next, the process is in error. Draw the index by setting a value of stash error. If you want to exit the process in the middle, return return.
+
+<pre>
+  # Display the top page if there is no message
+  unless (length $ message) {
+    $ self-> render ('index', error =>'Message is empty');
     return;
   }
-</pre>
+</ pre>
 
-本来ならば、データベースなどにデータを保存するのですが、今回はまだデータベースの処理について書いていませんので、フラッシュに保存しています。
+Originally, the data is saved in the database etc., but this time I have not written about the database processing yet, so I save it in the flash.
 
-フラッシュとは、クライアントサイドに保存されるデータで、次の画面の遷移のときまで保存されるデータです。flashメソッドで設定と取得を行うことができます。フラッシュについては、セッションを解説するときに、詳しく解説します。
-
-<pre>
-  # フラッシュに保存
-  $self->flash(name => $name);
-  $self->flash(private => $private);
-  $self->flash(message => $message);
-</pre>
-
-最後にリダイレクトを行って、最初のページを表示します。
+Flash is data stored on the client side and is stored until the next screen transition. You can set and get it with the flash method. We'll talk more about flash when we talk about sessions.
 
 <pre>
-  $self->redirect_to('/');
-</pre>
+  #Save to flash
+  $ self-> flash (name => $ name);
+  $ self-> flash (private => $ private);
+  $ self-> flash (message => $ message);
+</ pre>
 
-このようにフォームを使うとユーザーのデータを受け取ることができます。
+Finally, redirect to display the first page.
 
+<pre>
+  $ self-> redirect_to ('/');
+</ pre>
+
+You can use the form in this way to receive the user's data.

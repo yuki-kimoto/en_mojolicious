@@ -1,80 +1,78 @@
-
-<h2>テンプレートディレクトリの中のファイルを自動でディスパッチする方法</h2>
-<strong>テンプレートディレクトリの中のファイルを自動でディスパッチ</strong>する処理は以下のようにして書くことができます。
+<h2> How to automatically dispatch files in the template directory </ h2>
+The process of automatically dispatching files in the <strong> template directory </ strong> can be written as follows.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-# 手動でルートを作成
-get '/foo' => 'foo';
+# Manually create a route
+get'/ foo' =>'foo';
 
-# 自動のルートを作成
-any '/(*Path)' => sub {
-  my $self = shift;
+#Create an automatic route
+any'/ (* Path)' => sub {
+  my $ self = shift;
   
-  my $path = $self->param('Path');
+  my $ path = $ self-> param ('Path');
   
-  $self->render(template => $path);
-};
+  $ self-> render (template => $ path);
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ foo.html.ep
 foo
 
-@@ bar/baz.html.ep
-bar/baz
-</pre>
+@@ bar / baz.html.ep
+bar / baz
+</ pre>
 
-ワイルドカードプレースホルダー(*)を使ってアクセスするパス構造をそのままテンプレートのディレクトリ構造としてわたしています。Pathという大文字を使っているのはpathが予約語だからです。
+The path structure accessed using the wildcard placeholder (*) is used as the template directory structure. The capital letter Path is used because path is a reserved word.
 
-これでPHPのようなテンプレートディレクトリにファイルを配置する簡便さと、ルートを手動で定義してユーザーに見やすいURLを提供するというふたつの作業のどちらも簡単に行うことができます。
+Now you can easily do both the convenience of placing the file in a template directory like PHP and the manual definition of the root to provide the user with an easy-to-read URL.
 
-でもこの方法はよいように見えてひとつ問題があって、自動でテンプレートを描画した場合には、テンプレート描画以外の処理ができないということです。テンプレートの中で先頭でロジックを記述して場合に応じてNot Foundや例外ページやJSONを描画することができません。
+However, this method seems to be good, and there is one problem: when the template is drawn automatically, processing other than template drawing can not be done. It is not possible to write logic at the beginning of the template to draw Not Found, exception pages or JSON as the case may be.
 
-抜け道はあります。けれども、公式な方法ではないので、サポートされるかどうかは未知な部分がありますし、仕様変更に弱くなります。
+There is a loophole. However, since it is not an official method, it is unknown whether it will be supported or not, and it is vulnerable to specification changes.
 
-<h3>抜け道の方法(Mojolicious 4.0以降)</h3>
+<h3> How to get around (Mojolicious 4.0 or later) </ h3>
 
-render_maybeでテンプレートを描画して、mojo.finisedを確認します。
+Render the template with render_maybe and check mojo.finised.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-# 手動でルートを作成
-get '/foo' => sub {
-  my $self = shift;
-  $self->render_maybe('foo');
-  $self->stash('mojo.finished') ? undef : $self->reply->not_found;
-};
+# Manually create a route
+get'/ foo' => sub {
+  my $ self = shift;
+  $ self-> render_maybe ('foo');
+  $ self-> stash ('mojo.finished')? undef: $ self-> reply-> not_found;
+};;
 
-# 自動のルートを作成
-any '/(*Path)' => sub {
-  my $self = shift;
+#Create an automatic route
+any'/ (* Path)' => sub {
+  my $ self = shift;
   
-  my $path = $self->param('Path');
-  $self->render_maybe($path);
-  $self->stash('mojo.finished') ? undef : $self->reply->not_found;
-};
+  my $ path = $ self-> param ('Path');
+  $ self-> render_maybe ($ path);
+  $ self-> stash ('mojo.finished')? undef: $ self-> reply-> not_found;
+};;
 
-app->start;
+app-> start;
 
 __DATA__
 
 @@ foo.html.ep
 <%
-  $self->render(json => {path => 'foo'});
+  $ self-> render (json => {path =>'foo'});
   return;
 %>
 
-@@ bar/baz.html.ep
+@@ bar / baz.html.ep
 <%
-  $self->render(json => {path => '/bar/baz'});
+  $ self-> render (json => {path =>'/ bar / baz'});
   return;
 %>
-</pre>
+</ pre>
 
-このように記述するとテンプレートの中で、JSONやrender_exceptionを呼び出して例外を描画することができます。
-
+With this description, you can call JSON or render_exception in the template to draw the exception.

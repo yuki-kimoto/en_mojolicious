@@ -1,19 +1,17 @@
-
-<h2>プラグインの名前空間を追加する</h2>
-
+<h2> Add plugin namespace </ h2>
 
 
-プラグインはデフォルトで<b>Mojolicious::Plugin</b>以下から読み込まれますが、名前空間を追加することもできます。
+
+By default, plugins are loaded from under <b> Mojolicious :: Plugin </ b>, but you can add namespaces as well.
 
 <pre>
-# Mojolicious::Lite
-push @{app->plugins->namespaces}, 'MyApp::Plugins';
+#Mojolicious :: Lite
+push @ {app-> plugins-> namespaces},'MyApp :: Plugins';
 
-# Mojolicious
+#Mojolicious
 sub startup {
-  my $self = shift;
+   my $ self = shift;
 
-  push @{$self->plugins->namespaces}, 'MyApp::Plugins';
+   push @ {$ self-> plugins-> namespaces},'MyApp :: Plugins';
 }
-</pre>
-
+</ pre>

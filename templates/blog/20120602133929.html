@@ -1,29 +1,27 @@
-
-<h2>hypnotoadが正しく起動しているかどうかの確認</h2>
-
+<h2> Check if hypnotoad is running properly </ h2>
 
 
-hypnotoadコマンドを実行しても、実際にコマンドが成功したかどうかは、一見してわかりません。hyptnoaodサーバーは、logディレクトリが存在するとメッセージをlogディレクトリ以下のproduction.logに出力します。ですので、起動が成功したかどうかを調べるには以下のファイルを調べる必要があります。
 
-<pre>
-log/production.log
-</pre>
-
-<h3>ログメッセージ</h3>
-
-<h3>起動の確認</h3>
-
-hypnotoadサーバーが起動すると、以下のようなメッセージが出力されます。これはプロセスIDが29647で起動したという意味になります。
+Even if you execute the hypnotoad command, you cannot tell at first glance whether the command actually succeeded. The hyptnoaod server prints a message to production.log under the log directory if the log directory exists. So you need to look at the following files to see if the boot was successful.
 
 <pre>
-Hypnotoad server 29647 started for "/home/kimoto/labo/webminiapp/script/webminiapp".
-</pre>
+log / production.log
+</ pre>
 
-ですが、このメッセージがあっても、実際にリッスンされてクライアントからのリクエストを受け付けるかどうかは別の問題です。それを確認するためには以下のメッセージが出力されていることを確認する必要があります。
+<h3> Log message </ h3>
+
+<h3> Confirmation of startup </ h3>
+
+When the hypnotoad server starts, the following message is output. This means that the process ID was started with 29647.
 
 <pre>
-Listening at "http://*:8080".
-</pre>
+Hypnotoad server 29647 started for "/ home / kimoto / labo / webminiapp / script / webminiapp".
+</ pre>
 
-このメッセージがあって初めて、リクエストを特定のポート番号(ここでは8080)で受け付けるようになったことがわかります。
+However, even with this message, it is another matter whether it is actually listened to and accepts requests from clients. To confirm that, you need to confirm that the following message is output.
 
+<pre>
+Listening at "http: // *: 8080".
+</ pre>
+
+Only with this message will you know that the request is accepted on a specific port number (here 8080).

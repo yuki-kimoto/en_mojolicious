@@ -1,32 +1,30 @@
-
-<h2>EVを使ってイベントループを高速化する</h2>
-
+<h2> Use EV to speed up the event loop </ h2>
 
 
 
-MojoliciousはIO監視としてIO::Pollをデフォルトでは使用しますが、より速いEVを利用することもできます。MojoliciousはEVがインストールされていると自動的にIO監視でEVを利用し、パフォーマンスが向上します。EVは他のCPANモジュールと同じようにインストールすることができます。
+
+Mojolicious uses IO :: Poll for IO monitoring by default, but you can also take advantage of faster EVs. Mojolicious will automatically use EV for IO monitoring when EV is installed, improving performance. EVs can be installed just like any other CPAN module.
 
 <pre>
 cpan EV
-</pre>
+</ pre>
 
-MojoliciousからEVが見えているかを確認しましょう。
+Make sure you can see the EV from Mojolicious.
 
 <pre>
 mojo Version
-</pre>
+</ pre>
 
-次のようにEVがインストールされていれば成功です。
+If EV is installed as follows, it is successful.
 
 <pre>
 CORE
-  Perl        (5.012003, linux)
-  Mojolicious (2.09, Leaf Fluttering In Wind)
+   Perl (5.012003, linux)
+   Mojolicious (2.09, Leaf Fluttering In Wind)
 
 OPTIONAL
-  EV                       (4.03)
-  IO::Socket::IP           (not installed)
-  IO::Socket::SSL          (1.44)
-  Net::Rendezvous::Publish (not installed)
-</pre>
-
+   EV (4.03)
+   IO :: Socket :: IP (not installed)
+   IO :: Socket :: SSL (1.44)
+   Net :: Rendezvous :: Publish (not installed)
+</ pre>

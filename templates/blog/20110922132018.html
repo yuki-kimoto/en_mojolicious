@@ -1,31 +1,29 @@
+<h2> hypnotoad server timeout issue </ h2>
 
-<h2>hypnotoadサーバーのタイムアウトの問題</h2>
+The hypnotoad server is a prefolk server used for deployment in Mojolicious production environments.
 
-hypnotoadサーバーはMojoliciousの本番環境でデプロイするために利用されるプリフォークサーバーです。
+If you are developing with <a href="/blog/20120406133367.html"> morbo </a> in your development environment and you want to run your application in production, you need to be aware of timeouts.
 
-開発環境で<a href="/blog/20120406133367.html">morbo</a>で開発していて、本番環境でアプリケーションを動かすときには、タイムアウトに注意する必要があります。
+hypnotoad is a pre-fork server that has a mechanism to stop child processes that have not responded for a certain period of time.
 
-hypnotoadはプリフォークサーバーで、一定時間応答がない子プロセスを停止させるという仕組みがあります。
+Therefore, if you execute an HTTP request that takes more than 30 seconds, it will not be possible to execute it.
 
-ですから30秒以上かかるHTTPリクエストを実行した場合に、実行できないということが発生します。
+<h3> Time-out mechanism </ h3>
 
-<h3>タイムアウトの仕組み</h3>
+<h4> Heartbeat </ h4>
 
-<h4>ハートビート</h4>
+The hynotoad parent process monitors the survival of child processes. By default, if there is a process that has not responded for 5 seconds, the child process is instructed to stop as soon as the request is completed.
 
-hynotoadの親プロセスは子プロセスの生存監視をしています。デフォルトでは5秒間応答がないプロセスがあった場合に、その子プロセスに対して、リクエストが終わり次第停止するようにという命令を出します。
+If the request is not completed within another 30 seconds, it will be forced to stop the process. In other words, by default, you cannot receive requests longer than 35 seconds.
 
-さらに30秒以内にリクエストが終わらなかった場合には、強制的にそのプロセスを停止させます。つまりデフォルトでは35秒以上のリクエストを受け取ることができません。
+When writing a blocking application, you need to set a long heartbeat timeout value.
 
-ブロッキングするアプリケーションを書くときはハートビートのタイムアウト値を長く設定する必要があります。
-
-hypnotoadは同じディレクトリにhypnotoad.confというファイルがあると設定ファイルとして読み込んでくれますので、たとえば以下のようにハートビートのタイムアウトを設定をしておきます。
+If hypnotoad has a file called hypnotoad.conf in the same directory, it will be read as a configuration file, so set the heartbeat timeout as follows, for example.
 
 <pre>
 # hypnotoad.conf
 {heartbeat_timeout => 60}
-</pre>
+</ pre>
 
 <hr>
-<a href="/blog/20110402130560.html">Mojoliciousリファレンスへ</a>
-
+<a href="/blog/20110402130560.html"> Go to Mojolicious Reference </a>

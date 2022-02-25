@@ -1,26 +1,24 @@
-
-<h2>複数のコントローラーで共通に必要な値を渡す</h2>
-
+<h2> Pass the required values for multiple controllers </ h2>
 
 
-グローバルに値を設定するのであれば<b>defaults</b>メソッドを使うことができます。けれども、ときには複数のコントローラーだけで、値を利用したいという場合があると思います。
 
-そのような場合は次のようなテクニックを使います。
+If you want to set the value globally, you can use the <b> defaults </ b> method. However, sometimes you may want to use the value with just multiple controllers.
 
-<pre>
-my $r = $app->routes->to(val => $val);
-
-# 後は同じ
-$r->get('/foo');
-$r->get('/bar');
-</pre>
-
-ルーターを取得するときに<strong>to</strong>を使うところがポイントです。<b>to</b>メソッドは、通常はコントローラーとアクションの組み合わせを書くのに利用するのですが、実は、コントローラーのデフォルト値を設定することもできます。
-
-このようにすればコントローラー側で、設定した値を利用することができます。
+In such cases, use the following techniques.
 
 <pre>
-# コントローラー内
-my $val = $c->stash('val');
-</pre>
+my $ r = $ app-> routes-> to (val => $ val);
 
+# The rest is the same
+$ r-> get ('/ foo');
+$ r-> get ('/ bar');
+</ pre>
+
+The point is to use <strong> to </ strong> when getting a router. The <b> to </ b> method is usually used to write a combination of controller and action, but in fact you can also set a default value for the controller.
+
+By doing this, the set value can be used on the controller side.
+
+<pre>
+#In the controller
+my $ val = $ c-> stash ('val');
+</ pre>

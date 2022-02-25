@@ -1,24 +1,22 @@
-
-<h2>スタッシュのデフォルト値の設定</h2>
-
+<h2> Setting default values for stash </ h2>
 
 
-スタッシュのデフォルト値を設定するにはMojoliciousクラスの<strong>defaults</strong>メソッドを使用します。
 
-<pre>
-$app->defaults({foo => 'bar'});
-</pre>
-
-Mojolicious::LiteとMojoliciousでの使用例です。
+Use the <strong> defaults </ strong> method of the Mojolicious class to set default values for stash.
 
 <pre>
-# Mojolicious::Lite
-app->defaults({foo => 'bar'});
+$ app-> defaults ({foo =>'bar'});
+</ pre>
 
-# Mojolicious
+This is an example of use with Mojolicious :: Lite and Mojolicious.
+
+<pre>
+#Mojolicious :: Lite
+app-> defaults ({foo =>'bar'});
+
+#Mojolicious
 sub starup {
-  my $self = shift;
-  $self->defaults({foo => 'bar'});
+   my $ self = shift;
+   $ self-> defaults ({foo =>'bar'});
 }
-</pre>
-
+</ pre>

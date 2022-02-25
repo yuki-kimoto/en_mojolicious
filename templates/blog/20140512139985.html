@@ -1,125 +1,122 @@
-
-<h2>日本語の扱い</h2>
-
+<h2> Handling of Japanese </ h2>
 
 
-Mojoliciousにおける<strong>日本語の扱い</strong>について解説しておきます。Perlを使う場合に、学習するのを難しく感じるのは、文字コードの扱いでしょう。Perlでの文字コードの扱い自体はきわめて簡単なのですが、現代的な方法を知らないという理由で混乱されている方も多いと思います。
 
-過去の歴史や理論はおいておいて、ここでは実用的な項目に絞って絞って解説します。詳しい解説については「<a href="/blog/20091118124667.html">Encode - 日本語などのマルチバイト文字列を適切に処理する / Perlモジュール徹底解説</a>」を参考にしてください。
+I will explain <strong> Japanese handling </ strong> in Mojolicious. When using Perl, what you find difficult to learn is the handling of character codes. Handling character codes in Perl is quite easy, but I think many people are confused because they don't know the modern method.
 
-<h3>バイト文字列と内部文字列</h3>
+Aside from past history and theory, here we will focus on practical items. For a detailed explanation, please refer to "<a href="/blog/20091118124667.html"> Encode --Properly handle multibyte character strings such as Japanese / Perl module thorough explanation </a>".
 
-Perlでは、プログラムの内部では<b>内部文字列</b>を使って、プログラムの外部に対しては、特定の文字コードで表現された<b>バイト文字列</b>を入力として受け取ったり、出力したりします。
+<h3> Byte string and internal string </ h3>
 
-プログラムの内部では内部文字列、プログラムの外部ではバイト文字列と考えてください。
+In Perl, <b> internal string </ b> is used inside the program, and <b> byte string </ b> expressed by a specific character code is input to the outside of the program. Receive and output.
 
-<pre>
-プログラムの内部 - 内部文字列
-
-プログラムの外部 - バイト文字列
-</pre>
-
-Javaを知っているのであれば、単純に文字列ストリームとバイトストリームだと考えてみてください。
-
-つまりPerlでは、内部文字列とバイト文字列の変換が必要だということです。この変換を行うモジュールが、<strong>Encode</strong>モジュールです。
+Think of it as an internal string inside the program and a byte string outside the program.
 
 <pre>
-use Encode qw/encode decode/;
+Inside the program-internal string
 
-# デコード(特定の文字コードで表現されたバイト文字列を内部文字列に変換)
-my $str_internal = decode('UTF-8', $str_byte);
+External to program-byte string
+</ pre>
 
-# エンコード(内部文字列を特定の文字コードで表現されたバイト文字列に変換)
-my $str_byte = encode('UTF-6', $str_internal);
-</pre>
+If you know Java, just think of it as a string stream and a byte stream.
 
-Encodeモジュールのencode関数とdecode関数を使って、内部文字列とバイト文字列の変換を行います。
-
-<h3>utf8プラグマ</h3>
-
-次にもうひとつutf8プラグマの利用方法を見ておきましょう。ソースコードがUTF-8で保存された場合は、ソースコードの中の文字列は、UTF-8バイト文字列です。
+This means that Perl requires conversion between internal and byte strings. The module that does this conversion is the <strong> Encode </ strong> module.
 
 <pre>
-# UTF-8バイト文字列
-my $str_byte = 'あいうえお';
-</pre>
+use Encode qw / encode decode /;
 
-utf8プラグマを有効にすると、ソースコードの中の文字列は、内部文字列として解釈されます。
+#Decode (convert a byte string represented by a specific character code to an internal string)
+my $ str_internal = decode ('UTF-8', $ str_byte);
+
+# Encoding (Converts an internal string to a byte string represented by a specific character code)
+my $ str_byte = encode ('UTF-6', $ str_internal);
+</ pre>
+
+Use the encode and decode functions of the Encode module to convert between internal and byte strings.
+
+<h3> utf8 pragma </ h3>
+
+Next, let's see how to use another utf8 pragma. If the source code was saved in UTF-8, the string in the source code is a UTF-8 byte string.
 
 <pre>
-# 内部文字列
-my $str_internal = 'あういうえお';
-</pre>
+# UTF-8 byte string
+my $ str_byte ='aiueo';
+</ pre>
 
-Perlでソースコードの中で日本語を扱う場合は、必ずutf8を有効にして、ソースコードをUTF-8で保存するようにしてください。
+When the utf8 pragma is enabled, strings in the source code are interpreted as internal strings.
 
-<h3>Mojoliciousにおける日本語の扱い</h3>
+<pre>
+# Internal string
+my $ str_internal ='Aui Ueo';
+</ pre>
 
-Mojoliciousというフレームワークも、この現代的なPerlの文字列の扱いとまったく同じ考え方になっています。かつ、それらすべてを自動的に行ってくれるので非常に楽です。前提としてソースコードとテンプレートはUTF-8で必ず保存しましょう。
+When dealing with Japanese in the source code in Perl, be sure to enable utf8 and save the source code in UTF-8.
 
-Mojoliciousというフレームワークは、以下の機能を提供します。
+<h3> Handling of Japanese in Mojolicious </ h3>
+
+The Mojolicious framework has exactly the same idea as this modern Perl string handling. And it's very easy because it does all of them automatically. As a prerequisite, be sure to save the source code and template in UTF-8.
+
+A framework called Mojolicious provides the following features:
 
 <ol>
   <li>
-    utf8プラグマは自動的に有効になります。
-  </li>
+    The utf8 pragma is automatically enabled.
+  </ li>
   <li>
-    テンプレートに描画するときは内部文字列がUTF-8バイト文字列に自動的に変換されます
-  </li>
+    When drawing to a template, the internal string is automatically converted to a UTF-8 byte string
+  </ li>
   <li>
-    フォームから受け取るときはUTF-8バイト文字列が内部文字列に自動的に変換されます
-  </li>
-</ol>
+    UTF-8 byte string is automatically converted to an internal string when received from the form
+  </ li>
+</ ol>
 
-ひとつづつ解説します。
+I will explain one by one.
 
-<h4>utf8プラグマは自動的に有効になる</h4>
+<h4> utf8 pragma is automatically enabled </ h4>
 
-Mojoliciousでは、Mojo::Baseというクラスを継承しているクラスは、utf8プラグマが自動的に有効になります。Mojoliciousの機能を使うときは、必ずMojo::Baseを継承しているクラスを使うことになるので、すべてのクラスとテンプレートでutf8プラグマが自動的に有効になることになります。
+In Mojolicious, the utf8 pragma is automatically enabled for classes that inherit from the class Mojo :: Base. Whenever you use Mojolicious features, you will always use a class that inherits from Mojo :: Base, so the utf8 pragma will be automatically enabled for all classes and templates.
 
 <pre>
-# 自動的に有効になる
+# Enabled automatically
 use utf8;
-</pre>
+</ pre>
 
-ですから、ソースコードとテンプレートで記述する文字列は、すべて内部文字列になります。
+Therefore, all the strings described in the source code and template are internal strings.
 
-<h4>テンプレートに描画するときは内部文字列がUTF-8バイト文字列に自動的に変換</h4>
+<h4> When drawing to a template, the internal string is automatically converted to a UTF-8 byte string </ h4>
 
-テンプレートに描画するときは、内部文字列がUTF-8バイト文字列に自動的に変換されます。
+When drawing to a template, the internal string is automatically converted to a UTF-8 byte string.
 
 <pre>
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
 
-  $c->render('index', message => 'あいうえお');
-};
+  $ c-> render ('index', message =>'aiueo');
+};;
 
 @@ index.html
 <%
-  my $message = stash('message');
+  my $ message = stash ('message');
 %>
 
-日本語を書く
-<%= $message %>
-</pre>
+Write Japanese
+<% = $ message%>
+</ pre>
 
-普通に記述すれば、普通に自動変換されるので、普段は特別に意識する必要はないです。
+If you write it normally, it will be converted automatically, so you don't usually need to be aware of it.
 
-<h3>フォームから受け取るときはUTF-8バイト文字列が内部文字列に自動的に変換</h3>
+<h3> UTF-8 byte string is automatically converted to internal string when received from form </ h3>
 
-フォームから文字列を受け取るときは、自動的に内部文字列に変換されます。
+When you receive a string from the form, it is automatically converted to an internal string.
 
 <pre>
-post '/' => sub {
-  my $self = shift;  
-  my $message = $self->param('message');
+post'/' => sub {
+  my $ self = shift;
+  my $ message = $ self-> param ('message');
   ...
 }
-</pre>
+</ pre>
 
-paramメソッドで受け取った文字列は内部文字列へと自動的に変換されています。
+The string received by the param method is automatically converted to an internal string.
 
-このようにMojoliciousではバイト文字列と内部文字列の変換を自動的に行ってくれるので、普段はあまり意識する必要がありませんが、仕組み自体は覚えておいてほしいと思います。
-
-
+As you can see, Mojolicious automatically converts between byte strings and internal strings, so you don't usually need to be aware of it, but I would like you to remember the mechanism itself.

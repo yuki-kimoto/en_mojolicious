@@ -1,66 +1,64 @@
+<h2> Mojolicious :: Plugin :: DBViewer --Plugin for viewing database information in a browser </ h2>
 
-<h2>Mojolicious::Plugin::DBViewer - データベースの情報をブラウザで観覧するためのプラグイン</h2>
+<strong> <a href="http://search.cpan.org/dist/Mojolicious-Plugin-DBViewer/lib/Mojolicious/Plugin/DBViewer.pm"> Mojolicious :: Plugin :: DBViewer </a> </a> </a> strong> is a Mojolicious plugin for viewing <strong> database information </ strong> from a <strong> browser </ strong>.
 
-<strong><a href="http://search.cpan.org/dist/Mojolicious-Plugin-DBViewer/lib/Mojolicious/Plugin/DBViewer.pm">Mojolicious::Plugin::DBViewer</a></strong>は<strong>データベース情報</strong>を<strong>ブラウザ</strong>から見るためのMojoliciousのプラグインです。
+<img src = "http://cdn-ak.f.st-hatena.com/images/fotolife/p/perlcodesample/20130405/20130405170135_original.png" width = "700">
 
-<img src="http://cdn-ak.f.st-hatena.com/images/fotolife/p/perlcodesample/20130405/20130405170135_original.png" width="700">
-
-<h3>機能</h3>
+<h3> Functions </ h3>
 
 <ul>
   <li>
-    MySQLとSQLiteをサポートしています
-  </li>
+    Supports MySQL and SQLite
+  </ li>
   <li>
-    テーブル名の一覧表示
-  </li>
+    List table names
+  </ li>
   <li>
-    CREATE TABLEの内容の表示
-  </li>
+    Displaying the contents of CREATE TABLE
+  </ li>
   <li>
-    簡単SELECTステートメントによる検索の実行。複数検索条件、joinのサポート
-  </li>
+    Performing a search with a simple SELECT statement. Support for multiple search criteria, join
+  </ li>
   <li>
-    プライマリキー、nullを許容する列、データベースエンジン、文字コードなどの表示。
-  </li>
-</ul>
+    Display primary key, nullable columns, database engine, character encoding, etc.
+  </ li>
+</ ul>
 
-<h3>概要</h3>
+<h3> Overview </ h3>
 
-Mojolicious::Plugin::DBViewerは、Mojolicious::Plugin::MySQLViewerLiteとMojolicious::Plugin::SQLiteViewerLiteを統合して、機能を追加したものになっています。画面レイアウトもきれいになりました。
+Mojolicious :: Plugin :: DBViewer integrates Mojolicious :: Plugin :: MySQLViewerLite and Mojolicious :: Plugin :: SQLiteViewerLite to add functionality. The screen layout has also been cleaned up.
 
-今後はMojolicious::Plugin::DBViewerをお使いください。注意点として、直接データベースハンドルを渡すことができなくなりました。dsnにデータソース名を指定するようにしてください。
+Please use Mojolicious :: Plugin :: DBViewer from now on. Note that you can no longer pass database handles directly. Be sure to specify the data source name for dsn.
 
-MySQLとSQLiteに対応していて、データベースの情報をブラウザから見ることができます。phpMyAdminの観覧専用のようなものだともっていただけるとイメージしやすいかと思います。Mojoliciousのプラグインとして差し込むことができます。
+It supports MySQL and SQLite, and you can see the database information from your browser. I think it's easy to imagine if you can think of it as something like phpMyAdmin for viewing only. It can be plugged in as a Mojolicious plugin.
 
-<h3>使い方</h3>
+<h3> How to use </ h3>
 
-以下のように利用します。
+Use it as follows.
 
 <pre>
-# Mojolicious::Lite
-plugin(
-  'DBViewer',
-  dsn => "dbi:mysql:database=bookshop",
-  user => 'ken',
-  password => '!LFKD%$&'
+#Mojolicious :: Lite
+plugin (
+  'DB Viewer',
+  dsn => "dbi: mysql: database = bookshop",
+  user =>'ken',
+  password =>'! LFKD% $ &'
 );
 
-# Mojolicious
-$app->plugin(
-  'DBViewer',
-  dsn => "dbi:mysql:database=bookshop",
-  user => 'ken',
-  password => '!LFKD%$&'
+#Mojolicious
+$ app-> plugin (
+  'DB Viewer',
+  dsn => "dbi: mysql: database = bookshop",
+  user =>'ken',
+  password =>'! LFKD% $ &'
 );
-</pre>
+</ pre>
 
-以下のURLでアクセスできます。
+You can access it at the following URL.
 
 <blockquote>
-/dbviewer
-</blockquote>
+/ dbviewer
+</ blockquote>
 
 <hr>
-<a href="/blog/20130216136101.html">筆者の作成したCPANモジュールへ</a>
-
+<a href="/blog/20130216136101.html"> To the CPAN module I created </a>

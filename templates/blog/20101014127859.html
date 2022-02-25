@@ -1,17 +1,15 @@
-
-<h2>Mojolicious::Liteでルートの一覧を確認する</h2>
-
+<h2> Check the list of routes with Mojolicious :: Lite </ h2>
 
 
-<strong>ルート</strong>の定義が増えてくるとどのようなルートが存在するのかが一望できなくなってきます。そのようなときにどのようなルートが存在するかを確認するのに「routes」コマンドを利用することができます。
+
+As the definition of <strong> route </ strong> increases, it becomes difficult to see what kind of route exists. You can use the "routes" command to see what routes exist at such times.
 
 <pre>
 perl myapp.pl routes
-</pre>
+</ pre>
 
-すると次のようにルートの一覧を見ることができます。
+Then you can see the list of routes as follows.
 <pre>
-/              (?-xism:^(?:/)?)
-/hello/:date   (?-xism:^/hello/([^\/\.]+))
-</pre>
-
+/ (?-xism: ^ (?: /)?)
+/ hello /: date (?-xism: ^ / hello / ([^ \ / \.] +))
+</ pre>

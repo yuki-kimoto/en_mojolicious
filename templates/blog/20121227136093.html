@@ -1,171 +1,169 @@
-
-<h2>Mojoliciousにおけるセッションの扱い</h2>
-
+<h2> Handling sessions in Mojolicious </ h2>
 
 
 
-僕はWebアプリケーションをまともに作ったことがない人なので、Webアプリケーションのセキュリティ周りはうといです。Mojoliciousにはsessionというメソッドがあるのですが、これはWebアプリでいうところの、セッション管理であると信じていたのですが、ぜんぜん関係がない気がしてきました。
 
-sessionというメソッドの名前ゆえに僕が勘違いしていた可能性が高いです。Mojoliciousのセッション管理機能は貧弱といわれるけれど、そもそもMojoliciousにはセッション管理機能がついていないんじゃないかと思えてきました。
+I'm a person who has never made a web application properly, so I'm afraid about the security of web applications. Mojolicious has a method called session, and I believed that this was session management in a web application, but I felt that it had nothing to do with it.
 
-sessionメソッドっていうのは、単純にクッキーに値を保存するための簡単な仕組みで、HMACによる署名がつくので、確実に改ざんを検出できるようになっています。
+It's likely that I was misunderstanding because of the name of the method called session. Mojolicious's session management function is said to be poor, but I've been wondering if Mojolicious doesn't have a session management function in the first place.
+
+The session method is a simple mechanism for simply storing the value in a cookie, and since it is signed by HMAC, tampering can be detected reliably.
 
 <pre>
-$c->session(name => 'kimoto');
-</pre>
+$ c-> session (name =>'kimoto');
+</ pre>
 
-ですから、クッキーに保存されるデータはJSONをBase64でエンコードしただけで、暗号化はされていません。ですのでデータは丸見えです。
+So the data stored in the cookie is just Base64 encoded JSON, not encrypted. Therefore, the data is completely visible.
 
-けれどもHMACによる署名がされているので、信頼できない経路を通っても、改ざんを確実に検出することができます。
+However, because it is signed by HMAC, it can reliably detect tampering even through untrusted routes.
 
 <blockquote>
-sessionメソッドを使っても、暗号化はされない。改ざんの検出が可能。
-</blockquote>
+Even if you use the session method, it will not be encrypted. Falsification can be detected.
+</ blockquote>
 
-改ざんされないためには、secretの値をデフォルトの設定ではなく、きちんと変更しておくことが大切です。
-
-<pre>
-$app->secret('#!=%JOLFIS#jf438nfj');
-</pre>
-もし改ざんされている場合は、クッキーの値は破棄されます。
-
-<h3>どんなデータをsessionに保存してよいか</h3>
-
-一つ目は、見られてもよい重要でないデータです。暗号化されないので、見られたら困るデータは、sessionメソッドを使って保存してはいけません。見られたら困るデータは、サーバー側に保存しましょう。
-
-二つ目は、セッションIDです。これには条件があって、一意であるという条件です。一度使ったセッションIDを再利用すると、セキュリティを維持することができないようです。
-
-ですので、何らかのモジュールで、アプリケーションで一意になるセッションIDを生成してくれるモジュールを使いましょう。
+To prevent tampering, it is important to change the secret value properly, not the default setting.
 
 <pre>
-# セッションIDの生成(一意であること)
-my $session_id = Some::Module->new->create_session_id;
+$ app-> secret ('#! =% JOLFIS # jf438nfj');
+</ pre>
+If it has been tampered with, the cookie value will be discarded.
 
-# セッションIDを署名付きクッキーに保存
-$c->session(session_id => $session_id);
+<h3> What kind of data can be saved in session </ h3>
 
-# 見られてもよいデータは、sessionに保存してもよい
-$c->session(display => 'light');
+The first is unimportant data that may be seen. Data that would be inconvenient to see should not be saved using the session method as it is not encrypted. Save the data that you don't want to see on the server side.
 
-# 見られてはいけないデータは、データベースなどへ
-$dbi->insert({user_id => $user_id, age => 19});
-</pre>
+The second is the session ID. This is conditional and unique. It seems that security cannot be maintained once the session ID is reused.
 
-<h3>追記</h3>
-
-セッションを盗まれる可能性がありますが、それはクッキーにセッションIDを保存する以上は、どうにもならないです。これについては、セッションの有効期限を短く設定することで対処しましょう。
-
-<h3>セッションにデータを保存する</h3>
-
-現在のセッションにデータを保存するにはMojolicious::Controllerクラスのsessionメソッドを利用します。セッションIDは内部的に自動的に発行されているので、セッションIDを作成する必要はありません。セッションにデータを保存しておけば、同じユーザーからリクエストがあった場合に、保存したデータを取得することができます。
+So, in some module, use a module that will generate a session ID that will be unique to your application.
 
 <pre>
-# データの保存
-$c->session(name => 'Ken');
-$c->session(age => 19);
+#Generation of session ID (uniqueness)
+my $ session_id = Some :: Module-> new-> create_session_id;
 
-# データの取得
-my $name = $c->session('name');
-my $age = $c->session('age');
-</pre>
+#Save session ID in signed cookie
+$ c-> session (session_id => $ session_id);
 
-Mojoliciousのセッションはクッキーを使って実装されており、クッキーの上限サイズが4096バイトであることに注意してください。つまりこれを超えるバイトのデータを保存することはできないということです。
+# Data that may be seen may be saved in session
+$ c-> session (display =>'light');
 
-Mojolicious::Liteのサンプルです。
+#For data that should not be seen, go to the database etc.
+$ dbi-> insert ({user_id => $ user_id, age => 19});
+</ pre>
 
-<pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  $self->session(name => 'Ken');
-};
-</pre>
+<h3> Addition </ h3>
 
-Mojoliciousのサンプルです。
+The session can be stolen, but that's nothing more than storing the session ID in a cookie. Let's deal with this by setting a shorter session expiration date.
+
+<h3> Save data to session </ h3>
+
+To save the data in the current session, use the session method of the Mojolicious :: Controller class. You do not need to create a session ID because the session ID is issued automatically internally. If you save the data in the session, you can retrieve the saved data when requested by the same user.
 
 <pre>
-# Mojolicious
-package MyApp::Login;
+#Save data
+$ c-> session (name =>'Ken');
+$ c-> session (age => 19);
 
-use Mojo::Base 'Mojolicious::Controller';
+#Getting data
+my $ name = $ c-> session ('name');
+my $ age = $ c-> session ('age');
+</ pre>
+
+Note that Mojolicious sessions are implemented using cookies, and the maximum cookie size is 4096 bytes. This means that you cannot store more bytes of data.
+
+This is a sample of Mojolicious :: Lite.
+
+<pre>
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  $ self-> session (name =>'Ken');
+};;
+</ pre>
+
+This is a sample of Mojolicious.
+
+<pre>
+#Mojolicious
+package MyApp :: Login;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub default {
-  my $self = shift;
-  $self->session(name => 'Ken');
+  my $ self = shift;
+  $ self-> session (name =>'Ken');
 }
-</pre>
+</ pre>
 
 
-<h3>現在のセッションを破棄する</h3>
+<h3> Discard the current session </ h3>
 
-現在のセッションを破棄するにはMojolicious::Controllerクラスの<strong>session</strong>メソッドでexpiresを「1」に設定します。
-
-<pre>
-$c->session(expires => 1);
-</pre>
-
-Mojolicious::Liteのサンプルです。ログアウト処理の際にセッションを破棄して、「/login」というURLにリダイレクトしています。
+To destroy the current session, set expires to "1" in the <strong> session </ strong> method of the Mojolicious :: Controller class.
 
 <pre>
-# Mojolicious::Lite
-get '/logout' => sub {
-  my $self = shift;
-  $self->session(expires => 1);
-  $self->redirect_to('/login');
-};
-</pre>
+$ c-> session (expires => 1);
+</ pre>
 
-Mojoliciousのサンプルです。
+This is a sample of Mojolicious :: Lite. During the logout process, the session is destroyed and redirected to the URL "/ login".
 
 <pre>
-# Mojolicious
-package MyApp::Logout;
+#Mojolicious :: Lite
+get'/ logout' => sub {
+  my $ self = shift;
+  $ self-> session (expires => 1);
+  $ self-> redirect_to ('/ login');
+};;
+</ pre>
 
-use Mojo::Base 'Mojolicious::Controller';
+This is a sample of Mojolicious.
+
+<pre>
+#Mojolicious
+package MyApp :: Logout;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub default {
-  my $self = shift;
-  $self->session(expires => 1);
-  $self->redirect_to('/login');
+  my $ self = shift;
+  $ self-> session (expires => 1);
+  $ self-> redirect_to ('/ login');
 }
-</pre>
+</ pre>
 
 
-<h3>フラッシュにデータを保存する</h3>
+<h3> Save data to flash </ h3>
 
-フラッシュにデータを保存するにはMojolicious::Controllerクラスの<strong>flash</strong>メソッドを利用します。フラッシュは、次のリクエストにだけ引き継がれるセッションのことです。次回のリクエストのためだけにデータを保存しておきたい場合、たとえばリダイレクトを行う場合になどに利用されます。
-
-<pre>
-# データの保存
-$c->flash(name => 'Ken');
-$c->flash(age => 19);
-
-# データの取得
-my $name = $c->flash('name');
-my $age = $c->flash('age');
-</pre>
-
-Mojolicious::Liteのサンプルです。
+To save data to flash, use the <strong> flash </ strong> method of the Mojolicious :: Controller class. A flash is a session that is inherited only by the next request. It is used when you want to save the data only for the next request, for example when redirecting.
 
 <pre>
-# Mojolicious::Lite
-get '/' => sub {
-  my $self = shift;
-  $self->flash(name => 'Ken');
-};
-</pre>
+#Save data
+$ c-> flash (name =>'Ken');
+$ c-> flash (age => 19);
 
-Mojoliciousのサンプルです。
+#Getting data
+my $ name = $ c-> flash ('name');
+my $ age = $ c-> flash ('age');
+</ pre>
+
+This is a sample of Mojolicious :: Lite.
 
 <pre>
-# Mojolicious
-package MyApp::Login;
+#Mojolicious :: Lite
+get'/' => sub {
+  my $ self = shift;
+  $ self-> flash (name =>'Ken');
+};;
+</ pre>
 
-use Mojo::Base 'Mojolicious::Controller';
+This is a sample of Mojolicious.
+
+<pre>
+#Mojolicious
+package MyApp :: Login;
+
+use Mojo :: Base'Mojolicious :: Controller';
 
 sub default {
-  my $self = shift;
-  $self->flash(name => 'Ken');
+  my $ self = shift;
+  $ self-> flash (name =>'Ken');
 }
-</pre>
-
+</ pre>

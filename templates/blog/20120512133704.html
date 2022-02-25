@@ -1,13 +1,11 @@
-
-<h2>Mojoliciousのテンプレートで関数のインポートには危険が潜む</h2>
-
+<h2> Mojolicious templates can be dangerous to import functions </ h2>
 
 
-Mojoliciousのテンプレートでは、関数のインポートは避けたほうがよいかもしれません。たとえば以下のような記述。
+
+You may want to avoid importing functions in Mojolicious templates. For example, the following description.
 
 <pre>
-% use File::Basename 'dirname';
-</pre>
+% use File :: Basename'dirname';
+</ pre>
 
-Mojoliciousのテンプレートは、すべてのテンプレートがMojo::Template::Samdboxというクラスに、コンパイルされます。ですので、あるテンプレートでの関数のインポートの記述を、他のテンプレートでの関数のインポートの記述が上書いてしまうことがあります。
-
+For Mojolicious templates, all templates are compiled into a class called Mojo :: Template :: Samdbox. Therefore, the description of importing a function in one template may be overwritten with the description of importing a function in another template.

@@ -1,19 +1,17 @@
-
-<h2>hypnotoadが立ち上がらないときのチェック方法</h2>
-
+<h2> How to check when hypnotoad does not start </ h2>
 
 
-Mojoliciousの本番用のサーバーであるhypnotoadが立ち上がらないという事象が起こって、何がエラーなのかをチェックするのが大変だったので、対処方法を書いておきます。
 
-原因は、単に設定ファイルが間違っていたというだけなのですが、hypnotoad自体が起動しなければ、それをログファイルで確認することすらできません。
+Hypnotoad, the production server of Mojolicious, did not start up, and it was difficult to check what was the error, so I will write a workaround.
 
-またhypnotoadはバックグラウンドで実行されるので、エラーの内容は、コマンドラインに出力されません。
+The cause is simply that the config file was wrong, but if hypnotoad itself doesn't start, you can't even see it in the log file.
 
-それで、こういう場合は、hypnotoadをフォアグランドで実行して、エラーのチェックするのがよいです。hypnotoadをフォアグランドで実行するには<string>-f</strong>オプションを使用します。
+Also, hypnotoad runs in the background, so the details of the error are not printed to the command line.
+
+So, in this case, it's a good idea to run hypnotoad in the foreground to check for errors. Use the <string> -f </ strong> option to run hypnotoad in the foreground.
 
 <pre>
-hypnotoad -f script/myapp
-</pre>
+hypnotoad -f script / myapp
+</ pre>
 
-これで、エラーがコマンドラインに表示されます。
-
+The error is now displayed on the command line.

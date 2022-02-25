@@ -1,32 +1,30 @@
-
-<h2>rootユーザーからMojoliciousアプリケーションを管理する方法</h2>
-
+<h2> How to manage Mojolicious applications from the root user </ h2>
 
 
-一般的にはMojoliciousのアプリケーションは、一般ユーザーで作成して、hypnotoadコマンドを使ってデプロイすると思います。
 
-つまりhypnotoadコマンドは、通常は、一般ユーザーで実行する必要があるということですね。でもrootから管理したいという要望はでてくるものです。一般ユーザーになってから実行するのだと、自動化ができないということも多いと思います。
+In general, Mojolicious applications should be created by general users and deployed using the hypnotoad command.
 
-またperlbrewを使っている場合などは、rootから実行するとデフォルトのPerlを使ってしまうということも起こりますし、root権限で実行されるという問題も起こります。
+In other words, the hypnotoad command usually needs to be executed by a general user. However, there is a desire to manage it from root. I think that it is often impossible to automate if you execute it after becoming a general user.
 
-<h3>設定ファイルでuserとgroupを設定する</h3>
+Also, if you are using perlbrew, you may end up using the default Perl if you run it from root, and you may run with root privileges.
 
-root権限で実行したくはないので、hypnotoadの設定ファイルに、userとgroupを設定しましょう。こうすると、hypnotoadで実行される子プロセスが、ユーザー権限で動くことができます。
+<h3> Set user and group in the config file </ h3>
+
+I don't want to run it with root privileges, so let's set user and group in the hypnotoad config file. This allows child processes running in hypnotoad to run with user privileges.
 
 <blockquote>
 [hypnotoad]
-user=kimoto
-group=kimoto
-</blockquote>
+user = kimoto
+group = kimoto
+</ blockquote>
 
-<h3>perlbrewを使っている場合はPATHを設定する</h3>
+<h3> Set PATH if you are using perlbrew </ h3>
 
-perlbrewを使っている場合は、ユーザーのperlがrootからは見えませんのでPATH環境変数を設定する必要があります。ですので、アプリケーションをシェルスクリプトでくるんで実行する必要があります。
+If you're using perlbrew, you'll need to set the PATH environment variable because your perl isn't visible to root. So you need to wrap your application in a shell script and run it.
 
 <pre>
-#!/bin/sh
+#! / bin / sh
 
-PATH="perlのパス:$PATH"
-hypnotoad アプリケーションのパス
-</pre>
-
+PATH = "perl path: $ PATH"
+hypnotoad application path
+</ pre>

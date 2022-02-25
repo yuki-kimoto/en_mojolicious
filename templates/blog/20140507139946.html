@@ -1,405 +1,403 @@
-
-<h2>データベースの基礎</h2>
-
+<h2> Database basics </ h2>
 
 
-次にデータを保存するために、<strong>データベースの利用方法</strong>を学びましょう。Webアプリケーションでは、データはデータベースに保存するようにしましょう。過去の時代においてはファイルに保存されることも多かったですが、ファイルのロック機構や、アクセス量などを考えると、データベースを利用するのが最善です。
 
-データベースにはSQLite, MySQL, PostgreSQLなどありますが、今回はもっとも簡単なSQLiteを使います。SQLiteは簡単ですが、機能に制限がありますので、Webサイトを実際に作るときの最善の選択はMySQLかPostgreSQLです。MySQLについては、応用編で扱いたいと思います。
+Next, let's learn <strong> how to use the database </ strong> to store the data. For web applications, try to store your data in a database. In the past, it was often saved in a file, but considering the file locking mechanism and the amount of access, it is best to use a database.
 
-データベースについて、詳しく解説するよりも、今回は使い方を中心に解説します。最初にsqlite3というSQLiteのデータベースを利用するアプリケーションを使って、データベース操作の基礎を覚えましょう。
+Databases include SQLite, MySQL, PostgreSQL, etc., but this time we will use the simplest SQLite. SQLite is easy, but it has limited functionality, so MySQL or PostgreSQL is the best choice when actually creating a website. I would like to deal with MySQL in the advanced version.
 
-<h3>sqlite3のインストール</h3>
+Rather than explain the database in detail, this time we will focus on how to use it. First, let's learn the basics of database operations using sqlite3, an application that utilizes SQLite databases.
 
-まずSQLiteを操作するためのツールであるsqlite3をインストールします。
+<h3> Install sqlite3 </ h3>
 
-<h4>Windowsへのsqlite3のインストール</h4>
+First, install sqlite3, which is a tool for operating SQLite.
 
-Windowsを利用している場合は次の手順でsqlite3をダウンロードします。以下のサイトにからsqlite3をダウンロードしてください。
+<h4> Installing sqlite3 on Windows </ h4>
+
+If you are using Windows, follow the steps below to download sqlite3. Please download sqlite3 from the following site.
 
 <blockquote>
-<a href="http://www.sqlite.org/download.html">SQLite.org Download</a> → <a href="http://www.sqlite.org/2014/sqlite-shell-win32-x86-3080403.zip">sqlite-shell-win32-x86-3080403.zip</a>
-</blockquote>
+<a href="http://www.sqlite.org/download.html"> SQLite.org Download </a> → <a href="http://www.sqlite.org/2014/sqlite-shell- win32-x86-3080403.zip "> sqlite-shell-win32-x86-3080403.zip </a>
+</ blockquote>
 
-zipファイルをダウンロードするので、展開してください。「sqlite3.exe」というファイルがあるのを確認してください。これがSQLiteのデータベースを操作するためのアプリケーションです。これをアプリケーションのパスが通っている場所に配置する必要があります。
+The zip file will be downloaded, so unzip it. Make sure you have a file called "sqlite3.exe". This is an application for working with SQLite databases. You need to place it somewhere in your application's path.
 
-今回はPerlをインストールしたディレクトリと同じディレクトリに配置しましょう。「C:\Perl\site\bin」というディレクトリの中に「sqlite3.exe」をコピーして配置してください。
+This time, place it in the same directory where you installed Perl. Copy and place "sqlite3.exe" in the directory "C: \ Perl \ site \ bin".
 
-次にコマンドプロンプトを立ち上げて次のコマンドを実行してください。
+Then launch a command prompt and execute the following command.
 
 <pre>
 sqlite3 test.db
-</pre>
+</ pre>
 
-以下のようにsqlite3が起動すれば、インストールは完了です。
+Installation is complete when sqlite3 starts as shown below.
 
 <pre>
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</pre>
+</ pre>
 
-終了するには「.q」と入力してEnterを押します。
+Type .q to exit and press Enter.
 
 <pre>
 .q
-</pre>
+</ pre>
 
-<h4>Mac OS Xへのsqlite3のインストール</h4>
+<h4> Installing sqlite3 on Mac OS X </ h4>
 
-Mac OS Xにはsqlite3が最初からインストールされているので、特別な作業は必要ありません。ターミナルからsqlite3を起動してみましょう。
+Mac OS X comes with sqlite3 installed from the beginning, so no special work is required. Let's start sqlite3 from the terminal.
 
 <pre>
 sqlite3 test.db
-</pre>
+</ pre>
 
-以下のようにsqlite3が起動するか確認しましょう。
+Let's check if sqlite3 starts as follows.
 
 <pre>
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</pre>
+</ pre>
 
-終了するには「.q」と入力してEnterを押します。
+Type .q to exit and press Enter.
 
 <pre>
 .q
-</pre>
+</ pre>
 
-<h4>Linuxへのsqlite3のインストール</h4>
+<h4> Installing sqlite3 on Linux </ h4>
 
-CentOS, Redhat Linux, Fedoraの場合は、yumコマンドでsqlite3をインストールします。
+For CentOS, Redhat Linux, Fedora, install sqlite3 with the yum command.
 
 <pre>
 yum -y install sqlite
-</pre>
+</ pre>
 
-Ubuntuの場合はapt-getコマンドでsqlite3をsqlite3をインストールします。
+For Ubuntu, use the apt-get command to install sqlite3 and sqlite3.
 
 <pre>
 sudo apt-get install -y sqlite3
-</pre>
+</ pre>
 
-次にシェルから次のコマンドを実行してください。
+Then run the following command from the shell:
 
 <pre>
 sqlite3 test.db
-</pre>
+</ pre>
 
-以下のようにsqlite3が起動すれば、インストールは完了です。
+Installation is complete when sqlite3 starts as shown below.
 
 <pre>
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</pre>
+</ pre>
 
-終了するには「.q」と入力してEnterを押します。
+Type .q to exit and press Enter.
 
 <pre>
 .q
-</pre>
+</ pre>
 
-<h3>テーブルの作成</h3>
+<h3> Create table </ h3>
 
-SQLiteではデータは、ファイルに保存されます。test.dbという名前のファイルでデータベースを作成しましょう。
+SQLite saves the data in a file. Let's create a database with a file named test.db.
 
 <pre>
 sqlite3 test.db
-</pre>
+</ pre>
 
-sqlite3が起動したら最初にテーブルを作成します。テーブルを作成するには「create table」構文を使用します。データベースへ命令を行う言語のことをSQLといいます。「create table」もSQLのひとつです。
+Create the table first when sqlite3 starts. Use the "create table" syntax to create a table. The language that gives instructions to the database is called SQL. "Create table" is also one of SQL.
 
-bookというテーブル名で、id, title, authorという列を持つテーブルを作成する「create table」を実行してみましょう。
+Let's run "create table" with the table name book and create a table with columns id, title and author.
 
 <pre>
 create table book (
   id primary key,
-  title not null default '',
-  author not null default ''
+  title not null default'',
+  author not null default''''
 );
-</pre>
+</ pre>
 
-列の定義は「列名 (型) (オプション)」という形式でなされます。
+The column definition is in the form "column name (type) (optional)".
 
 <pre>
-列名 (型) (オプション)
-</pre>
+Column name (type) (optional)
+</ pre>
 
-列名は必須です。SQLiteではデータ型を指定する必要はありません。データ型を指定しなかった場合は文字列として扱われます。
+Column names are required. SQLite does not require you to specify a data type. If you do not specify the data type, it will be treated as a character string.
 
-各テーブルには主キーをあらわすidを指定しておきましょう。これは、行を一意に識別するためのものです。主キーには<b>primary key</b>制約をつけます。primary key制約は、各行が一意であることを保障するためのもので、重複する主キーを登録を禁止するためのものです。
+Let's specify the id that represents the primary key for each table. This is to uniquely identify the row. Put a <b> primary key </ b> constraint on the primary key. The primary key constraint is to ensure that each row is unique and to prevent duplicate primary keys from being registered.
 
-他の列には<b>not null</b>制約をつけるようにします。not null制約とは、行にnullという値を設定できないようにする制約です。not null制約を行う場合は<b>default</b>を設定する必要がありますのであわせて設定します。
+Make sure to put <b> not null </ b> constraints on the other columns. A not null constraint is a constraint that prevents a row from being set to the value null. When not null constraint is performed, it is necessary to set <b> default </ b>, so set it as well.
 
-nullはできる限り使わないほうがよいというのが、よい習慣ですので、すべての列にnot null制約をつけておきましょう。not nullを前提にしてデータベースを設計するのがよいです。
+It's a good practice to avoid using nulls as much as possible, so put a not null constraint on all columns. It's a good idea to design your database on the assumption that it is not null.
 
-<h4>テーブル一覧の表示</h4>
+<h4> Display table list </ h4>
 
-テーブルを作成したらどのようなテーブルが存在するかを見てみましょう。テーブル一覧を表示するには「<strong>.tables</strong>」コマンドを使用します。
+After creating the table, let's see what kind of table exists. Use the <strong> .tables </ strong> command to display the table list.
 
 <pre>
 .tables
-</pre>
+</ pre>
 
-テーブルの一覧が表示されます。
+A list of tables is displayed.
 
 <pre>
 book
-</pre>
+</ pre>
 
-<h4>テーブルの定義を確認</h4>
+<h4> Check the table definition </ h4>
 
-create table文で作成したテーブルの定義を確認してみましょう。「<strong>.schema</strong>」コマンドを使用します。
+Let's check the definition of the table created by the create table statement. Use the "<strong> .schema </ strong>" command.
 
 <pre>
 .schema book
-</pre>
+</ pre>
 
-テーブルの定義が表示されます。
+The table definition is displayed.
 
 <pre>
-CREATE TABLE book (
+CREATE TABLE book (CREATE TABLE book
   id primary key,
-  title not null default '',
-  author not null default ''
+  title not null default'',
+  author not null default''''
 );
-</pre>
+</ pre>
 
-<h3>行の挿入 - insert文</h3>
+<h3> Insert line --insert statement </ h3>
 
-次に行を挿入してみましょう。データベースに行を挿入するには<strong>insert文</strong>を使用します。
-
-<pre>
-# 使用方法
-insert into テーブル名 (列名1, 列名2, ...) values (値1, 値2, 値3);
-</pre>
-
-実際にデータを挿入してみます。「id」が「00000001」、「title」が「Perl」、「author」が「kimoto」というデータをデータベースに挿入しましょう。文字列はシングルクォートで囲む必要があります。
+Now let's insert a line. Use the <strong> insert statement </ strong> to insert a row into the database.
 
 <pre>
-insert into book (id, title, author) values ('00000001', 'Perl', 'kimoto');
-</pre>
+# how to use
+insert into table name (column name 1, column name 2, ...) values ​​(value 1, value 2, value 3);
+</ pre>
 
-どのような行が挿入されたかselect文を使って見てみましょう。select文については詳しく後ほど解説します。
+Let's actually insert the data. Insert the data that "id" is "00000001", "title" is "Perl", and "author" is "kimoto" into the database. The string must be enclosed in single quotes.
+
+<pre>
+insert into book (id, title, author) values ​​('00000001','Perl','kimoto');
+</ pre>
+
+Let's use the select statement to see what kind of row was inserted. The select statement will be explained in detail later.
 
 <pre>
 select * from book;
-</pre>
+</ pre>
 
-次のように表示されます。
+It will be displayed in the following manner.
 
 <pre>
-00000001|Perl|kimoto
-</pre>
+00000001 | Perl | kimoto
+</ pre>
 
-列名が表示されていないので少し見づらいですね。<strong>.header</strong>コマンドを実行しておくと、列名を表示することができます。
+It's a little hard to see because the column names aren't displayed. You can display the column names by executing the <strong> .header </ strong> command.
 
 <pre>
 .header on
-</pre>
+</ pre>
 
-もう一度select文を実行してみてください。次のように列名を含めて、行が表示されます。
-
-<pre>
-id|title|author
-00000001|Perl|kimoto
-</pre>
-
-<h3>行の更新 - update文</h3>
-
-次に行を更新してみましょう。行を更新するには<strong>update</strong>文を使用します。
+Try executing the select statement again. The rows are displayed, including the column names, as shown below.
 
 <pre>
-update テーブル名 set 列名1 = 値1, 列名2 = 値2, ... where 条件
-</pre>
+id | title | author
+00000001 | Perl | kimoto
+</ pre>
 
-update文では、where句を使って条件を指定して、条件にマッチした行を更新するという動作を行います。where句を指定しなかった場合は、すべての行が更新されてしまうので、よく注意してください。
+<h3> Line update --update statement </ h3>
 
-ではupdate文を使って「title」列の「Perl」という文字列を「Ruby」に変更してみましょう。条件に「id」の値を指定して、更新します。
+Now let's update the line. Use the <strong> update </ strong> statement to update the row.
 
 <pre>
-update book set title = 'Ruby' where id = '00000001';
-</pre>
+update table name set column name 1 = value 1, column name 2 = value 2, ... where condition
+</ pre>
 
-select文で、値が変更されていることを確認してみましょう。
+In the update statement, the condition is specified using the where clause, and the row that matches the condition is updated. Note that if you do not specify the where clause, all rows will be updated.
+
+Now let's use the update statement to change the string "Perl" in the "title" column to "Ruby". Specify the value of "id" in the condition and update.
+
+<pre>
+update book set title ='Ruby' where id = '00000001';
+</ pre>
+
+Let's confirm that the value has been changed in the select statement.
 
 <pre>
 select * from book;
-</pre>
+</ pre>
 
-次のように表示されます。
-
-<pre>
-00000001|Ruby|kimoto
-</pre>
-
-<h3>行の削除 - delete文</h3>
-
-次に行を削除してみましょう。行を削除するには<strong>delete</strong>文を使用します。
+It will be displayed in the following manner.
 
 <pre>
-delete from テーブル名 where 条件
-</pre>
+00000001 | Ruby | kimoto
+</ pre>
 
-delete文では、where句を使って条件を指定して、条件にマッチした行を削除するという動作を行います。where句を指定しなかった場合は、すべての行が削除されてしまうので、よく注意してください。
+<h3> Delete line --delete statement </ h3>
 
-ではdelete文を使って、行を削除してみましょう。条件に「id」の値を指定して、削除します。
+Now let's delete the line. Use the <strong> delete </ strong> statement to delete a row.
+
+<pre>
+delete from table name where condition
+</ pre>
+
+In the delete statement, the condition is specified using the where clause, and the row that matches the condition is deleted. Note that if you do not specify a where clause, all lines will be deleted.
+
+Now let's delete the line using the delete statement. Specify the value of "id" in the condition and delete it.
 
 <pre>
 delete from book where id = '00000001';
-</pre>
+</ pre>
 
-select文で、値が変更されていることを確認してみましょう。
+Let's confirm that the value has been changed in the select statement.
 
 <pre>
 select * from book;
-</pre>
+</ pre>
 
-行が削除されたので、何も表示されません。
+Because the line has been deleted, Nothing is displayed.
 
-<h3>行の選択 - select文</h3>
+<h3> Select row --select statement </ h3>
 
-行を取得するためにselect文を書いてきましたが、もう少し詳しく解説しておきます。まず、select文を試すために、以下のSQLで、行を挿入してください。
-
-<pre>
-insert into book (id, title, author) values ('00000001', 'Perl Tutorial', 'kimoto');
-insert into book (id, title, author) values ('00000002', 'Perl advantage', 'ken');
-insert into book (id, title, author) values ('00000003', 'Ruby Tutorial', 'yosuke');
-</pre>
-
-<h4>列の選択</h4>
-
-select文では「*」を指定した場合は、すべての列を取得することができます。また列名を指定して、対象の列だけを取得することもできます。
+I've written a select statement to get a row, but I'll explain it in a little more detail. First, in order to try the select statement, insert a row with the following SQL.
 
 <pre>
-# すべての列
+insert into book (id, title, author) values ​​('00000001','Perl Tutorial','kimoto');
+insert into book (id, title, author) values ​​('00000002','Perl advantage','ken');
+insert into book (id, title, author) values ​​('00000003','Ruby Tutorial','yosuke');
+</ pre>
+
+<h4> Column selection </ h4>
+
+If you specify "*" in the select statement, you can get all columns. You can also specify the column name to get only the target column.
+
+<pre>
+# All columns
 select * from book;
 
-# id
+#id
 select id from book;
 
-# idとtitle
-# select id, title book;
-</pre>
+#id and title
+#select id, title book;
+</ pre>
 
-<h4>条件 - where句</h4>
+<h4> Condition-where clause </ h4>
 
-select文はwhere句で条件を指定して使うことが多いです。
+The select statement is often used by specifying the condition in the where clause.
 
 <pre>
-select 列名 from テーブル名 where 条件
-</pre>
+select column name from table name where condition
+</ pre>
 
-条件演算子には以下のものがあります。
+The conditional operators are:
 
 <table>
   <tr>
     <td>
-      演算子
-    </td>
+      operator
+    </ td>
     <td>
-      意味
-    </td>
-  </tr>
+      meaning
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      =
-    </td>
+      = =
+    </ td>
     <td>
-      等しい
-    </td>
-  </tr>
+      equal
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      &lt;&gt;
-    </td>
+      & lt; & gt;
+    </ td>
     <td>
-      等しくない
-    </td>
-  </tr>
+      Not equal
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ～より大きい
-    </td>
+      Greater than
+    </ td>
     <td>
-      &gt
-    </td>
-  </tr>
+      & gt
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ～より大きい、または等しい
-    </td>
+      Greater than or equal to
+    </ td>
     <td>
-      &gt=
-    </td>
-  </tr>
+      & gt =
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ～より小さい
-    </td>
+      Less than
+    </ td>
     <td>
-      &lt
-    </td>
-  </tr>
+      & lt
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ～より小さい、または等しい
-    </td>
+      Less than or equal to
+    </ td>
     <td>
-      &lt=
-    </td>
-  </tr>
+      & lt =
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ～を含む
-    </td>
+      Including
+    </ td>
     <td>
       like
-    </td>
-  </tr>
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ヌル
-    </td>
+      null
+    </ td>
     <td>
       is null
-    </td>
-  </tr>
+    </ td>
+  </ tr>
 
   <tr>
     <td>
-      ヌルではない
-    </td>
+      Not null
+    </ td>
     <td>
       is not null
-    </td>
-  </tr>
+    </ td>
+  </ tr>
 
-</table>
+</ table>
 
-演算子は次のように利用できます。
+The operators can be used as follows:
 
 <pre>
-# 「id」が「00000002」に等しい
+# "Id" is equal to "00000002"
 select * from book where id = '00000002';
-</pre>
+</ pre>
 
-like演算子の使い方が少し異なるので解説します。like演算子を使う場合は、文字列の中にワイルドカードとして「%」を使うことができます。次のように記述すれば「title」に「Perl」を含んでいる行だけを取得することができます。
+The usage of the like operator is a little different, so I will explain it. If you use the like operator, you can use "%" as a wildcard in the string. You can get only the lines that contain "Perl" in "title" by writing as follows.
 
 <pre>
-# 「title」に「Perl」を含む
-select * from book where title like '%Perl%';
-</pre>
+# Includes "Perl" in "title"
+select * from book where title like'% Perl%';
+</ pre>
 
-これでデータベースにデータを保存して、取得する最低限の知識はマスターできました。
-
+You have now mastered the minimum knowledge you need to store and retrieve data in the database.

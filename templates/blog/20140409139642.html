@@ -1,364 +1,362 @@
-
-<h2>アプリケーションとコントローラーの機能</h2>
-
+<h2> Application and controller functions </ h2>
 
 
-MojoliciousはWebアプリケーションを作る為の便利な機能をたくさん持っています。その中でも、使用頻度が高いものを紹介したいと思います。最初にこれらを覚えておけば、どうしたらいいかを迷わなくてすむと思います。
 
-<h3>アプリケーションオブジェクト</h3>
+Mojolicious has a lot of useful features for creating web applications. Among them, I would like to introduce the ones that are frequently used. If you remember these first, you won't have to worry about what to do.
 
-アプリケーションの本体を表すオブジェクトを<strong>app</strong>関数で取得することができます。app関数はMojolicious::Liteを読み込んだときに、自動的にインポートされます。
+<h3> Application object </ h3>
 
-<pre>
-use Mojolicious::Lite;
-
-# アプリケーションオブジェクト
-my $app = app;
-</pre>
-
-アプリケーションオブジェクトはMojoliciousクラスに属しており、Mojoliciousクラスのメソッドを呼び出すことができます。メソッドの一覧については<a href="https://en.mojodoc.perlzemi.com/mojo-api-reference.html">Mojolicious API リファレンス</a>を参考にしてください。 
-
-<h4>ホームオブジェクト</h4>
-
-まずMojoliciousのホームディレクトリを表現する<strong>home</strong>オブジェクトを、<b>home</b>メソッドを使って取得することができます。ホームオブジェクトは、Mojo::Homeクラスに属します。
+You can get the object that represents the body of the application with the <strong> app </ strong> function. The app function is automatically imported when you load Mojolicious :: Lite.
 
 <pre>
-# ホームオブジェクトの取得
-my $home = $app->home;
-</pre>
+use Mojolicious :: Lite;
 
-ホームオブジェクトからは、Mojo::Homeクラスのメソッドを呼び出すことができます。Mojo::Homeは<b>rel_file</b>というメソッドを持っており、ホームディレクトリからの相対パスで指定したパスを絶対パスに変換してくれます。
+#Application object
+my $ app = app;
+</ pre>
+
+The application object belongs to the Mojolicious class and you can call the methods of the Mojolicious class. See <a href="https://en.mojodoc.perlzemi.com/mojo-api-reference.html"> Mojolicious API Reference </a> for a list of methods.
+
+<h4> Home object </ h4>
+
+First, you can get a <strong> home </ strong> object that represents Mojolicious's home directory using the <b> home </ b> method. Home objects belong to the Mojo :: Home class.
 
 <pre>
-my $path_abs = $home->rel_file('db/myapp.db');
-</pre>
+#Get home object
+my $ home = $ app-> home;
+</ pre>
 
-これは、データベースファイルなどのパスを取得するときに便利です。
+From the home object, you can call the methods of the Mojo :: Home class. Mojo :: Home has a method called <b> rel_file </ b>, which converts the path specified by the relative path from the home directory to the absolute path.
 
-<h3>ログファイル</h3>
+<pre>
+my $ path_abs = $ home-> rel_file ('db / myapp.db');
+</ pre>
 
-Mojoliciousはログを出力する機構を備えています。アプリケーションと同じディレクトリに<b>log</b>というディレクトリを作成してみてください。
+This is useful when getting the path to a database file, etc.
+
+<h3> Log file </ h3>
+
+Mojolicious has a mechanism to output logs. Try creating a directory called <b> log </ b> in the same directory as your application.
 
 <pre>
 myapp.pl
-log
-</pre>
+log log
+</ pre>
 
-するとこのディレクトリの中に<b>development.log</b>というファイルが作成され、ここにアプリケーションのログが出力されます。
-
-<pre>
-log/development.log
-</pre>
-
-このログファイルに自分で出力することもできますが、そのためにはアプリケーションオブジェクトから<b>log</b>メソッドを使って、ログオブジェクトを取得します。
+Then, a file called <b> development.log </ b> will be created in this directory, and the application log will be output here.
 
 <pre>
-my $log = $app->log;
-</pre>
+log / development.log
+</ pre>
 
-ログオブジェクトはMojo::Logクラスに属しています。Mojo::Logクラスは、レベルに応じたログの出力を行うことができます。以下のメソッドを使ってレベルに応じてログを出力することができます。
+You can output it to this log file yourself, but to do so, use the <b> log </ b> method from the application object to get the log object.
 
 <pre>
-$log->debug($messgae);
-$log->info($messgae);
-$log->warn($messgae);
-$log->error($messgae);
-$log->fatal($messgae);
-</pre>
+my $ log = $ app-> log;
+</ pre>
 
-デバッグのときだけ出力したい情報は<b>debug</b>で出力します。通常は<b>info</b>メソッドで情報を出力して、警告、エラー、致命的なエラーの場合には<b>warn</b>メソッド、<b>error</b>メソッド、<b>fatal</b>メソッドを利用するとよいでしょう。
+Log objects belong to the Mojo :: Log class. The Mojo :: Log class can output logs according to the level. You can output the log according to the level using the following method.
 
-何がエラーで、何が警告なのかは、プログラマである各自が判断して決めます。
+<pre>
+$ log-> debug ($ messgae);
+$ log-> info ($ messgae);
+$ log-> warn ($ messgae);
+$ log-> error ($ messgae);
+$ log-> fatal ($ messgae);
+</ pre>
 
-<h3>設定ファイル</h3>
+Information that you want to output only when debugging is output with <b> debug </ b>. Normally, the <b> info </ b> method outputs information, and in the case of warnings, errors, and fatal errors, the <b> warn </ b> method, <b> error </ b> method, You may want to use the <b> fatal </ b> method.
 
-Mojoliciousでは設定ファイルを簡単に記述することができます。スクリプトと同じディレクトリに、スクリプトと同じ名前で拡張子が<b>conf</b>のファイルを作成してください。
+It is up to each programmer to decide what is an error and what is a warning.
+
+<h3> Configuration file </ h3>
+
+Mojolicious makes it easy to write configuration files. Create a file with the same name as the script and the extension <b> conf </ b> in the same directory as the script.
 
 <pre>
 myapp.pl
 myapp.conf
-</pre>
+</ pre>
 
-この設定ファイルはPerlで記述することができます。
+This configuration file can be written in Perl.
 
 <pre>
 {
-  name => 'kimoto',
+  name =>'kimoto',
   age => 19
 }
-</pre>
+</ pre>
 
-ハッシュリファレンスを記述することに注意してください。また日本語を利用する場合は、ファイルはUTF-8で保存してください。
+Note that you write a hash reference. If you use Japanese, save the file in UTF-8.
 
-<h4>設定ファイルの読み込み</h4>
+<h4> Read the configuration file </ h4>
 
-設定ファイルの読み込みは、Configプラグインを利用することで読み込みます。プラグインとは、Mojoliciousの機能を追加する仕組みのことで、Configプラグインは、設定ファイルを読み込むために最初から容易されているプラグインです。
+The configuration file can be read by using the Config plugin. A plugin is a mechanism to add Mojolicious functions, and a Config plugin is a plugin that is easy from the beginning to read a configuration file.
 
-プラグインを利用するには<b>plugin</b>関数またはアプリケーションオブジェクトからpluginメソッドを呼び出します。
-
-<pre>
-plugin('Config');
-$app->plugin('Config');
-</pre>
-
-これで、設定ファイルが読みこまれ、<b>config</b>メソッドで設定を取得することができます。
+To use a plugin, call the plugin method from a <b> plugin </ b> function or application object.
 
 <pre>
-# ひとつづつ取得
-my $name = $app->config('name');
-my $age = $app->config('age');
+plugin ('Config');
+$ app-> plugin ('Config');
+</ pre>
 
-# 全部を取得
-my $config = $app->config;
-</pre>
-
-またアプリケーション上で設定を行うことも可能です。
+Now the config file is loaded and you can get the config with the <b> config </ b> method.
 
 <pre>
-# 設定
-$app->config('name' => 'Ken');
-</pre>
+# Get one by one
+my $ name = $ app-> config ('name');
+my $ age = $ app-> config ('age');
 
-<h3>コントローラーでアプリケーションオブジェクトを取得</h3>
+# Get all
+my $ config = $ app-> config;
+</ pre>
 
-コントローラーからアプリケーションオブジェクトを取得するには、コントローラーオブジェクトから<b>app</b>メソッドを利用します。
-
-<pre>
-my $app = $c->app;
-</pre>
-
-たとえば、以下のように取得できます。アプリケーションオブジェクトを取得できれば、ここから<b>home</b>や<b>log</b>を呼び出すこともできますね。
+It is also possible to make settings on the application.
 
 <pre>
-get '/' => sub {
-  my $self = shift;
+# Setting
+$ app-> config ('name' =>'Ken');
+</ pre>
 
-  my $app = $self->app;
-  $app->log->info('Info');
-};
-</pre>
+<h3> Get application object with controller </ h3>
 
-<h3>静的ファイルの配置</h3>
+To get the application object from the controller, use the <b> app </ b> method from the controller object.
 
-CSSやJavaScriptや画像などの静的なファイルを利用したい場合は、アプリケーションと同じディレクトリに<b>public</b>ディレクトリを作成します。
+<pre>
+my $ app = $ c-> app;
+</ pre>
+
+For example, you can get: If you can get the application object, you can also call <b> home </ b> or <b> log </ b> from here.
+
+<pre>
+get'/' => sub {
+  my $ self = shift;
+
+  my $ app = $ self-> app;
+  $ app-> log-> info ('Info');
+};;
+</ pre>
+
+<h3> Placement of static files </ h3>
+
+If you want to use static files such as CSS, JavaScript and images, create a <b> public </ b> directory in the same directory as your application.
 
 <pre>
 myapp.pl
 public
-</pre>
+</ pre>
 
-そしてこの中にCSSなどの静的ファイルを配置します。
-
-<pre>
-public/css/common.css
-public/js/common.js
-</pre>
-
-静的ファイルはMojoliciousによって自動的にディスパッチされます。次のURLでアクセスすると、これらのファイルを取得できます。
+And place a static file such as CSS in this.
 
 <pre>
-http://localhost:3000/css/common.css
-http://localhost:3000/js/common.js
-</pre>
+public / css / common.css
+public / js / common.js
+</ pre>
 
-<h3>テンプレートの外部ファイル化</h3>
-
-Mojolicious::Liteではテンプレートをひとつのファイルの中に書いていましたが、アプリケーションが大きくなってきたときには、外部のファイルに書きたくなってくると思います。
-
-次のアプリケーションを見てください。
+Static files are automatically dispatched by Mojolicious. You can get these files by accessing them at the following URL:
 
 <pre>
-use Mojolicious::Lite;
+http: //localhost:3000/css/common.css
+http: //localhost:3000/js/common.js
+</ pre>
 
-get '/' => sub {
-  my $self = shift;
+<h3> Template external file </ h3>
 
-  $self->render('info');
-};
+Mojolicious :: Lite used to write templates in one file, but as your application grows, you'll want to write it in an external file.
 
-app->start;
+Take a look at the following application.
+
+<pre>
+use Mojolicious :: Lite;
+
+get'/' => sub {
+  my $ self = shift;
+
+  $ self-> render ('info');
+};;
+
+app-> start;
 
 __DATA__
 
 @@ info.html.ep
 Information
-</pre>
+</ pre>
 
-<b>info.html.ep</b>はデータセクションに書かれていますが、このテンプレートを外部ファイル化してみましょう。
+<b> info.html.ep </ b> is written in the data section, but let's convert this template to an external file.
 
-まずスクリプトと同じディレクトリに<b>templates</b>というディレクトリを作成します。
+First, create a directory called <b> templates </ b> in the same directory as the script.
 
 <pre>
 myapp.pl
-templates
-</pre>
+templates templates
+</ pre>
 
-この中に、テンプレートファイルを配置します。
-
-<pre>
-templates/info.html.ep
-</pre>
-
-そして、データセクションは削除してしまいます。
+Place the template file in this.
 
 <pre>
-use Mojolicious::Lite;
+templates / info.html.ep
+</ pre>
 
-get '/' => sub {
-  my $self = shift;
-
-  $self->render('info');
-};
-
-app->start;
-</pre>
-
-このようにテンプレートファイルを外部化すると、文法のエラーが発生した行番号などがわかりやすくなるので、便利です。
-
-<h3>リダイレクト</h3>
-
-リダイレクトとは、他のURLに転送する機能のことです。Mojolicious::Controllerクラスの<strong>redirect_to</strong>メソッドを使うとリダイレクトを行うことができます。
+And the data section will be deleted.
 
 <pre>
-$c->redirect_to('/other');
-</pre>
+use Mojolicious :: Lite;
 
-<h3>これらの機能を使ったサンプル</h3>
+get'/' => sub {
+  my $ self = shift;
 
-では最後に、ここで紹介した機能を使ったサンプルを作成してみます。
+  $ self-> render ('info');
+};;
 
-<h4>myapp.pl</h4>
+app-> start;
+</ pre>
 
-最初にアプリケーションの本体を記述します。
+Externalizing the template file in this way is convenient because it makes it easier to understand the line number where the syntax error occurred.
+
+<h3> Redirection </ h3>
+
+A redirect is the ability to forward to another URL. You can redirect using the <strong> redirect_to </ strong> method of the Mojolicious :: Controller class.
 
 <pre>
-use Mojolicious::Lite;
+$ c-> redirect_to ('/ other');
+</ pre>
 
-# 設定ファイルの読み込み
-plugin('Config');
+<h3> Samples using these functions </ h3>
 
-# ログへの出力
-app->log->info('Start application');
+Finally, let's create a sample using the functions introduced here.
 
-# データベースファイルのパスを取得
-my $db_file = app->home->rel_file('db/myapp.db');
+<h4> myapp.pl </ h4>
 
-# / へのアクセス
-get '/' => sub {
-  my $self = shift;
+First, write the body of the application.
 
-  # アプリケーション
-  my $app = $self->app;
+<pre>
+use Mojolicious :: Lite;
 
-  # ログへ出力
-  $app->log->info('Access infomation');
+#Read configuration file
+plugin ('Config');
+
+#Output to log
+app-> log-> info ('Start application');
+
+#Get the path of the database file
+my $ db_file = app-> home-> rel_file ('db / myapp.db');
+
+Access to # /
+get'/' => sub {
+  my $ self = shift;
+
+  # application
+  my $ app = $ self-> app;
+
+  # Output to log
+  $ app-> log-> info ('Access infomation');
   
-  # データベースファイルのパスを取得
-  my $db_file = $app->home->rel_file('db/myapp.db');
+  #Get the path of the database file
+  my $ db_file = $ app-> home-> rel_file ('db / myapp.db');
 
-  # 設定ファイルから取得
-  my $name = $app->config('name');
-  my $age = $app->config('age');
+  #Get from config file
+  my $ name = $ app-> config ('name');
+  my $ age = $ app-> config ('age');
 
-  # テンプレートの描画
-  $self->render(
+  #Drawing a template
+  $ self-> render (
     'info',
-    name => $name,
-    age => $age,
-    db_file => $db_file
+    name => $ name,
+    age => $ age,
+    db_file => $ db_file
   );
-};
+};;
 
-# リダイレクト
-get '/some' => sub {
-  my $self = shift;
+#Redirect
+get'/ some' => sub {
+  my $ self = shift;
 
-  $self->redirect_to('/other');
-};
+  $ self-> redirect_to ('/ other');
+};;
 
-get '/other' => sub {
-  my $self = shift;
+get'/ other' => sub {
+  my $ self = shift;
 
-  $self->render(text => 'Other');
-};
+  $ self-> render (text =>'Other');
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-<h3>log</h3>
+<h3> log </ h3>
 
-ログファイルのためのlogディレクトリを作成してください。
+Create a log directory for the log files.
 
-<h4>myapp.conf</h4>
+<h4> myapp.conf </ h4>
 
-設定ファイルです。myapp.plと同じディレクトリに配置します。
+This is a configuration file. Place it in the same directory as myapp.pl.
 
 <pre>
 {
-  name => 'Kimoto',
+  name =>'Kimoto',
   age => 32
 }
-</pre>
+</ pre>
 
-<h4>public/css/common.css</h4>
+<h4> public / css / common.css </ h4>
 
-スタイルシートです。publicディレクトリを作成してその中に配置します。
+It is a style sheet. Create a public directory and place it in it.
 
 <pre>
 body {
-  background:#FFFFEE;
+  background: #FFFFEE;
 }
-</pre>
+</ pre>
 
-<h4>templates/info.html.ep</h4>
+<h4> templates / info.html.ep </ h4>
 
-テンプレートファイルです。templatesディレクトリを作成してその中に配置します。
+This is a template file. Create a templates directory and place it in it.
 
 <pre>
 <%
-  my $name = stash('name');
-  my $age = stash('age');
-  my $db_file = stash('db_file');
+  my $ name = stash ('name');
+  my $ age = stash ('age');
+  my $ db_file = stash ('db_file');
 %>
 
 <html>
   <head>
-    <title>Information</title>
-    %= stylesheet '/css/common';
-  </head>
+    <title> Information </ title>
+    % = stylesheet'/ css / common';
+  </ head>
   <body>
-    <b>Name</b>: <%= $name %><br>
-    <b>Age</b>: <%= $age %><br>
-    <b>Database file</b>: <%= $db_file %><br>
-  </body>
-</html>
-</pre>
+    <b> Name </ b>: <% = $ name%> <br>
+    <b> Age </ b>: <% = $ age%> <br>
+    <b> Database file </ b>: <% = $ db_file%> <br>
+  </ body>
+</ html>
+</ pre>
 
-stylesheet関数はここでは解説していませんが、スタイルシートを読み込むためのテンプレートのヘルパーです。
+The stylesheet function isn't covered here, but it's a template helper for loading stylesheets.
 
-<h4>アプリケーションの実行</h4>
+<h4> Run application </ h4>
 
-ディレクトリ構成が以下のようになっているかを確認してください。
+Check if the directory structure is as follows.
 
 <pre>
 myapp.pl
 myapp.conf
-templates/info.html.ep
-public/css/common.css
-log
-</pre>
+templates / info.html.ep
+public / css / common.css
+log log
+</ pre>
 
-アプリケーションを実行して「/」にアクセスすれば、次のような結果を得ることができます。
+If you run the application and access the "/", you will get the following results:
 
 <pre>
 Name: Kimoto
 Age: 32
 Database file: /home/kimoto/labo/db/myapp.db
-</pre>
+</ pre>
 
-「/some」にアクセスすれば「/other」にリダイレクトされて、「/other」の内容が表示されます。
+If you access "/ some", you will be redirected to "/ other" and the contents of "/ other" will be displayed.
 
 <pre>
-Other
-</pre>
-
+Other Other
+</ pre>

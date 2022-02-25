@@ -1,43 +1,41 @@
-
-<h2>Mojolicious::Liteアプリでは、最後を「1;」で終わってはいけない。</h2>
-
+<h2> In the Mojolicious :: Lite app, don't end with "1;". </ h2>
 
 
-Mojoliciousでは、自動的にファイルの変更を検地してくれる<a href="/blog/20120406133367.html">morbo</a>と呼ばれるサーバーを起動して開発ができます。
+
+With Mojolicious, you can start development by starting a server called <a href="/blog/20120406133367.html"> morbo </a> that automatically detects file changes.
 
 <pre>
 morbo myapp.pl
-</pre>
+</ pre>
 
-でもひとつ気をつけてほしいことがあります。実は以下のアプリケーションは正しくうごきません。
+But there is one thing I want you to be careful about. Actually, the following applications do not work properly.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-get '/' => sub { shift->render(text => 'aaa') };
+get'/' => sub {shift-> render (text =>'aaa')};
 
-app->start;
+app-> start;
 
 1;
-</pre>
+</ pre>
 
-Perlのソースコードとしては正しく見えます。でもmorboコマンドで実行すると以下のようにエラーになります。
+It looks correct as Perl source code. However, when I execute it with the morbo command, the following error occurs.
 
 <pre>
 "myapp.pl" is not a valid application.
-</pre>
+</ pre>
 
-実は最後の<b>1;</b>という行が問題です。実はapp->startでスクリプトが終わっている必要があります。__DATA__セクションがある場合は、app->startと__DATA__の間に空白以外をいれてはいけません。
+Actually, the last line <b> 1; </ b> is the problem. Actually, the script needs to be finished with app-> start. If there is a __DATA__ section, there should be no space between app-> start and __DATA__.
 
-以下のように修正すると正しく動きます。
+If you modify it as follows, it will work correctly.
 
 <pre>
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-get '/' => sub { shift->render(text => 'aaa') };
+get'/' => sub {shift-> render (text =>'aaa')};
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-これはPSGIでアプリケーションを実行するときも同じことが言えるので気をつけましょう。
-
+Keep in mind that the same is true when running an application with PSGI.

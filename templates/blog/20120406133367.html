@@ -1,43 +1,40 @@
-
-<h2>morbo - Mojoliciousの開発サーバー</h2>
-
+<h2> morbo --Mojolicious development server </ h2>
 
 
-<b>morbo</b>はMojoliciousにデフォルトでついている開発サーバーです。ファイルの変更を自動的に検知してサーバーを自動で再起動してくるので、Web開発がとても便利になります。
+
+<b> morbo </ b> is the development server that comes with Mojolicious by default. Web development is very convenient because it automatically detects file changes and restarts the server automatically.
 
 <pre>
 morbo app.pl
-</pre>
+</ pre>
 
-<h4>morboがWindowsでうまく動かない</h4>
+<h4> morbo doesn't work on Windows </ h4>
 
-morboは、Windowsでは、ファイルを検出して、うまく再起動してくれません。(2018年4月27日現在)
+morbo does not detect the file and restart successfully on Windows. (As of April 27, 2018)
 
-このためにWindows上での開発は非常にストレスがたまるものになります。
+This makes developing on Windows very stressful.
 
-この問題の解決のためにwinmorboというバッチファイルを作成したので、ご利用ください。
+I created a batch file called winmorbo to solve this problem, so please use it.
 
 <ul>
   <li>
-    <a href="/blog/20180430152504.html">morboをWindowsで動かすツール - winmorbo</a>
-  </li>
-</ul>
+    <a href="/blog/20180430152504.html"> Tools to run morbo on Windows --winmorbo </a>
+  </ li>
+</ ul>
 
-<h4>ポート番号を指定する</h4>
+<h4> Specify the port number </ h4>
 
-morboで試験用のサーバーを起動すると、通常はポート番号3000でアプリケーションが起動します。
+When you start the test server on morbo, the application usually starts on port number 3000.
 
-これは、<b>--listen</b>オプションで変更することができます。
-
-<pre>
-morbo --listen=http://*:3001 myapp.pl
-</pre>
-
-また<b>MOJO_LISTEN</b>環境変数を設定することで指定することもできます。
+This can be changed with the <b> --listen </ b> option.
 
 <pre>
-export MOJO_LISTEN=http://*:3001
+morbo --listen = http: //*:3001 myapp.pl
+</ pre>
+
+It can also be specified by setting the <b> MOJO_LISTEN </ b> environment variable.
+
+<pre>
+export MOJO_LISTEN = http: // *: 3001
 morbo a.pl
-</pre>
-
-
+</ pre>

@@ -1,75 +1,75 @@
-<h2>mojo generate app - Mojoliciousのひな型を作成する</h2>
+<h2> mojo generate app --Create a Mojolicious template </ h2>
 
-<b>mojo generate app</b>コマンドを使って、Mojoliciousのひな型を作成することができます。
+You can use the <b> mojo generate app </ b> command to create a Mojolicious template.
 
 <pre>
-mojo generate app アプリケーション名
-</pre>
+mojo generate app application name
+</ pre>
 
-Myappというアプリケーションを作成するサンプルです。Perlのモジュール名は、先頭が大文字であることが推奨、慣習なので、アプリケーション名は、すべて最初は大文字、それ以降は、小文字にするのをお勧めします。
+This is a sample to create an application called Myapp. It is recommended and customary for Perl module names to start with an uppercase letter, so it is recommended that all application names be uppercase at the beginning and lowercase after that.
 
 <pre>
 mojo generate app Myapp
-</pre>
+</ pre>
 
-以下のように出力され「myapp」ディレクトリが作成されています。アプリケーション名や、ディレクトリは小文字に、モジュール名は、アプリケーション名と同じとなります。
+The output is as follows, and the "myapp" directory is created. The application name and directory are in lowercase, and the module name is the same as the application name.
 
 <pre>
-  [mkdir] /home/kimoto/labo/tmp/myapp/script
-  [write] /home/kimoto/labo/tmp/myapp/script/myapp
-  [chmod] /home/kimoto/labo/tmp/myapp/script/myapp 744
-  [mkdir] /home/kimoto/labo/tmp/myapp/lib
+  [mkdir] / home / kimoto / labo / tmp / myapp / script
+  [write] / home / kimoto / labo / tmp / myapp / script / myapp
+  [chmod] / home / kimoto / labo / tmp / myapp / script / myapp 744
+  [mkdir] / home / kimoto / labo / tmp / myapp / lib
   [write] /home/kimoto/labo/tmp/myapp/lib/Myapp.pm
-  [exist] /home/kimoto/labo/tmp/myapp
+  [exist] / home / kimoto / labo / tmp / myapp
   [write] /home/kimoto/labo/tmp/myapp/myapp.conf
-  [mkdir] /home/kimoto/labo/tmp/myapp/lib/Myapp/Controller
+  [mkdir] / home / kimoto / labo / tmp / myapp / lib / Myapp / Controller
   [write] /home/kimoto/labo/tmp/myapp/lib/Myapp/Controller/Example.pm
-  [mkdir] /home/kimoto/labo/tmp/myapp/t
+  [mkdir] / home / kimoto / labo / tmp / myapp / t
   [write] /home/kimoto/labo/tmp/myapp/t/basic.t
-  [mkdir] /home/kimoto/labo/tmp/myapp/public
+  [mkdir] / home / kimoto / labo / tmp / myapp / public
   [write] /home/kimoto/labo/tmp/myapp/public/index.html
-  [mkdir] /home/kimoto/labo/tmp/myapp/templates/layouts
+  [mkdir] / home / kimoto / labo / tmp / myapp / templates / layouts
   [write] /home/kimoto/labo/tmp/myapp/templates/layouts/default.html.ep
-  [mkdir] /home/kimoto/labo/tmp/myapp/templates/example
+  [mkdir] / home / kimoto / labo / tmp / myapp / templates / example
   [write] /home/kimoto/labo/tmp/myapp/templates/example/welcome.html.ep
-</pre>
+</ pre>
 
-<h3>ディレクトリ構成の簡単な解説</h3>
+<h3> A brief explanation of the directory structure </ h3>
 
-<h4>public</h4>
+<h4> public </ h4>
 
-静的ファイルのディレクトリです。
+A directory of static files.
 
-<h4>templates</h4>
+<h4> templates </ h4>
 
-テンプレートファイルのディレクトリです。
+Template file directory.
 
-<h4>lib</h4>
+<h4> lib </ h4>
 
-ライブラリを置くディレクトリです。
+The directory where the library is placed.
 
-<h4>myapp.conf</h4>
+<h4> myapp.conf </ h4>
 
-アプリケーションの設定ファイルです。
+This is the application configuration file.
 
-<h4>myapp</h4>
+<h4> myapp </ h4>
 
-Mojoliciousアプリケーションです。開発サーバーで起動するには<a href="/blog/20120406133367.html">morbo</a>(モーボ)、本番サーバーで起動するには<a href="/blog/20110122130016.html">hypnotoad</a>(ハイフノトード)を使います。
+Mojolicious application. <a href="/blog/20120406133367.html"> morbo </a> to boot on the development server, <a href="/blog/20110122130016.html"> hypnotoad to boot on the production server Use </a> (hyphenotod).
 
-開発サーバー
+Development server
 
 <pre>
 morbo myapp
-</pre>
+</ pre>
 
-本番サーバー
+Production server
 
 <pre>
 hypnotoad myapp
-</pre>
+</ pre>
 
-<h3>アプリケーションクラスの動画解説</h3>
+<h3> Application class video commentary </ h3>
 
 <ul>
-  <li><a href="https://www.youtube.com/watch?v=_GLkeeU8UgM">Mojoliciousアプリケーションクラス - Perlプログラミングちゃんねる</a></li>
-</ul>
+  <li> <a href="https://www.youtube.com/watch?v=_GLkeeU8UgM"> Mojolicious Application Class --Perl Programming Channel </a> </ li>
+</ ul>

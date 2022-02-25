@@ -1,336 +1,334 @@
-
-<h2>さくらのレンタルサーバー・スタンダードでMojoliciousアプリを公開</h2>
-
+<h2> Mojolicious app released on Sakura rental server standard </ h2>
 
 
-Hello Worldアプリケーションを作成し、自分のマシンの上で、実行して、ブラウザで表示させました。けれども、最終的には、インターネットを使って、他の人に、作成したアプリを見せたいと思うようになると思います。
 
-インターネットでWebサイトを公開するための手順は、いくつかありますが、今回はもっとも簡単な方法として、さくらのレンタルサーバー・スタンダードを利用したいと思います。
+I created a Hello World application, ran it on my machine, and viewed it in a browser. But in the end, you'll want to use the internet to show others the apps you've created.
 
-さくらのレンタルサーバー・スタンダードは、インターネットで、Webサイトを公開するためのサービスです。共有レンタルサーバーと呼ばれ、CGIを使って作成されたファイルを、実行して、表示することができます。
+There are several steps to publish a website on the Internet, but this time I would like to use Sakura's rental server standard as the easiest method.
 
-Hello Worldアプリケーションは、実は、CGIとしても、実効することが可能です。ですので、自分のマシンで作成したアプリケーションを、さくらのレンタルサーバー・スタンダードを使って公開することができます。
+Sakura Rental Server Standard is a service for publishing websites on the Internet. Called a shared rental server, you can run and view files created using CGI.
 
-<h3>さくらレンタルサーバー・スタンダードの申し込み</h3>
+The Hello World application can actually be implemented as a CGI as well. Therefore, you can publish the application created on your own machine using Sakura Rental Server Standard.
 
-さくらのレンタルサーバー・スタンダードは、こちらのページから申し込むことができます。1ヶ月500円程度で利用でき、ディスク容量も100GBと、かなり大きいので、お得です。また、この後解説しますが、SSHを使って、サーバー上で、コマンドを実行することができます。
+<h3> Apply for Sakura Rental Server Standard </ h3>
 
-<blockquote>
-<a href="http://www.sakura.ne.jp/standard.html">さくらのレンタルサーバー スタンダードの申し込み</a>
-</blockquote>
-
-こちらのサイトでの解説手順に従って、進めていってください。
-
-<h3>SSHを使って、サーバーに接続する</h3>
-
-さくらのレンタルサーバー・スタンダードが利用できるようになったら、さっそく手順を進めていきましょう。まず最初に、SSHを使って、サーバーに接続するということをやってみたいと思います。
-
-SSHというのは、セキュアな通信で、サーバーに対してコマンドを実行するためのプロトコルです。この後の作業で、異なるバージョンのPerlに変更したり、CGIのパーミッションを変更したりするときに、コマンドというものを実効する必要があります。
-
-そのために、SSHを使って、サーバーに接続する必要があります。Mac OS Xをお持ちの方であれば、sshコマンドは、すでに用意されています。ターミナルを開けば、sshコマンドを利用することができるので、準備は要りません。
-
-Windowsの場合は、SSHクライアントであるTeratermと呼ばれるアプリケーションをインストールしましょう。Teratermを使えば、SSHを使って、サーバーで、コマンドを実行することができます。
-
-<h4>WindowsでのTera Termのインストール</h4>
-
-以下のサイトからTera Termをダウンロードしてインストールします。
+You can apply for Sakura Rental Server Standard from this page. It can be used for about 500 yen a month, and the disk capacity is 100GB, which is quite large, so it is a good deal. Also, as I will explain later, SSH can be used to execute commands on the server.
 
 <blockquote>
-<a href="http://www.forest.impress.co.jp/lib/inet/servernt/remote/utf8teraterm.html">Tera Term</a>
-</blockquote>
+<a href="http://www.sakura.ne.jp/standard.html"> Sakura Rental Server Standard Application </a>
+</ blockquote>
 
-インストールが完了したら、Tera Termを起動します。「New Connection」というウインドウが表示されると思います。
+Please follow the instructions on this site to proceed.
 
-Hostの部分には、さくらスタンダードを申し込んだときに、受け取ったホスト名を入力します。
+<h3> Connect to the server using SSH </ h3>
+
+When Sakura's rental server standard becomes available, let's proceed with the procedure immediately. First of all, I would like to try connecting to the server using SSH.
+
+SSH is a secure communication protocol for executing commands to a server. In the rest of this work, you'll need to implement commands when you change to a different version of Perl or change CGI permissions.
+
+To do this, you need to connect to the server using SSH. If you have Mac OS X, the ssh command is already available. If you open the terminal, you can use the ssh command, so no preparation is required.
+
+For Windows, install an SSH client called Teraterm. With Teraterm, you can use SSH to execute commands on the server.
+
+<h4> Installing Tera Term on Windows </ h4>
+
+Download and install Tera Term from the following site.
+
+<blockquote>
+<a href="http://www.forest.impress.co.jp/lib/inet/servernt/remote/utf8teraterm.html"> Tera Term </a>
+</ blockquote>
+
+After the installation is complete, start Tera Term. You should see a window called "New Connection".
+
+In the Host part, enter the host name you received when you applied for Sakura Standard.
 
 <blockquote>
 xxxxx.sakura.ne.jp
-</blockquote>
+</ blockquote>
 
-xxxxxのところにはユーザー名が入ります。
+The user name is entered in place of xxxxx.
 
- 「Service」の部分はSSHを指定します。
+ The "Service" part specifies SSH.
  
 <blockquote>
 SSH
-</blockquote>
+</ blockquote>
 
-「OK」ボタンを押すと、SSH Authenticationというウインドウが開きます。
-「User name」と「Passphrase」の部分にさくらスタンダードで受け取った、ユーザー名とパスワードを入力します。
+Press the "OK" button to open a window called SSH Authentication.
+Enter the user name and password received by Sakura Standard in the "User name" and "Passphrase" parts.
 
-「OK」をクリックすると、サーバーに接続することができます。
+You can connect to the server by clicking OK.
 
-<h4>Mac OS Xでのサーバーへの接続</h4>
+<h4> Connecting to a server on Mac OS X </ h4>
 
-Mac OS Xには、デフォルトでsshコマンドが利用できますので、ターミナルを開いてSSHコマンドを実行します。
+The ssh command is available by default on Mac OS X, so open a terminal and run the SSH command.
 
 <pre>
 ssh yyy@xxx.sakura.ne.jp
-</pre>
+</ pre>
 
-xxxの部分には、ユーザー名を入力してください。xxxの部分が、与えられたホスト名の該当する部分を入力してください。
+Enter your user name in the xxx field. For the xxx part, enter the corresponding part of the given host name.
 
-パスワードを聞かれますので、さくらスタンダードを申し込んだときにもらったパスワードを入力してください。
+You will be asked for a password, so enter the password you received when you applied for Sakura Standard.
 
-サーバーに接続することができます。
+You can connect to the server.
 
-<h3>利用するPerlのバージョンを変更する</h3>
+<h3> Change the version of Perl to use </ h3>
 
-Mojoliciousを利用するには、5.10.1以上のPerlが必要です。さくらのスタンダードでは、Perlのバージョンを簡単に切り替えることができます。
+To use Mojolicious, you need Perl 5.10.1 or higher. Sakura Standard makes it easy to switch between Perl versions.
 
-SSHでは、コマンドというものを使ってさまざまな操作を行います。まず、Perlのバージョンが指定されたファイルを表示してみましょう。以下のコマンドを入力して、Enterを押すとコマンドを実行できます。
+SSH uses commands to perform various operations. First, let's view the file with the Perl version specified. You can execute the command by typing the following command and pressing Enter.
 
 <pre>
 cat .perl.version
-</pre>
+</ pre>
 
-catの後ろには空白があるので注意しましょう。コマンドを実行するときはいつでもEnterを押すので、覚えておいてください。
+Note that there is a space after cat. Keep in mind that you press Enter whenever you run a command.
 
-次に、さくらのスタンダードでは2015年現在Perl 5.14が利用できるので、この設定を書き換えます。
-
-<pre>
-echo "5.14" > .perl.version
-</pre>
-
-もとに戻したい場合は次のコマンドで元に戻せます。
+Next, since Perl 5.14 is available in Sakura Standard as of 2015, rewrite this setting.
 
 <pre>
-echo "5.8" > .perl.version
-</pre>
+echo "5.14"> .perl.version
+</ pre>
 
-次のコマンドでPerlのバージョンを確認してみましょう。
+If you want to restore it, you can restore it with the following command.
+
+<pre>
+echo "5.8"> .perl.version
+</ pre>
+
+Let's check the version of Perl with the following command.
 
 <pre>
 perl -v
-</pre>
+</ pre>
 
-以下のように、Perl 5.14が表示されれば、成功です。
+If you see Perl 5.14 as shown below, you're successful.
 
 <pre>
 This is perl 5, version 20, subversion 1 (v5.20.1) built for amd64-freebsd
-</pre>
+</ pre>
 
-<h3>Mojoliciousをインストールする</h3>
+<h3> Install Mojolicious </ h3>
 
-Mojoliciousをインストールするには、cpanmというPerlのモジュールをインストールするツールを利用するのが簡単です。cpanmをダウンロードして、Mojoliciousをインストールしましょう。
+To install Mojolicious, it's easy to use a tool called cpanm that installs Perl modules. Download cpanm and install Mojolicious.
 
-<h4>cpanmのダウンロード</h4>
+<h4> Download cpanm </ h4>
 
-まず最初にcurlというコマンドを使ってcpanmをダウンロードします。
+First of all, download cpanm using the command curl.
 
 <pre>
 curl -LOk http://xrl.us/cpanm
-</pre>
+</ pre>
 
-ファイル一覧を表示するコマンドを使ってcpanmがダウンロードされているかどうか確認しましょう。
+Check if cpanm has been downloaded using the command to display the file list.
 
 <pre>
 ls
-</pre>
+</ pre>
 
-cpanmというファイルが表示されているか確認しましょう。
+Make sure you see a file called cpanm.
 
-<h4>Mojoliciousのインストール</h4>
+<h4> Install Mojolicious </ h4>
 
-次にcpanmを使ってMojoliciousをインストールしましょう。
+Next, let's install Mojolicious using cpanm.
 
 <pre>
 perl cpanm Mojolicious
-</pre>
+</ pre>
 
-次のような画面が表示されます。
+The following screen will be displayed.
 
 <pre>
---> Working on Mojolicious
+-> Working on Mojolicious
 Fetching http://www.cpan.org/authors/id/S/SR/SRI/Mojolicious-6.08.tar.gz ... OK
 Configuring Mojolicious-6.08 ... OK
 Building and testing Mojolicious-6.08 ... OK
 Successfully installed Mojolicious-6.08
 1 distribution installed
-</pre>
+</ pre>
 
-Mojoliciousがインストールされていることを確認してみましょう。perldocというコマンドは、Perlのドキュメントを見るコマンドですが、Mojoliciousがインストールされていれば、ドキュメントを見ることができます。
+Let's make sure that Mojolicious is installed. The command perldoc is a command to view Perl documentation, but if you have Mojolicious installed, you can view the documentation.
 
 <pre>
 perldoc Mojolicious
-</pre>
+</ pre>
 
-Mojoliciousがインストールされていれば、ドキュメントが表示されます。ドキュメントの表示を終えるときは「q」を押します。
-
-<pre>
-q
-</pre>
-
-<h3>Mojoliciousアプリケーションの修正</h3>
-
-さくらのスタンダードで動かすためには、先ほど作成した「webapp.pl」スクリプトを少し修正する必要があります。
-
-
-<h3>シェバングの追加</h3>
-
-以下が先ほど作成したスクリプトです。
+If you have Mojolicious installed, you'll see the documentation. Press "q" to finish viewing the document.
 
 <pre>
-use Mojolicious::Lite;
+q q
+</ pre>
 
-get '/' => sub {
-  my $self = shift;
+<h3> Mojolicious application fix </ h3>
 
-  $self->render(text => 'Hello World');
-};
+In order to work with Sakura Standard, you need to modify the "webapp.pl" script created earlier.
 
-app->start;
-</pre>
 
-このスクリプトの先頭に次の一行を追加してください。これは、シェバングと呼ばれ、CGIをPerlを使って実行するための指示になります。
+<h3> Add Shebang </ h3>
+
+Below is the script I created earlier.
 
 <pre>
-#!/usr/bin/env perl
-</pre>
+use Mojolicious :: Lite;
 
-また、Mojoliciousをインストールしたディレクトリを、ライブラリのパスとして読み込むために、次の2行を追加します。
+get'/' => sub {
+  my $ self = shift;
+
+  $ self-> render (text =>'Hello World');
+};;
+
+app-> start;
+</ pre>
+
+Add the following line to the beginning of this script. This is called a shebang and is an instruction to run CGI using Perl.
+
+<pre>
+#! / usr / bin / env perl
+</ pre>
+
+Also, add the following two lines to read the directory where you installed Mojolicious as the path of the library.
 
 <pre>
 use FindBin;
-use lib "$FindBin::Bin/../perl5/lib/perl5";
-</pre>
+use lib "$ FindBin :: Bin / ../ perl5 / lib / perl5";
+</ pre>
 
 
-スクリプトは次のようになります。
+The script looks like this:
 
 <pre>
-#!/usr/bin/env perl
+#! / usr / bin / env perl
 use FindBin;
-use lib "$FindBin::Bin/../perl5/lib/perl5";
+use lib "$ FindBin :: Bin / ../ perl5 / lib / perl5";
 
-use Mojolicious::Lite;
+use Mojolicious :: Lite;
 
-get '/' => sub {
-  my $self = shift;
+get'/' => sub {
+  my $ self = shift;
 
-  $self->render(text => 'Hello World');
-};
+  $ self-> render (text =>'Hello World');
+};;
 
-app->start;
-</pre>
+app-> start;
+</ pre>
 
-(参考)<a href="/blog/20100524127696.html">FindBin</a>
+(Reference) <a href="/blog/20100524127696.html"> FindBin </a>
 
-なお、自分の環境で開発をするときも、このままおいておいても大丈夫です。
+Even when developing in your own environment, you can leave it as it is.
 
-<h3>ファイル名の変更</h3>
+<h3> Rename file </ h3>
 
-さくらのスタンダードで実効するときは、ファイル名の拡張子を「.cgi」にする必要があります。
+When effective with Sakura Standard, the extension of the file name must be ".cgi".
 
- 「webapp.pl」を「webapp.cgi」に変更してください。
+ Change "webapp.pl" to "webapp.cgi".
 
-<h3>Mojoliciousアプリケーションのアップロード</h3>
+<h3> Upload Mojolicious application </ h3>
 
-Mojoliciousのインストールが終われば、次は、作成したHello Worldアプリケーションのアップロードを行います。
+After installing Mojolicious, the next step is to upload the Hello World application you created.
 
-Windowsの場合は、Windowsの場合は、Windows7以降であれば、FTPソフトは、エクスプローラに統合されているので、これを利用します。もし、Windows7より前の場合は、FFFTPというソフトを利用すれば、ファイルをアップロードすることができます。
+In the case of Windows, in the case of Windows, if it is Windows 7 or later, the FTP software is integrated in Explorer, so use this. If you are using Windows 7 or earlier, you can upload files by using software called FFFTP.
 
-Mac OS Xの場合も、FTPソフトは、デフォルトでインストールされているので、これを利用します。
+For Mac OS X, FTP software is installed by default, so use it.
 
-<h3>Windowsの場合(Windows7以降の場合を解説)</h3>
+<h3> For Windows (explaining for Windows 7 or later) </ h3>
 
-エクスプローラから、FTPを使って、サーバーに接続しましょう。なんでもよいので、フォルダをダブルクリックして、エクスプローラを立ち上げてください。
+From Explorer, use FTP to connect to the server. Anything is fine, just double-click the folder to launch Explorer.
 
-上にあるアドレスバーの空白部分をクリックすると、自分でURLを入力することができます。ここに次のように、入力してください。
-
-<pre>
-ftp:yyy@xxx.sakura.ne.jp
-</pre>
-
-yyy@xxx.sakura.ne.jpはSSHの接続のときに利用したものと同じものです
-
-すると、サーバーにFTPで接続することができます。ユーザー名とパスワードを聞かれますので、入力してください。
-
-接続するとwwwというフォルダがあると思います。このフォルダの中にインターネットで、公開するファイルを配置します。
-
-Hello Worldアプリケーションを、「webapp.cgi」という名前で保存したと思いますが、これをwwwフォルダの中に保存してください。
-
-これで、ファイルのアップロードは終了です。
-
-<h3>Mac OS Xの場合</h3>
-
-Finderは、ファイルを見るためのものですが、これを使って、サーバーへFTP接続をすることができます。
-
-Finderを使って、FTP接続するには、「Finderのメニューの移動（Go）＞サーバへ接続（Connect to Server）を選択。」します。
-
-次に、接続したいサーバーを次のように入力してください。
+Empty address bar at the topYou can enter the URL yourself by clicking the white part. Enter the following here.
 
 <pre>
-ftp:yyy@xxx.sakura.ne.jp
-</pre>
+ftp: yyy@xxx.sakura.ne.jp
+</ pre>
 
-yyy@xxx.sakura.ne.jpはSSHの接続のときに利用したものと同じものです
+yyy@xxx.sakura.ne.jp is the same as the one used when connecting to SSH.
 
-すると、サーバーにFTPで接続することができます。ユーザー名とパスワードを聞かれますので、入力してください。
+Then you can connect to the server via FTP. You will be asked for your user name and password, so enter them.
 
-接続するとwwwというフォルダがあると思います。このフォルダの中にインターネットで、公開するファイルを配置します。
+When you connect, you will find a folder called www. Place the files you want to publish on the Internet in this folder.
 
-Hello Worldアプリケーションを、「webapp.cgi」という名前で保存したと思いますが、これをwwwフォルダの中に保存してください。
+I think I saved the Hello World application as "webapp.cgi", but save it in the www folder.
 
-これで、ファイルのアップロードは終了です。
+This completes the file upload.
 
-<h3>アプリケーションを実効するための準備</h3>
+<h3> For Mac OS X </ h3>
 
-アプリケーションを実効するためには、いくつかの準備が必要です。
+The Finder is for viewing files, but you can use it to make an FTP connection to the server.
 
-<h4>ファイルのパーミッションを755にする</h4>
+To make an FTP connection using the Finder, select Go> Connect to Server from the Finder menu.
 
-CGIファイルを実行するためには、CGIファイルのパーミッションというものを、755にする必要があります。ここでは、おまじないとして覚えておいてください。
-
-まず、先ほど解説した手順でSSHを使って、サーバーに接続してください。Windowsの場合は、Tera Termを、Mac OS Xの場合はターミナルからsshコマンドを利用するのでしたね。
-
-そして、まず、webapp.cgiの存在するディレクトリに移動します。ディレクトリを移動するには、「cd」コマンドを使用します。
+Then enter the server you want to connect to as follows:
 
 <pre>
-cd ~/www
-</pre>
+ftp: yyy@xxx.sakura.ne.jp
+</ pre>
 
-「~」というのは、自分のホームディレクトリを表す記号です。ホームディレクトリの中の「www」フォルダに移動します。
+yyy@xxx.sakura.ne.jp is the same as the one used when connecting to SSH.
 
-次に、「webapp.cgi」のファイルのパーミッションを「755」に変更します。
+Then you can connect to the server via FTP. You will be asked for your user name and password, so enter them.
+
+When you connect, you will find a folder called www. Place the files you want to publish on the Internet in this folder.
+
+I think I saved the Hello World application as "webapp.cgi", but save it in the www folder.
+
+This completes the file upload.
+
+<h3> Preparation for running the application </ h3>
+
+Some preparation is required for the application to work.
+
+<h4> Set file permissions to 755 </ h4>
+
+In order to execute a CGI file, the permission of the CGI file must be set to 755. Remember here as a spell.
+
+First, connect to the server using SSH using the procedure described earlier. For Windows, use Tera Term, and for Mac OS X, use the ssh command from the terminal.
+
+And first, change to the directory where webapp.cgi exists. Use the "cd" command to change directories.
+
+<pre>
+cd ~ / www
+</ pre>
+
+"~" Is a symbol that represents your home directory. Navigate to the "www" folder in your home directory.
+
+Next, change the permissions of the "webapp.cgi" file to "755".
 
 <pre>
 chmod 755 webapp.cgi
-</pre>
+</ pre>
 
-<h4>Windowsの場合は、改行コードを「LF」にする</h4>
+<h4> For Windows, set the line feed code to "LF" </ h4>
 
-Windowsの場合は、デフォルトでは、改行コードというものが「CR + LF」というものになっています。さくらのスタンダードで動かすために、改行コードを「LF」に変換する必要があります。
+In the case of Windows, the line feed code is "CR + LF" by default. In order to work with Sakura Standard, it is necessary to convert the line feed code to "LF".
 
-次のコマンドで改行コードを、「LF」に統一します。
+Use the following command to unify the line feed code to "LF".
 
 <pre>
-perl  -i.org  -pe  's/\r\n/\n/g' webapp.cgi
-</pre>
+perl -i.org -pe's / \ r \ n / \ n / g'webapp.cgi
+</ pre>
 
-これを毎回やるのは面倒ですね。秀丸やさくらエディタなどの、Windowsのテキスト編集ソフトを利用すれば、あらかじめ、「LF」に統一しておけるので便利です。
+It's a hassle to do this every time. If you use Windows text editing software such as Hidemaru or Sakura Editor, it is convenient because you can unify it to "LF" in advance.
 
-<h4>Perlのスクリプトが正しいかを確認する</h4>
+<h4> Check if the Perl script is correct </ h4>
 
-Perlのスクリプトが間違っていた場合は、CGIの実効が失敗しますので、CGIが正しいかどうかを確認します。
+If the Perl script is incorrect, the CGI will fail to execute, so check if the CGI is correct.
 
 <pre>
 perl -c webapp.cgi
-</pre>
+</ pre>
 
-「perl -c」というコマンドを使うと、Perlのスクリプトの文法が正しいことが確認できます。以下のように表示されれば、Perlのスクリプトは正しく記述できています。
+You can use the command "perl -c" to verify that the Perl script syntax is correct. If you see the following, the Perl script is written correctly.
 
 <pre>
 webapp.cgi syntax OK
-</pre>
+</ pre>
 
-<h3>Mojoliciousアプリケーションにアクセスする</h3>
+<h3> Access the Mojolicious application </ h3>
 
-さっそく、Mojoliciousアプリケーションにアクセスしてみましょう。ブラウザから、URLを入力してみてください。
+Let's access the Mojolicious application now. Try entering the URL from your browser.
 
 <pre>
 http://xxx.sakura.ne.jp/webapp.cgi
-</pre>
+</ pre>
 
-「Hello World」と表示されれば成功です。これで、インタネット上での公開が完了し、すべての人から、あなたの作成したMojoliciousアプリケーションを見ることができます。おめでとう!
-
+If "Hello World" is displayed, it is successful. Now that you've published it on the internet, everyone can see your Mojolicious application. congratulation!

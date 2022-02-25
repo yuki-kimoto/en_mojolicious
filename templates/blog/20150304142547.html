@@ -1,140 +1,138 @@
+<h2> Mojolicious 6 has been released </ h2>
 
-<h2>Mojolicious 6がリリースされました</h2>
-
-少し情報提供が遅れましたが、先日Mojolicious 6がリリースされました。MojoliciousはPerlのWebフレームワークです。
+Mojolicious 6 was released the other day, although the information was delayed a little. Mojolicious is a Perl web framework.
 
 <blockquote>
-<a href="http://blog.kraih.com/post/112170845701/mojolicious-6-0-released-perl-real-time-web">Mojolicious 6.0 released: Perl real-time web framework</a>
-</blockquote>
+<a href="http://blog.kraih.com/post/112170845701/mojolicious-6-0-released-perl-real-time-web"> Mojolicious 6.0 released: Perl real-time web framework </a>
+</ blockquote>
 
-Mojoliciousの作者のセバスチャン・リーデルさんのアナウンスを日本語訳しておきます。
+I have translated the announcement of Mojolicious author Sebastian Riedel into Japanese.
 
-<h3>リリース報告</h3>
+<h3> Release report </ h3>
 
-Mojolicious 6.0(Clinking Beer Mugs)のリリースをアナウンスできて、とても大きな喜びに満たされています。これは、コアチームに新しいメンバーを迎えての最初のメジャーリリースです。ようこそ、ヤン・ヘニング・トーセン(Jan Henning Thorsen)。
+We are delighted to announce the release of Mojolicious 6.0 (Clinking Beer Mugs). This is the first major release with new members on the core team. Welcome to Jan Henning Thorsen.
 
-2015年は、6.0のリリースの年として記憶されるように思えるでしょうけれど、まだこの年は早い時期ですし、楽しみにできることは、たくさんあります。IETFはHTTP/2を承認しました。これが、よいにしろ悪いにしろ、私たちがWebアプリケーションを開発する方法完全に変更してしまうかもしれません。
+2015 may seem like the year of the 6.0 release, but it's still early and there's a lot to look forward to. The IETF has approved HTTP / 2. This, for better or for worse, may completely change the way we develop web applications.
 
-これが私たちを導く場所を待っていることは、できないでしょう。また、今年はニューヨークでMojoconfがあります。準備はすでに始まっており、まもなく詳細を共有することができるでしょう。
+You can't wait for the place where this leads us. We also have Mojoconf in New York this year. Preparations have already begun and we will soon be able to share the details.
 
-リアルタイムWebテクノロジーはますます主流になってきており、コミュニティは成熟してきましたけれど、着実な成長を続けています。Github上でも、もっともスターがついたPerlのプロジェクトとしての地位を強化できました。
+Real-time web technology is becoming more and more mainstream, and while the community has matured, it continues to grow steadily. Even on Github, we were able to strengthen our position as the most starred Perl project.
 
-公式ドキュメントには、毎日数百人のユーザーが訪れています。メーリングリストの購読者は1000人を超えました。みなさん、ありがとう。
+The official documentation is visited by hundreds of users every day. The mailing list has more than 1000 subscribers. thank you everyone.
 
-今年の主要な焦点は、パフォーマンスの改善です。すべての部品がかなり速くなり、スケーラビリティも増しました。新しいいくつかの機能追加もあります。以下は、機能のハイライトです。
+This year's main focus is on improving performance. All parts are much faster and more scalable. There are also some new feature additions. Below are the highlights of the features.
 
 <ul>
   <li>
-    ネストされたヘルパー。ヘルパーを名前空間の中に入れ子にできるようになりｍさいた。たとえば、組み込みのヘルパー reply->asset のように。
-  </li>
+    Nested helper. Helpers can now be nested in namespaces. For example, the built-in helper reply-> asset.
+  </ li>
   <li>
-    IO::Socket::Socksを通したSOCKS5のサポート。
-  </li>
+    Support for SOCKS 5 through IO :: Socket :: Socks.
+  </ li>
   <li>
-    Net::DNS::Nativeを通して、ノンブロッキングの名前解決のサポート。
-  </li>
+    Support for non-blocking name resolution through Net :: DNS :: Native.
+  </ li>
   <li>
-    新しいMojo::DOM。完全にAPIがデザインされなおしました。また、ケース印センシティブな属性のセレクタのサポートが追加されました。[foo=”bar” i]の「ように。
-  </li>
+    New Mojo :: DOM. The API has been completely redesigned. We also added support for case-sensitive attribute selectors. "Like" in [foo = ”bar” i].
+  </ li>
   <li>
-    RFC 3339のサポート。ほとんどすべての新しいREST APIがそれを使います。
-  </li>
+    Support for RFC 3339. Almost all new REST APIs use it.
+  </ li>
   <li>
-    コンテントネゴシエーション。コンテントネゴシエーションは、If-None-Match 、If-Modified-Sinceと一緒に使えます。
-  </li>
+    Content negotiation. Content negotiation can be used with If-None-Match and If-Modified-Since.
+  </ li>
   <li>
-    IPv6をあらゆる場面でサポート: IO::Socket::IPが、とても信頼できるものになったので、いつでもそれを使用するようになりました。
-  </li>
+    IPv6 support everywhere: IO :: Socket :: IP has become so reliable that I've always used it.
+  </ li>
   <li>
-    wantarray()は使いません。セキュリティの脆弱性を防ぐために、コードから完全に取り除かれました。
-  </li>
+    Do not use wantarray (). It has been completely removed from the code to prevent security vulnerabilities.
+  </ li>
   <li>
-    Mojo::PgとMinion: 安定的な1.0のリリースに到達しました。これは、スピンオフプロジェクトになりました。
-  </li>
+    Mojo :: Pg and Minion: We have reached a stable 1.0 release. This has become a spin-off project.
+  </ li>
   <li>
-    より多くのことを知りたいなら、GitHub上のChangesを見てください。
-  </li>
-</ul>
+    If you want to know more, take a look at Changes on GitHub.
+  </ li>
+</ ul>
 
 <blockquote>
-<a href="http://cpansearch.perl.org/src/SRI/Mojolicious-6.0/Changes">Mojolicious 6.0 Changes</a>
-</blockquote>
+<a href="http://cpansearch.perl.org/src/SRI/Mojolicious-6.0/Changes"> Mojolicious 6.0 Changes </a>
+</ blockquote>
 
-楽しんでね!
+have fun!
 
-<h3>Mojolicious 6で互換性が崩れる部分をピックアップ</h3>
+<h3> Pick up the part where compatibility is broken with Mojolicious 6 </ h3>
 
-MojoliciousはPerlのWebフレームワークのひとつで、ノンブロッキングI/Oをサポートしているので、並列HTTPリクエストに対する処理が最適に処理されるようになっています。
+Mojolicious is one of Perl's web frameworks that supports non-blocking I / O so that it handles parallel HTTP requests optimally.
 
-Mojoliciousの互換性は、全体的に高いですが、将来のために、部分的な非互換を許容しています。ですから、Mojoliciousは新しいバージョンいきなりアップグレードするのではなくって、開発環境で試験をしてから、アップグレードしてくださいね。
+Mojolicious's compatibility is high overall, but for the future it allows for partial incompatibilities. So, don't upgrade Mojolicious to a new version all at once, but test it in your development environment before upgrading.
 
-Mojolicious 6において互換性が崩れる部分が少しありますので、その部分について書いておきます。
+There are some parts of Mojolicious 6 that are out of compatibility, so I will write about those parts.
 
-<h4>paramメソッドは、リストコンテキストで評価されなくなりました。</h4>
+The <h4> param method is no longer evaluated in list context. </ h4>
 
-paramメソッドは、リストコンテキストで評価されなくなりました。セキュリティの脆弱性を防ぐために、コード上のwantarrayを使っている部分ががすべて取り除かれました。
+The param method is no longer evaluated in list context. To prevent security vulnerabilities, all parts of the code that use wantarray have been removed.
 
-以下のようなコードが、以前のようには機能しなくなるので、注意してください。
-
-<blockquote>
-my @params = $c->param('title');
-</blockquote>
-
-<h4>paramメソッドは、配列のリファレンスを受け取らなくなりました。</h4>
-
-paramメソッドは、配列のリファレンスを受け取らなくなりました。以下の記述が以前のようには、機能しなくなるので、注意してください。
+Note that code like the following will no longer work as it used to.
 
 <blockquote>
-my @params = $c->param(['title', 'author']);
-</blockquote>
+my @params = $ c-> param ('title');
+</ blockquote>
 
-paramメソッドの一部仕様変更は、広い範囲に影響があると思われますが、Webアプリは、セキュリティリスクを下げる必要が高い分野ですので、これは、いたしかたがないと感じます。上記のふたつのコードが利用されている可能性があれば、チェックしてみてください。
+The <h4> param method no longer accepts array references. </ h4>
 
-<h4>Mojo::JSONのオブジェクト指向サポートがなくなりました</h4>
+The param method no longer accepts array references. Please note that the following description will no longer work as before.
 
-Mojo::JSONのオブジェクト指向サポートがなくなりました。もし次のように記述していた場合は、下のものに書き換えてください。
+<blockquote>
+my @params = $ c-> param (['title','author']);
+</ blockquote>
 
-<pre>
-# 旧
-use Mojo::JSON;
-Mojo::JSON->new->encode($foo);
-Mojo::JSON->new->decode($foo);
+It seems that some specification changes of the param method will affect a wide range, but since Web applications are an area where it is highly necessary to reduce security risks, I feel that this is unavoidable. If you think the above two codes may be used, please check them out.
 
-# 新
-use Mojo::JSON 'encode_json', 'decode_json';
-encode_json($foo);
-decode_json($foo);
-</pre>
+<h4> Mojo :: JSON object-oriented support is gone </ h4>
 
-<h4>render_static, render_not_found, render_exceptionがなくなります</h4>
-
-コントローラクラスのrender_static, render_not_found, render_exceptionがなくなります。代わりに次のように記述しましょう。
+Mojo :: JSON object-oriented support is gone. If it is described as follows, please rewrite it as below.
 
 <pre>
-# 旧
-$c->render_static($path);
-$c->render_not_found;
-$c->render_exception;
+# Old
+use Mojo :: JSON;
+Mojo :: JSON-> new-> encode ($ foo);
+Mojo :: JSON-> new-> decode ($ foo);
 
-# 新
-$c->reply->static($path);
-$c->reply->not_found;
-$c->reply->exception;
-</pre>
+#New
+use Mojo :: JSON'encode_json','decode_json';
+encode_json ($ foo);
+decode_json ($ foo);
+</ pre>
 
-<h4>bridgeがなくなってunderになります。</h4>
+<h4> render_static, render_not_found, render_exception are gone </ h4>
 
-bridgeと書いているところはunderに変更しましょう。
+The controller class render_static, render_not_found, render_exception are gone. Instead, write:
 
 <pre>
-# 旧
-$r->bridge(sub { ... })
+# Old
+$ c-> render_static ($ path);
+$ c-> render_not_found;
+$ c-> render_exception;
 
-# 新
-$r->under(sub { ... });
-</pre>
+#New
+$ c-> reply-> static ($ path);
+$ c-> reply-> not_found;
+$ c-> reply-> exception;
+</ pre>
 
-<h4>Mojo::DOM周辺はまだ安定していません</h4>
+<h4> The bridge disappears and it becomes under. </ h4>
 
-Mojo::DOM周辺の実装はまだ安定していませんので、もし使っている場合は、変更箇所を確認しましょう。
+Let's change the place where it says bridge to under.
 
+<pre>
+# Old
+$ r-> bridge (sub {...})
+
+#New
+$ r-> under (sub {...});
+</ pre>
+
+<h4> The area around Mojo :: DOM is not stable yet </ h4>
+
+The implementation around Mojo :: DOM is not stable yet, so if you are using it, check the changes.
