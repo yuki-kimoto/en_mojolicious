@@ -1,19 +1,19 @@
-<h2> Run hypnotoad with specific user privileges (or group privileges) </ h2>
+<h2> Run hypnotoad with specific user privileges (or group privileges) </h2>
 
 
 
-To run the application hypnotoad with specific user privileges, set the <strong> user </ strong> in the configuration file. To run hypnotoad with specific group privileges, set <strong> group </ strong> in the configuration file.
+To run the application hypnotoad with specific user privileges, set the <strong> user </strong> in the configuration file. To run hypnotoad with specific group privileges, set <strong> group </strong> in the configuration file.
 
 <pre>
 {
   user => kimoto,
   group => admin
 }
-</ pre>
+</pre>
 
 In reality, the parent process runs with the privileges of the user who executed it, but the spawned child process now runs with the privileges of the user. The actual processing of the application is done by the child process, so it is safe.
 
-You may want to run it from the root user when managing your application. In such a case, you can set <strong> user </ strong> and <strong> group </ strong> in the configuration file, and it can be executed with that user authority, so it is safe.
+You may want to run it from the root user when managing your application. In such a case, you can set <strong> user </strong> and <strong> group </strong> in the configuration file, and it can be executed with that user authority, so it is safe.
 
 <hr>
-<a href="/blog/20110402130560.html"> Go to Mojolicious Reference </a>
+<a href="/blog/20110402130560.html"> Go to Mojolicious Reference</a>

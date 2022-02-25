@@ -1,20 +1,20 @@
-<h2> Introduction to Mojolicious </ h2>
+<h2> Introduction to Mojolicious </h2>
 
 
 
 An introduction to web development using Mojolicious, Perl's flagship framework.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => {text =>'Hello World!'};
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 It works on Windows, Linux and any environment. For those who think "I didn't like CGI", now there is "Mojolicious".
 
-<h3> 1. Features of Mojolicious </ h3>
+<h3> 1. Features of Mojolicious </h3>
 
 I think there is such a question, "Is Mojolicious only a small website?" In fact, Mojolicious can start from a small website and grow steadily.
 
@@ -24,15 +24,15 @@ Mojolicious
 <ol>
   <li>
     Creating a website easily and quickly
-  </ li>
+  </li>
   <li>
     Provides a set of functions required for website creation
-  </ li>
+  </li>
   <li>
     Supports large-scale web application development
-  </ li>
-</ ol>
-</ ul>
+  </li>
+</ol>
+</ul>
 
 It has the feature.
 
@@ -42,403 +42,403 @@ Mojolicious provides "a set of features needed to create a website".
 <ul>
   <li>
     Template, parameter acquisition, form processing, URL creation
-  </ li>
+  </li>
   <li>
     Sessions, cookies, WebSockets, asynchronous I / O, authentication
-  </ li>
+  </li>
   <li>
     SSL, JSON, web server
-  </ li>
-</ ul>
-</ ul>
+  </li>
+</ul>
+</ul>
 
 You can write HTML quickly using the "template function". "Parameters" are also easy to get, and "Sessions" are also supported by default. Since it supports "asynchronous I / O", it can handle even if the load becomes high after the service starts.
 
-Is there a web service you want to create? <b> If you want to create efficient and maintainable web apps, Mojolicious is for you. </ b>
+Is there a web service you want to create? <b> If you want to create efficient and maintainable web apps, Mojolicious is for you. </b>
 
-<h3> 2. Introduction to Mojolicious </ h3>
+<h3> 2. Introduction to Mojolicious </h3>
 
 Let's start by installing Mojolicious. After that, I will actually run Mojolicious.
 
-<h4> 2.1 Installing Mojolicious </ h4>
+<h4> 2.1 Installing Mojolicious </h4>
 
 I will explain the procedure to install Mojolicious.
 
 <ul>
   <li>
-    <a href="/blog/20140324139564.html"> Install Mojolicious </a>
-  </ li>
-</ ul>
+    <a href="/blog/20140324139564.html"> Install Mojolicious</a>
+  </li>
+</ul>
 
-<h4> 2.2 Let's display "Hello World" in Mojolicious </ h4>
+<h4> 2.2 Let's display "Hello World" in Mojolicious </h4>
 
 Let's create the simplest Hello World application with Mojolicious.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ self-> render (text =>'Hello World');
+  $self->render(text =>'Hello World');
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
-See <a href="/blog/20140325139572.html"> Smallest Web Application </a> for a description and how to execute it.
+See <a href="/blog/20140325139572.html"> Smallest Web Application</a> for a description and how to execute it.
 
-In the introduction to Mojolicious, I will write articles on the assumption that I have knowledge of "HTML" and "CSS". If you don't know the minimum "HTML" or "CSS" yet, <a href="/blog/20110417130624.html"> HTML basics </a> and <a href="/blog/20110419130638.html" Please refer to "> CSS Basics </a>.
+In the introduction to Mojolicious, I will write articles on the assumption that I have knowledge of "HTML" and "CSS". If you don't know the minimum "HTML" or "CSS" yet, <a href="/blog/20110417130624.html"> HTML basics</a> and <a href="/blog/20110419130638.html" Please refer to "> CSS Basics</a>.
 
-<h4> 2.3 Publication on the Internet </ h4>
+<h4> 2.3 Publication on the Internet </h4>
 
 "I want to publish a website as soon as I create it!"
 
-The easiest way is to publish your application using "Sakura Rental Server Standard". If you want to publish it immediately, please see <a href="/blog/20150425142996.html"> Publish the app on Sakura Rental Server Standard </a>. If you want to move on without publishing it yet, you can read it later.
+The easiest way is to publish your application using "Sakura Rental Server Standard". If you want to publish it immediately, please see <a href="/blog/20150425142996.html"> Publish the app on Sakura Rental Server Standard</a>. If you want to move on without publishing it yet, you can read it later.
 
-<b> The joy of running a site I created on the Internet is exceptional. </ b> Please give it a try!
+<b> The joy of running a site I created on the Internet is exceptional. </b> Please give it a try!
 
-<h3> Web application basics </ h3>
+<h3> Web application basics </h3>
 
 I will explain the basics of Web applications using Mojolicious.
 
 <ul>
   <li>
-    <a href="/blog/20140402139642.html"> How to receive parameters </a>
-  </ li>
+    <a href="/blog/20140402139642.html"> How to receive parameters</a>
+  </li>
   <li>
-    <a href="/blog/20140405139642.html"> Template basics </a>
-  </ li>
+    <a href="/blog/20140405139642.html"> Template basics</a>
+  </li>
   <li>
-    <a href="/blog/20140409139642.html"> Application and controller features </a>
-  </ li>
+    <a href="/blog/20140409139642.html"> Application and controller features</a>
+  </li>
   <li>
-    <a href="/blog/20140412139642.html"> Routing basics </a>
-  </ li>
+    <a href="/blog/20140412139642.html"> Routing basics</a>
+  </li>
   <li>
-    <a href="/blog/20140414139745.html"> Template helper </a>
-  </ li>
+    <a href="/blog/20140414139745.html"> Template helper</a>
+  </li>
   <li>
-    <a href="/blog/20140421139815.html"> Using forms </a>
-  </ li>
+    <a href="/blog/20140421139815.html"> Using forms</a>
+  </li>
   <li>
-    <a href="/blog/20140512139985.html"> Handling of Japanese </a>
-  </ li>
+    <a href="/blog/20140512139985.html"> Handling of Japanese</a>
+  </li>
   <li>
-    <a href="/blog/20140507139946.html"> Database basics </a>
-  </ li>
+    <a href="/blog/20140507139946.html"> Database basics</a>
+  </li>
   <li>
-    <a href="/blog/20140511139989.html"> Database and program linkage </a>
-  </ li>
-</ ul>
+    <a href="/blog/20140511139989.html"> Database and program linkage</a>
+  </li>
+</ul>
 
-<h3> Mojolicious Reference </ h3>
+<h3> Mojolicious Reference </h3>
 
 The Mojolicious Reference introduces a variety of techniques that were not covered in the introduction to Mojolicious. Mojolicious is a highly customizable framework with a wealth of features to support it.
 
 If you can master Mojolicious, you will be able to create websites and web services efficiently. There may also be new discoveries in functionality.
 
-<h3> Installation </ h3>
+<h3> Installation </h3>
 
 <ul>
   <li>
-    <a href="/blog/20120417133483.html"> Installing Mojolicious </a> --Installing Mojolicious on Windows, Mac OS X, Unix / Linux
-  </ li>
+    <a href="/blog/20120417133483.html"> Installing Mojolicious</a> --Installing Mojolicious on Windows, Mac OS X, Unix / Linux
+  </li>
   <li>
-    <a href="/blog/20110521130853.html"> Hello World! Application </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110521130853.html"> Hello World! Application</a>
+  </li>
+</ul>
 
-<h3> Route </ h3>
-
-<ul>
-  <li>
-    <a href="/blog/20110525130883.html"> Describe various routes with Mojolicious :: Lite </a>
-  </ li>
-  <li>
-    <a href="/blog/20101112127859.html"> Describe the process to be executed before all processes under under </a>
-  </ li>
-  <li>
-    <a href="/blog/20101014127859.html"> Check the list of routes </a>
-  </ li>
-  <li>
-    <a href="/blog/20120503133604.html"> Use reserved words such as colon (:) in URLs </a>
-  </ li>
-</ ul>
-
-<h3> Controller </ h3>
+<h3> Route </h3>
 
 <ul>
   <li>
-    <a href="/blog/20110501130707.html"> Get the value of the parameter </a>
-  </ li>
+    <a href="/blog/20110525130883.html"> Describe various routes with Mojolicious::Lite</a>
+  </li>
   <li>
-    <a href="/blog/20110424130671.html"> Convert parameters to hash reference </a>
-  </ li>
+    <a href="/blog/20101112127859.html"> Describe the process to be executed before all processes under under</a>
+  </li>
   <li>
-    <a href="/blog/20110420130648.html"> Get HTTP method </a>
-  </ li>
+    <a href="/blog/20101014127859.html"> Check the list of routes</a>
+  </li>
   <li>
-    <a href="/blog/20110502130707.html"> Get HTTP headers </a>
-  </ li>
-  <li>
-    <a href="/blog/20110405130586.html"> Setting default values ​​for stash </a>
-  </ li>
-  <li>
-    <a href="/blog/20110406130586.html"> Set a passphrase for signed cookies </a>
-  </ li>
-  <li>
-    <a href="/blog/20130308136272.html"> Pass the required values ​​in common for multiple controllers </a>
-  </ li>
-</ ul>
+    <a href="/blog/20120503133604.html"> Use reserved words such as colon (:) in URLs</a>
+  </li>
+</ul>
 
-<h3> Drawing templates and JSON </ h3>
+<h3> Controller </h3>
 
 <ul>
   <li>
-    <a href="/blog/20110408130611.html"> Explanation of template and JSON rendering render method in Mojolicious </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110501130707.html"> Get the value of the parameter</a>
+  </li>
+  <li>
+    <a href="/blog/20110424130671.html"> Convert parameters to hash reference</a>
+  </li>
+  <li>
+    <a href="/blog/20110420130648.html"> Get HTTP method</a>
+  </li>
+  <li>
+    <a href="/blog/20110502130707.html"> Get HTTP headers</a>
+  </li>
+  <li>
+    <a href="/blog/20110405130586.html"> Setting default values ​​for stash</a>
+  </li>
+  <li>
+    <a href="/blog/20110406130586.html"> Set a passphrase for signed cookies</a>
+  </li>
+  <li>
+    <a href="/blog/20130308136272.html"> Pass the required values ​​in common for multiple controllers</a>
+  </li>
+</ul>
 
-<h3> Character code </ h3>
+<h3> Drawing templates and JSON </h3>
 
 <ul>
   <li>
-    <a href="/blog/20110330130559.html"> UTF-8 handling </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110408130611.html"> Explanation of template and JSON rendering render method in Mojolicious</a>
+  </li>
+</ul>
 
-<h3> Utilities </ h3>
-
-<ul>
-  <li>
-    <a href="/blog/20091215126018.html"> Explanation of Mojolicious's utility </a>
-  </ li>
-  <li>
-    <a href="/blog/20091212126018.html"> Creating a web application template </a>
-  </ li>
-</ ul>
-
-<h3> Tag helper </ h3>
+<h3> Character code </h3>
 
 <ul>
   <li>
-    <a href="/blog/20110616130993.html"> List of tag helpers </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110330130559.html"> UTF-8 handling</a>
+  </li>
+</ul>
 
-<h3> Session </ h3>
-
-<ul>
-  <li>
-    <a href="/blog/20121227136093.html"> Handling of sessions </a>
-  </ li>
-</ ul>
-
-<h3> URL </ h3>
+<h3> Utilities </h3>
 
 <ul>
   <li>
-    <a href="/blog/20101128129876.html"> Technique to freely generate "URL" with Mojolicious </a>
-  </ li>
-</ ul>
+    <a href="/blog/20091215126018.html"> Explanation of Mojolicious's utility</a>
+  </li>
+  <li>
+    <a href="/blog/20091212126018.html"> Creating a web application template</a>
+  </li>
+</ul>
 
-<h3> Plugins </ h3>
+<h3> Tag helper </h3>
+
+<ul>
+  <li>
+    <a href="/blog/20110616130993.html"> List of tag helpers</a>
+  </li>
+</ul>
+
+<h3> Session </h3>
+
+<ul>
+  <li>
+    <a href="/blog/20121227136093.html"> Handling of sessions</a>
+  </li>
+</ul>
+
+<h3> URL </h3>
+
+<ul>
+  <li>
+    <a href="/blog/20101128129876.html"> Technique to freely generate "URL" with Mojolicious</a>
+  </li>
+</ul>
+
+<h3> Plugins </h3>
 
 Introducing how to use Mojolicious plugins and modules.
 
 <ul>
   <li>
-    <a href="/blog/20120907134700.html"> Add plugin namespace </a>
-  </ li>
+    <a href="/blog/20120907134700.html"> Add plugin namespace</a>
+  </li>
   <li>
-    <a href="/blog/20130731137527.html "> Mojolicious :: Plugin :: AutoRoute-Mojolicious plugin for automatically generating routes </a>
-  </ li>
+    <a href="/blog/20130731137527.html "> Mojolicious::Plugin::AutoRoute-Mojolicious plugin for automatically generating routes</a>
+  </li>
   <li>
-    <a href="https://github.com/yuki-kimoto/Mojolicious-Plugin-SQLiteViewerLite"> Mojolicious :: Plugin :: SQLiteViewerLite </a> --Plugin for viewing SQLite table information from a browser
-  </ li>
+    <a href="https://github.com/yuki-kimoto/Mojolicious-Plugin-SQLiteViewerLite"> Mojolicious::Plugin::SQLiteViewerLite</a> --Plugin for viewing SQLite table information from a browser
+  </li>
   <li>
-    <a href="https://github.com/yuki-kimoto/Mojolicious-Plugin-MySQLViewerLite"> Mojolicious :: Plugin :: MySQLViewerLite </a> --Plugin for viewing MySQL table information from a browser
-  </ li>
-</ ul>
+    <a href="https://github.com/yuki-kimoto/Mojolicious-Plugin-MySQLViewerLite"> Mojolicious::Plugin::MySQLViewerLite</a> --Plugin for viewing MySQL table information from a browser
+  </li>
+</ul>
 
-<h3> Exam </ h3>
-
-<ul>
-  <li>
-    <a href="/blog/20101017127859.html"> Mojolicious's "automatic test" technique </a>
-  </ li>
-</ ul>
-
-<h3> Deploy </ h3>
+<h3> Exam </h3>
 
 <ul>
   <li>
-    <a href="/blog/20120406133367.html"> morbo --Mojolicious development server </a>
-  </ li>
-  <li>
-    <a href="/blog/20100906127859.html"> Deploy the PSGI app with Starman </a>
-  </ li>
-  <li>
-    <a href="/blog/20110324130551.html"> Resolve URL issues when connecting via a proxy server </a>
-  </ li>
-  <li>
-    <a href="/blog/20110120130016.html"> What to do if you get a "Service Temporarily Unavailable" error when using Apache mod_proxy </a>
-  </ li>
-  <li>
-    <a href="/blog/20110122130016.html"> hypnotoad command </a>
-  </ li>
-  <li>
-    <a href="/blog/20131123138521.html"> How to check when hypnotoad does not start </a>
-  </ li>
-  <li>
-    <a href="/blog/20110124130016.html"> Test :: Perform tests that cannot be performed by Mojo </a>
-  </ li>
-  <li>
-    <a href="/blog/20120405133367.html"> Operate Mojolicious in a subdirectory </a>
-  </ li>
-  <li>
-    <a href="/blog/20120602133929.html"> Check if hypnotoad is running properly </a>
-  </ li>
-  <li>
-    <a href="/blog/20121121135351.html"> How to manage Mojolicious applications from the root user </a>
-  </ li>
-  <li>
-    <a href="/blog/20130304136235.html"> Run hypnotoad with specific user privileges (or group privileges) </a>
-  </ li>
-  <li>
-    <a href="/blog/20130702137274.html"> How to switch to a general user and execute commands while you are the root user </a>
-  </ li>
-</ ul>
+    <a href="/blog/20101017127859.html"> Mojolicious's "automatic test" technique</a>
+  </li>
+</ul>
 
-<h3> Cooperation with SSL </ h3>
-<ul>
-  <li>
-    <a href="/blog/20130527136961.html"> Tell that it is SSL communication from the reverse proxy </a>
-  </ li>
-</ ul>
-
-<h3> Web scraping </ h3>
+<h3> Deploy </h3>
 
 <ul>
   <li>
-    <a href="/blog/20120513133704.html"> Save content on the web as a file with Mojo :: UserAgent </a>
-  </ li>
-</ ul>
+    <a href="/blog/20120406133367.html"> morbo --Mojolicious development server</a>
+  </li>
+  <li>
+    <a href="/blog/20100906127859.html"> Deploy the PSGI app with Starman</a>
+  </li>
+  <li>
+    <a href="/blog/20110324130551.html"> Resolve URL issues when connecting via a proxy server</a>
+  </li>
+  <li>
+    <a href="/blog/20110120130016.html"> What to do if you get a "Service Temporarily Unavailable" error when using Apache mod_proxy</a>
+  </li>
+  <li>
+    <a href="/blog/20110122130016.html"> hypnotoad command</a>
+  </li>
+  <li>
+    <a href="/blog/20131123138521.html"> How to check when hypnotoad does not start</a>
+  </li>
+  <li>
+    <a href="/blog/20110124130016.html"> Test::Perform tests that cannot be performed by Mojo</a>
+  </li>
+  <li>
+    <a href="/blog/20120405133367.html"> Operate Mojolicious in a subdirectory</a>
+  </li>
+  <li>
+    <a href="/blog/20120602133929.html"> Check if hypnotoad is running properly</a>
+  </li>
+  <li>
+    <a href="/blog/20121121135351.html"> How to manage Mojolicious applications from the root user</a>
+  </li>
+  <li>
+    <a href="/blog/20130304136235.html"> Run hypnotoad with specific user privileges (or group privileges)</a>
+  </li>
+  <li>
+    <a href="/blog/20130702137274.html"> How to switch to a general user and execute commands while you are the root user</a>
+  </li>
+</ul>
 
-<h3> Performance </ h3>
+<h3> Cooperation with SSL </h3>
+<ul>
+  <li>
+    <a href="/blog/20130527136961.html"> Tell that it is SSL communication from the reverse proxy</a>
+  </li>
+</ul>
+
+<h3> Web scraping </h3>
 
 <ul>
   <li>
-    <a href="/blog/20110920132004.html"> Use EV to speed up the event loop </a>
-  </ li>
-</ ul>
+    <a href="/blog/20120513133704.html"> Save content on the web as a file with Mojo::UserAgent</a>
+  </li>
+</ul>
 
-<h3> hypnotoad prefork server </ h3>
-
-<ul>
-  <li>
-    <a href="/blog/20110922132018.html"> hypnotoad server timeout issue </a>
-  </ li>
-  <li>
-    <a href="/blog/20121121135351.html"> How to manage Mojolicious applications from the root user </a>
-  </ li>
-</ ul>
-
-<h3> Non-blocking IO </ h3>
-<ul>
-  <li>
-    <a href="/blog/20130604137030.html"> Non-blocking IO understands which part is non-blocking </a>
-  </ li>
-</ ul>
-
-<h3> Others </ h3>
+<h3> Performance </h3>
 
 <ul>
   <li>
-    <a href="/blog/20120512133704.html"> Mojolicious templates can be dangerous to import functions </a>
-  </ li>
-  <li>
-    <a href="/blog/20100907127859.html"> Convenient API </a>
-  </ li>
-  <li>
-    <a href="/blog/20101114127859.html"> Things to consider when migrating from Mojolicious :: Lite to Mojolicious </a>
-  </ li>
-  <li>
-    <a href="/blog/20110329130559.html"> Use Mojolicious and AnyEvent at the same time </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110920132004.html"> Use EV to speed up the event loop</a>
+  </li>
+</ul>
 
-<h3> Release information </ h3>
+<h3> hypnotoad prefork server </h3>
 
 <ul>
   <li>
-    <a href="/blog/20150304142547.html"> Mojolicious 6 has been released </a>
-  </ li>
+    <a href="/blog/20110922132018.html"> hypnotoad server timeout issue</a>
+  </li>
   <li>
-    <a href="/blog/20140603140176.html"> Mojolicious 5 has been released </a>
-  </ li>
-</ ul>
+    <a href="/blog/20121121135351.html"> How to manage Mojolicious applications from the root user</a>
+  </li>
+</ul>
 
-<h3> Sakura rental server </ h3>
+<h3> Non-blocking IO </h3>
+<ul>
+  <li>
+    <a href="/blog/20130604137030.html"> Non-blocking IO understands which part is non-blocking</a>
+  </li>
+</ul>
+
+<h3> Others </h3>
+
+<ul>
+  <li>
+    <a href="/blog/20120512133704.html"> Mojolicious templates can be dangerous to import functions</a>
+  </li>
+  <li>
+    <a href="/blog/20100907127859.html"> Convenient API</a>
+  </li>
+  <li>
+    <a href="/blog/20101114127859.html"> Things to consider when migrating from Mojolicious::Lite to Mojolicious</a>
+  </li>
+  <li>
+    <a href="/blog/20110329130559.html"> Use Mojolicious and AnyEvent at the same time</a>
+  </li>
+</ul>
+
+<h3> Release information </h3>
+
+<ul>
+  <li>
+    <a href="/blog/20150304142547.html"> Mojolicious 6 has been released</a>
+  </li>
+  <li>
+    <a href="/blog/20140603140176.html"> Mojolicious 5 has been released</a>
+  </li>
+</ul>
+
+<h3> Sakura rental server </h3>
 
 An article useful for using Mojolicious on Sakura's rental server.
 
 <ul>
   <li>
-    <a href="/blog/20101221130016.html"> The procedure from starting Mojolicious development on Windows to publishing it on Sakura's rental server </a>
-  </ li>
+    <a href="/blog/20101221130016.html"> The procedure from starting Mojolicious development on Windows to publishing it on Sakura's rental server</a>
+  </li>
   <li>
-    <a href="/blog/20101224130059.html"> Use static files such as CSS with Mojolicious </a>
-  </ li>
+    <a href="/blog/20101224130059.html"> Use static files such as CSS with Mojolicious</a>
+  </li>
   <li>
-    <a href="/blog/20101227127859.html"> What to do if a "505 Internal Server" error occurs on Sakura's rental server </a>
-  </ li>
+    <a href="/blog/20101227127859.html"> What to do if a "505 Internal Server" error occurs on Sakura's rental server</a>
+  </li>
   <li>
-    <a href="/blog/20110107130016.html"> Script to install CPAN module with Sakura rental server light plan </a>
-  </ li>
-</ ul>
+    <a href="/blog/20110107130016.html"> Script to install CPAN module with Sakura rental server light plan</a>
+  </li>
+</ul>
 
-<h3> Mojolicious sample </ h3>
+<h3> Mojolicious sample </h3>
 
 Introducing a sample using Mojolicious.
 
 <ul>
   <li>
-    <a href="/blog/20100109126494.html"> A word message board </a> --Easy bulletin board
-  </ li>
+    <a href="/blog/20100109126494.html"> A word message board</a> --Easy bulletin board
+  </li>
   <li>
-    <a href="/blog/20100113126494.html"> Image board </a> --Easy image board
-  </ li>
+    <a href="/blog/20100113126494.html"> Image board</a> --Easy image board
+  </li>
   <li>
-    <a href="/blog/20100115126494.html"> Search application </a> --Simple search application
-  </ li>
+    <a href="/blog/20100115126494.html"> Search application</a> --Simple search application
+  </li>
   <li>
-    <a href="/blog/20100331127089.html"> Simple real-time clock </a> --Real-time clock using WebSocket
-  </ li>
+    <a href="/blog/20100331127089.html"> Simple real-time clock</a> --Real-time clock using WebSocket
+  </li>
   <li>
-    <a href="/blog/20100403127089.html"> Simple real-time chat </a> --Real-time chat using WebSocket
-  </ li>
+    <a href="/blog/20100403127089.html"> Simple real-time chat</a> --Real-time chat using WebSocket
+  </li>
   <li>
-    <a href="https://github.com/yuki-kimoto/Portablebbs"> Portable BBS </a> --Sample for creating a portable web app
-  </ li>
+    <a href="https://github.com/yuki-kimoto/Portablebbs"> Portable BBS</a> --Sample for creating a portable web app
+  </li>
   <li>
-    <a href="https://github.com/yuki-kimoto/gitweblite"> Gitweb Lite </a> --Git repository viewer. Porting gitweb.cgi to Mojolicious.
-  </ li>
-</ ul>
+    <a href="https://github.com/yuki-kimoto/gitweblite"> Gitweb Lite</a> --Git repository viewer. Porting gitweb.cgi to Mojolicious.
+  </li>
+</ul>
 
 
-<h3> Mojolicious documentation </ h3>
+<h3> Mojolicious documentation </h3>
 
 The official document of Mojolicious. This document describes all the features of Mojolicious. If you don't know, always refer to this.
 
 <ul>
   <li>
-    <a href="https://en.mojodoc.perlzemi.com"> Mojolicious documentation </a>
-  </ li>
-</ ul>
+    <a href="https://en.mojodoc.perlzemi.com"> Mojolicious documentation</a>
+  </li>
+</ul>
 
-<h3> Mojolicious Startup </ h3>
+<h3> Mojolicious Startup </h3>
 
 Mojolicious Startup describes new web development with Perl using Mojolicious. With Mojolicious and Perl, you can start web development with both development efficiency and performance at low cost.
 
@@ -446,4 +446,4 @@ The combination of Mojolicious and Perl is a good choice for your business start
 
 If you have Perl assets written in combination with CGI, you can replace just the web development part with Mojolicious, which has high development efficiency and performance.
 
-<a href="https://en.webapp.perlzemi.com/"> Mojolicious Startup-New Web Development with Perl </a>
+<a href="https://en.webapp.perlzemi.com/"> Mojolicious Startup-New Web Development with Perl</a>

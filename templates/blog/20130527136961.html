@@ -1,8 +1,8 @@
-<h2> Tell that it is SSL communication from the reverse proxy </ h2>
+<h2> Tell that it is SSL communication from the reverse proxy </h2>
 
 
 
-Set the <strong> X-Forwarded-HTTPS </ strong> request header to tell Mojolicious that SSL communication is taking place when using a reverse proxy.
+Set the <strong> X-Forwarded-HTTPS </strong> request header to tell Mojolicious that SSL communication is taking place when using a reverse proxy.
 
 The following is an example of Apache.
 
@@ -12,13 +12,13 @@ The following is an example of Apache.
    <Proxy *>
      Order deny, allow
      Allow from all
-   </ Proxy>
+   </Proxy>
    ProxyRequests Off
    ProxyPreserveHost On
    ProxyPass / http: // localhost: 20000 / keepalive = On
    ProxyPassReverse / http: // localhost: 20000 /
    RequestHeader set X-Forwarded-HTTPS "1"
-</ VirtualHost>
-</ pre>
+</VirtualHost>
+</pre>
 
 If you do this, Mojolicious will recognize that you are communicating with the https schema, and the url_for method etc. will correctly draw the https schema.

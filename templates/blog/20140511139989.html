@@ -1,48 +1,48 @@
-<h2> Database and program linkage </ h2>
+<h2> Database and program linkage </h2>
 
 
 
-After learning the basics of databases, let's learn how to <strong> programmatically access databases </ strong>.
+After learning the basics of databases, let's learn how to <strong> programmatically access databases </strong>.
 
-<h3> Install DBD :: SQLite </ h3>
+<h3> Install DBD::SQLite </h3>
 
-First of all, you need to be able to use SQLite. Use the cpan command for Windows and the cpanm command for Linux and Mac OS X to install the <strong> DBD :: SQLite </ strong> module.
+First of all, you need to be able to use SQLite. Use the cpan command for Windows and the cpanm command for Linux and Mac OS X to install the <strong> DBD::SQLite </strong> module.
 
 <pre>
 #Windows
-cpan DBD :: SQLite
+cpan DBD::SQLite
 
 #Linux, Mac OS X
-cpanm DBD :: SQLite
-</ pre>
+cpanm DBD::SQLite
+</pre>
 
-<h3> Install DBIx :: Connector </ h3>
+<h3> Install DBIx::Connector </h3>
 
 Perl often tells you to use DBI when working with databases, but when creating a website, don't just use DBI. When creating a website, it is placed in the production environment on the prefork server, but DBI does not manage the connection with the database, so there is a problem that the connection is interrupted.
 
-Therefore, you need to use a module that has a function in DBI that automatically manages the connection with the database. This time, we will use a module called DBIx :: Connector, which has an automatic connection management function in addition to the DBI function. Keep in mind that such modules are called connection managers.
+Therefore, you need to use a module that has a function in DBI that automatically manages the connection with the database. This time, we will use a module called DBIx::Connector, which has an automatic connection management function in addition to the DBI function. Keep in mind that such modules are called connection managers.
 
-Install DBIx :: Connector.
+Install DBIx::Connector.
 
 <pre>
 #Windows
-cpan DBIx :: Connector
+cpan DBIx::Connector
 
 #Linux, Mac OS X
-cpanm DBIx :: Connector
-</ pre>
+cpanm DBIx::Connector
+</pre>
 
-<h3> Connection to database </ h3>
+<h3> Connection to database </h3>
 
-Now let's access the database using DBIx :: Connector. First, create a DBIx :: Connector object. Use the new method to create a DBIx :: Connector object.
+Now let's access the database using DBIx::Connector. First, create a DBIx::Connector object. Use the new method to create a DBIx::Connector object.
 
 <pre>
-use DBIx :: Connector;
+use DBIx::Connector;
 
 #Create connection
-my $ dsn ='dbi: SQLite: dbname = test.db';
-my $ conn = DBIx :: Connector-> new (
-  $ dsn, # data source name
+my $dsn ='dbi: SQLite: dbname = test.db';
+my $conn = DBIx::Connector->new(
+  $dsn, # data source name
   undef, #username
   undef, # password
   # DBI options
@@ -52,31 +52,31 @@ my $ conn = DBIx :: Connector-> new (
     AutoCommit => 1
   }
 );
-</ pre>
+</pre>
 
-The new argument of DBIx :: Connector is the same as the argument of the connect method of DBI. The first argument of new specifies the information to connect to the database called the data source. The format is a bit special, but let's remember.
+The new argument of DBIx::Connector is the same as the argument of the connect method of DBI. The first argument of new specifies the information to connect to the database called the data source. The format is a bit special, but let's remember.
 
  You can specify the name of the database to connect to in the data source. In SQLite, the database is simply created as a file, so specify any name you like as the database name. The return value is an object called a database handle for communicating with the database.
 
 When you do this, you should have a file called test.db in your current directory.
 
-<h4> Connect by specifying the user name and password </ h4>
+<h4> Connect by specifying the user name and password </h4>
 
 No username or password is required to connect to a database created with SQLite. However, standard databases such as MySQL, PostgreSQL, and Oracle require you to specify a username and password when connecting.
 
 To connect using DBI with a username and password: Specify the user name in the second argument and the password in the third argument.
 
 <pre>
-my $ conn = DBIx :: Connector-> new ($ dsn, $ user, $ password);
-</ pre>
+my $conn = DBIx::Connector->new($dsn, $user, $password);
+</pre>
 
-<h4> Explanation of options </ h4>
+<h4> Explanation of options </h4>
 
-DBI options can be specified in the 4th argument of the new method of DBIx :: Connector.
+DBI options can be specified in the 4th argument of the new method of DBIx::Connector.
 
 <pre>
-DBIx :: Connector-> new ($ dsn, $ user, $ password, {opt1 => $ val1, opt2 => $ val2, ..});
-</ pre>
+DBIx::Connector->new($dsn, $user, $password, {opt1 => $val1, opt2 => $val2, ..});
+</pre>
 
 The default behavior of DBI is to print a warning to standard error if an error occurs.
 
@@ -86,30 +86,30 @@ To prevent the warning from being output, do the following.
 
 <pre>
 PrintError => 0
-</ pre>
+</pre>
 
 To output an error message and terminate the program, do the following.
 
 <pre>
 RaiseError => 1
-</ pre>
+</pre>
 
 DBI also has an option called AutoCommit. This is an option that decides whether to do something called commit automatically or not. The default value may differ depending on the database driver, so it is better to specify it explicitly. In my case I set it to commit automatically and set AutoCommit to 0 when a transaction is needed.
 
 Therefore, when connecting to the database based on this, I think it is better to write something like the following sample.
 
-<h3> Get database handle </ h3>
+<h3> Get database handle </h3>
 
-To access the database, you need to get the database handle from the connection manager. You can get the database handle with the <strong> dbh </ strong> method.
+To access the database, you need to get the database handle from the connection manager. You can get the database handle with the <strong> dbh </strong> method.
 
 <pre>
 #Get database handle
-my $ dbh = $ conn-> dbh;
-</ pre>
+my $dbh = $conn->dbh;
+</pre>
 
 Use this to access the database.
 
-<h3> SQL execution </ h3>
+<h3> SQL execution </h3>
 
 SQL is the query language used to create tables, register data in databases, and retrieve data. I will explain the basic SQL from now on. Here, we will first explain how to execute SQL.
 
@@ -118,99 +118,99 @@ There are two ways to execute SQL.
 <ol>
   <li>
     How to execute directly using do method
-  </ li>
+  </li>
   <li>
     How to prepare a statement handle with the prepare method and then execute it with the execute method
-  </ li>
-</ ol>
+  </li>
+</ol>
 
 There are two methods, but in principle, the second method is used. Websites will insert data received from users into the database, but the first method is a security risk, so be sure to use the second method.
 
 This time, I will explain only the second method.
 
-<h3> Add record insert </ h3>
+<h3> Add record insert </h3>
 
 Use the insert statement to insert a record into the table.
 
 <pre>
 #Preparing the statement handle
-my $ sth = $ dbh-> prepare ('insert into book (id, title, author) values ​​(?,?,?)');
+my $sth = $dbh->prepare('insert into book (id, title, author) values ​​(?,?,?)');
 
 #Execute SQL
 my @params = ('00000001','Perl','kimoto');
-$ sth-> execute (@params);
-</ pre>
+$sth->execute(@params);
+</pre>
 
 First, prepare the statement handle with the prepare statement. In the parameter part, describe "?". This is called a placeholder.
 
-To actually execute the SQL, call the <strong> execute </ strong> method from the statement handle. In the argument, specify the value to be embedded in the placeholder as an array.
+To actually execute the SQL, call the <strong> execute </strong> method from the statement handle. In the argument, specify the value to be embedded in the placeholder as an array.
 
 Be sure to use placeholders when using values ​​received from users. If you use placeholders, the values ​​will be quoted properly, so it's safe.
 
-<h3> Record update update </ h3>
+<h3> Record update update </h3>
 
 Use the update statement to update the data in the table.
 
 <pre>
 #Preparing the statement handle
-my $ sth = $ dbh-> prepare ('update book set title =? where author =?');
+my $sth = $dbh->prepare('update book set title =? where author =?');
 
 #Execute SQL
 my @params = ('Ruby','taro',);
-$ sth-> execute (@params);
-</ pre>
+$sth->execute(@params);
+</pre>
 
-<h3> Delete record delete </ h3>
+<h3> Delete record delete </h3>
 
 Use the delete statement to delete a record.
 
 <pre>
 #Preparing the statement handle
-my $ sth = $ dbh-> prepare ('delete from book where id =?');
+my $sth = $dbh->prepare('delete from book where id =?');
 
 #Execute SQL
 my @params = ('00000001');
-$ sth-> execute (@params);
-</ pre>
+$sth->execute(@params);
+</pre>
 
-<h3> Get record select </ h3>
+<h3> Get record select </h3>
 
 Use a select statement to get the column. It differs from other SQL statements in that it performs a process called fetch to retrieve each row.
 
 <pre>
 #Preparing the statement handle
-my $ sth = $ dbh-> prepare ('select * from book where title like?');
+my $sth = $dbh->prepare('select * from book where title like?');
 
 #Execute SQL
-my @params = ('% Perl%');
-$ sth-> execute (@params);
+my @params = ('%Perl%');
+$sth->execute(@params);
 
 #Fetch
-while (my $ row = $ sth-> fetchrow_hashref) {
-  my $ id = $ row-> {id};
-  my $ title = $ row-> {title};
+while (my $row = $sth->fetchrow_hashref) {
+  my $id = $row->{id};
+  my $title = $row->{title};
 
-  print "id: $ id, title: $ title \ n";
+  print "id: $id, title: $title\n";
 }
-</ pre>
+</pre>
 
-You can use the <strong> fetchrow_hashref </ strong> method to fetch the data for each row as a hash reference. Repeat until you get all the lines in the <a href="/blog/20100123126425.html"> while statement </a>.
+You can use the <strong> fetchrow_hashref </strong> method to fetch the data for each row as a hash reference. Repeat until you get all the lines in the <a href="/blog/20100123126425.html"> while statement</a>.
 
-<h3> Handling of Japanese </ h3>
+<h3> Handling of Japanese </h3>
 
 You explained that the internal character string is used inside the program, and when it is output to the outside, it is converted to a byte character string. The same idea applies to databases. When you pass data to the database, you need to convert the internal string to a byte string.
 
-But this is very annoying, isn't it? However, there is an option called <b> sqlite_unicode </ b> that does this automatically, so if you specify the option, you don't have to think about anything else.
+But this is very annoying, isn't it? However, there is an option called <b> sqlite_unicode </b> that does this automatically, so if you specify the option, you don't have to think about anything else.
 
 Let's specify it as an option when connecting.
 
 <pre>
-use DBIx :: Connector;
+use DBIx::Connector;
 
 #Create connection
-my $ dsn ='dbi: SQLite: dbname = test.db';
-my $ conn = DBIx :: Connector-> new (
-  $ dsn, # data source name
+my $dsn ='dbi: SQLite: dbname = test.db';
+my $conn = DBIx::Connector->new(
+  $dsn, # data source name
   undef, #username
   undef, # password
   # DBI options
@@ -221,9 +221,9 @@ my $ conn = DBIx :: Connector-> new (
     sqlite_unicode => 1 # Automatically convert internal strings to UTF-8 byte strings
   }
 );
-</ pre>
+</pre>
 
-<h3> Sample code </ h3>
+<h3> Sample code </h3>
 
 Let's write a program that can actually be run. SQLite also allows you to create a database in memory, which makes testing easier. In the data source name, specify ": ​​memory:" for "dbname". Save the source code in UTF-8.
 
@@ -232,13 +232,13 @@ use strict;
 use warnings;
 use utf8;
 
-use DBIx :: Connector;
+use DBIx::Connector;
 use Encode'encode';
 
 #Create connection
-my $ dsn ='dbi: SQLite: dbname =: memory:';
-my $ conn = DBIx :: Connector-> new (
-  $ dsn, # data source name
+my $dsn ='dbi: SQLite: dbname =: memory:';
+my $conn = DBIx::Connector->new(
+  $dsn, # data source name
   undef, #username
   undef, # password
   # DBI options
@@ -251,57 +251,57 @@ my $ conn = DBIx :: Connector-> new (
 );
 
 #Get database handle
-my $ dbh = $ conn-> dbh;
+my $dbh = $conn->dbh;
 
 #Create table
-my $ create_table_sql = << "EOS";
+my $create_table_sql = << "EOS";
 create table book (
   id primary key,
   title not null default'',
   author not null default''''
 );
 EOS
-$ dbh-> do ($ create_table_sql);
+$dbh->do($create_table_sql);
 
 #insert statement
-my $ sth = $ dbh-> prepare ('insert into book (id, title, author) values ​​(?,?,?)');
-$ sth-> execute ('00000001','Perl','kimoto');
+my $sth = $dbh->prepare('insert into book (id, title, author) values ​​(?,?,?)');
+$sth->execute('00000001','Perl','kimoto');
 
 #update statement
-$ sth = $ dbh-> prepare ('update book set title =? where author =?');
-$ sth-> execute ('Ruby','taro');
+$sth = $dbh->prepare('update book set title =? where author =?');
+$sth->execute('Ruby','taro');
 
 #delete statement
-$ sth = $ dbh-> prepare ('delete from book where id =?');
-$ sth-> execute ('00000001');
+$sth = $dbh->prepare('delete from book where id =?');
+$sth->execute('00000001');
 
 #insert statement
-$ sth = $ dbh-> prepare ('insert into book (id, title, author) values ​​(?,?,?)');
-$ sth-> execute ('00000001','Perl Tutorial','Kimoto');
-$ sth-> execute ('00000002','Perl advantage','Ken');
-$ sth-> execute ('00000003','Ruby Tutorial','Yosuke');
+$sth = $dbh->prepare('insert into book (id, title, author) values ​​(?,?,?)');
+$sth->execute('00000001','Perl Tutorial','Kimoto');
+$sth->execute('00000002','Perl advantage','Ken');
+$sth->execute('00000003','Ruby Tutorial','Yosuke');
 
 #select statement
-$ sth = $ dbh-> prepare ('select * from book where title like?');
-$ sth-> execute ('% Perl%');
+$sth = $dbh->prepare('select * from book where title like?');
+$sth->execute('%Perl%');
 
 #Fetch
-while (my $ row = $ sth-> fetchrow_hashref) {
-  my $ id = $ row-> {id};
-  my $ title = $ row-> {title};
-  my $ author = $ row-> {author};
+while (my $row = $sth->fetchrow_hashref) {
+  my $id = $row->{id};
+  my $title = $row->{title};
+  my $author = $row->{author};
 
-  my $ line = "id: $ id, title: $ title, author: $ author \ n";
+  my $line = "id: $id, title: $title, author: $author\n";
   
   # Output in cp932 for Windows, UTF-8 for other OS
-  my $ enc = $ ^ O eq'MSWin32'?'cp932':'UTF-8';
-  print encode ($ enc, $ line);
+  my $enc = $^ O eq'MSWin32'?'cp932':'UTF-8';
+  print encode ($enc, $line);
 }
-</ pre>
+</pre>
 
 The contents of the row are displayed only if the column "title" contains "Perl".
 
 <pre>
 id: 00000001, title: Perl Tutorial, author: Kimoto
 id: 00000002, title: Perl advantage, author: Ken
-</ pre>
+</pre>

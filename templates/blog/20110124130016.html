@@ -1,13 +1,13 @@
-<h2> Test :: Do a test that Mojo can't run </ h2>
+<h2> Test::Do a test that Mojo can't run </h2>
 
 
 
-Test :: Mojo is useful, but some tests cannot be run with Test :: Mojo's methods. For example, let's say you want to write a test that doesn't contain a string. In this case, the Test :: Mojo method cannot be used for testing.
-In such cases, get the content directly and use the Test :: More method to test it. Content can be retrieved as "$ t-> tx-> res-> body".
+Test::Mojo is useful, but some tests cannot be run with Test::Mojo's methods. For example, let's say you want to write a test that doesn't contain a string. In this case, the Test::Mojo method cannot be used for testing.
+In such cases, get the content directly and use the Test::More method to test it. Content can be retrieved as "$t->tx->res->body".
 
 <pre>
 #Test to see that the content does not contain ppp
-$ t-> get_ok ('/ foo');
-my $ content = $ t-> tx-> res-> body;
-is (index ($ content,'ppp'), -1);
-</ pre>
+$t->get_ok('/ foo');
+my $content = $t->tx->res->body;
+is (index($content,'ppp'), -1);
+</pre>

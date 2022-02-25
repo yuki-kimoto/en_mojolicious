@@ -1,14 +1,14 @@
-<h2> Mojolicious 6 has been released </ h2>
+<h2> Mojolicious 6 has been released </h2>
 
 Mojolicious 6 was released the other day, although the information was delayed a little. Mojolicious is a Perl web framework.
 
 <blockquote>
-<a href="http://blog.kraih.com/post/112170845701/mojolicious-6-0-released-perl-real-time-web"> Mojolicious 6.0 released: Perl real-time web framework </a>
-</ blockquote>
+<a href="http://blog.kraih.com/post/112170845701/mojolicious-6-0-released-perl-real-time-web"> Mojolicious 6.0 released: Perl real-time web framework</a>
+</blockquote>
 
 I have translated the announcement of Mojolicious author Sebastian Riedel into Japanese.
 
-<h3> Release report </ h3>
+<h3> Release report </h3>
 
 We are delighted to announce the release of Mojolicious 6.0 (Clinking Beer Mugs). This is the first major release with new members on the core team. Welcome to Jan Henning Thorsen.
 
@@ -24,44 +24,44 @@ This year's main focus is on improving performance. All parts are much faster an
 
 <ul>
   <li>
-    Nested helper. Helpers can now be nested in namespaces. For example, the built-in helper reply-> asset.
-  </ li>
+    Nested helper. Helpers can now be nested in namespaces. For example, the built-in helper reply->asset.
+  </li>
   <li>
-    Support for SOCKS 5 through IO :: Socket :: Socks.
-  </ li>
+    Support for SOCKS 5 through IO::Socket::Socks.
+  </li>
   <li>
-    Support for non-blocking name resolution through Net :: DNS :: Native.
-  </ li>
+    Support for non-blocking name resolution through Net::DNS::Native.
+  </li>
   <li>
-    New Mojo :: DOM. The API has been completely redesigned. We also added support for case-sensitive attribute selectors. "Like" in [foo = ”bar” i].
-  </ li>
+    New Mojo::DOM. The API has been completely redesigned. We also added support for case-sensitive attribute selectors. "Like" in [foo = ”bar” i].
+  </li>
   <li>
     Support for RFC 3339. Almost all new REST APIs use it.
-  </ li>
+  </li>
   <li>
     Content negotiation. Content negotiation can be used with If-None-Match and If-Modified-Since.
-  </ li>
+  </li>
   <li>
-    IPv6 support everywhere: IO :: Socket :: IP has become so reliable that I've always used it.
-  </ li>
+    IPv6 support everywhere: IO::Socket::IP has become so reliable that I've always used it.
+  </li>
   <li>
-    Do not use wantarray (). It has been completely removed from the code to prevent security vulnerabilities.
-  </ li>
+    Do not use wantarray(). It has been completely removed from the code to prevent security vulnerabilities.
+  </li>
   <li>
-    Mojo :: Pg and Minion: We have reached a stable 1.0 release. This has become a spin-off project.
-  </ li>
+    Mojo::Pg and Minion: We have reached a stable 1.0 release. This has become a spin-off project.
+  </li>
   <li>
     If you want to know more, take a look at Changes on GitHub.
-  </ li>
-</ ul>
+  </li>
+</ul>
 
 <blockquote>
-<a href="http://cpansearch.perl.org/src/SRI/Mojolicious-6.0/Changes"> Mojolicious 6.0 Changes </a>
-</ blockquote>
+<a href="http://cpansearch.perl.org/src/SRI/Mojolicious-6.0/Changes"> Mojolicious 6.0 Changes</a>
+</blockquote>
 
 have fun!
 
-<h3> Pick up the part where compatibility is broken with Mojolicious 6 </ h3>
+<h3> Pick up the part where compatibility is broken with Mojolicious 6 </h3>
 
 Mojolicious is one of Perl's web frameworks that supports non-blocking I / O so that it handles parallel HTTP requests optimally.
 
@@ -69,70 +69,70 @@ Mojolicious's compatibility is high overall, but for the future it allows for pa
 
 There are some parts of Mojolicious 6 that are out of compatibility, so I will write about those parts.
 
-The <h4> param method is no longer evaluated in list context. </ h4>
+The <h4> param method is no longer evaluated in list context. </h4>
 
 The param method is no longer evaluated in list context. To prevent security vulnerabilities, all parts of the code that use wantarray have been removed.
 
 Note that code like the following will no longer work as it used to.
 
 <blockquote>
-my @params = $ c-> param ('title');
-</ blockquote>
+my @params = $c->param('title');
+</blockquote>
 
-The <h4> param method no longer accepts array references. </ h4>
+The <h4> param method no longer accepts array references. </h4>
 
 The param method no longer accepts array references. Please note that the following description will no longer work as before.
 
 <blockquote>
-my @params = $ c-> param (['title','author']);
-</ blockquote>
+my @params = $c->param(['title','author']);
+</blockquote>
 
 It seems that some specification changes of the param method will affect a wide range, but since Web applications are an area where it is highly necessary to reduce security risks, I feel that this is unavoidable. If you think the above two codes may be used, please check them out.
 
-<h4> Mojo :: JSON object-oriented support is gone </ h4>
+<h4> Mojo::JSON object-oriented support is gone </h4>
 
-Mojo :: JSON object-oriented support is gone. If it is described as follows, please rewrite it as below.
+Mojo::JSON object-oriented support is gone. If it is described as follows, please rewrite it as below.
 
 <pre>
 # Old
-use Mojo :: JSON;
-Mojo :: JSON-> new-> encode ($ foo);
-Mojo :: JSON-> new-> decode ($ foo);
+use Mojo::JSON;
+Mojo::JSON->new->encode($foo);
+Mojo::JSON->new->decode($foo);
 
 #New
-use Mojo :: JSON'encode_json','decode_json';
-encode_json ($ foo);
-decode_json ($ foo);
-</ pre>
+use Mojo::JSON'encode_json','decode_json';
+encode_json ($foo);
+decode_json ($foo);
+</pre>
 
-<h4> render_static, render_not_found, render_exception are gone </ h4>
+<h4> render_static, render_not_found, render_exception are gone </h4>
 
 The controller class render_static, render_not_found, render_exception are gone. Instead, write:
 
 <pre>
 # Old
-$ c-> render_static ($ path);
-$ c-> render_not_found;
-$ c-> render_exception;
+$c->render_static($path);
+$c->render_not_found;
+$c->render_exception;
 
 #New
-$ c-> reply-> static ($ path);
-$ c-> reply-> not_found;
-$ c-> reply-> exception;
-</ pre>
+$c->reply->static($path);
+$c->reply->not_found;
+$c->reply->exception;
+</pre>
 
-<h4> The bridge disappears and it becomes under. </ h4>
+<h4> The bridge disappears and it becomes under. </h4>
 
 Let's change the place where it says bridge to under.
 
 <pre>
 # Old
-$ r-> bridge (sub {...})
+$r->bridge(sub {...})
 
 #New
-$ r-> under (sub {...});
-</ pre>
+$r->under(sub {...});
+</pre>
 
-<h4> The area around Mojo :: DOM is not stable yet </ h4>
+<h4> The area around Mojo::DOM is not stable yet </h4>
 
-The implementation around Mojo :: DOM is not stable yet, so if you are using it, check the changes.
+The implementation around Mojo::DOM is not stable yet, so if you are using it, check the changes.

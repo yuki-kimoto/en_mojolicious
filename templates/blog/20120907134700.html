@@ -1,17 +1,17 @@
-<h2> Add plugin namespace </ h2>
+<h2> Add plugin namespace </h2>
 
 
 
-By default, plugins are loaded from under <b> Mojolicious :: Plugin </ b>, but you can add namespaces as well.
+By default, plugins are loaded from under <b> Mojolicious::Plugin </b>, but you can add namespaces as well.
 
 <pre>
-#Mojolicious :: Lite
-push @ {app-> plugins-> namespaces},'MyApp :: Plugins';
+#Mojolicious::Lite
+push @{app->plugins->namespaces},'MyApp::Plugins';
 
 #Mojolicious
 sub startup {
-   my $ self = shift;
+   my $self = shift;
 
-   push @ {$ self-> plugins-> namespaces},'MyApp :: Plugins';
+   push @{$self->plugins->namespaces},'MyApp::Plugins';
 }
-</ pre>
+</pre>

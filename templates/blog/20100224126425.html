@@ -1,66 +1,66 @@
-<h2> Object :: Simple --Generate Mojo :: Base compatible accessor </ h2>
+<h2> Object::Simple --Generate Mojo::Base compatible accessor </h2>
 
 
 
-Use <strong> Object :: Simple </ strong> to create an accessor with a default value. Object :: Simple is highly compatible with Mojolicious's Mojo :: Base.
+Use <strong> Object::Simple </strong> to create an accessor with a default value. Object::Simple is highly compatible with Mojolicious's Mojo::Base.
 
 <pre>
 package Point;
-use Object :: Simple -base;
+use Object::Simple -base;
 
 has x => 1;
 has y => 1;
 
 package main;
 
-my $ point = Point-> new;
-print $ point-> x;
+my $point = Point->new;
+print $point->x;
 
 1;
-</ pre>
+</pre>
 
-You can inherit Object :: Simple by specifying -base when using. Object :: Simple has a new method. Also, a method called has for defining accessors is imported. Also, strict and warnings are automatically enabled.
+You can inherit Object::Simple by specifying -base when using. Object::Simple has a new method. Also, a method called has for defining accessors is imported. Also, strict and warnings are automatically enabled.
 
-<h3> General class sample </ h3>
+<h3> General class sample </h3>
 
 This is a sample of a general class. The Point class has accessors x and y. It also has a method called clear that initializes x and y to 0.
 
 <pre>
 package Point;
-use Object :: Simple -base;
+use Object::Simple -base;
 
 has x => 0;
 has y => 0;
 
 sub clear {
-  my $ self = shift;
+  my $self = shift;
     
-  $ self-> x (0);
-  $ self-> y (0);
+  $self->x(0);
+  $self->y(0);
 }
 
 1;
-</ pre>
+</pre>
 
-Use the Point class as follows: The constructor new is inherited from Object :: Simple.
+Use the Point class as follows: The constructor new is inherited from Object::Simple.
 
 <pre>
-my $ point = Point-> new (x => 4, y => 6);
+my $point = Point->new(x => 4, y => 6);
 
-$ point-> x (1);
-$ point-> y (2);
+$point->x(1);
+$point->y(2);
 
-my $ x = $ point-> x;
-my $ y = $ point-> y;
+my $x = $point->x;
+my $y = $point->y;
 
-$ point-> clear;
-</ pre>
+$point->clear;
+</pre>
 
-<h3> How to use Object :: Simple </ h3>
+<h3> How to use Object::Simple </h3>
 
 There are several ways to define attributes.
 
-<h4> Define multiple attributes at once </ h4>
+<h4> Define multiple attributes at once </h4>
 
 <pre>
 #No default value
@@ -68,11 +68,11 @@ has ['x','y'];
 
 #There is a default value
 has ['x','y'] => 0;
-</ pre>
+</pre>
 
 You can define multiple accessors at once by specifying an array reference as the first argument to has.
 
-<h4> Specify default value </ h4>
+<h4> Specify default value </h4>
 
 <pre>
 #Constant
@@ -85,22 +85,22 @@ has foo => sub {[]};
 has bar => sub {{}};
 
 # object
-has baz => sub {LWP :: UserAgent-> new};
-</ pre>
+has baz => sub {LWP::UserAgent->new};
+</pre>
 
 When setting array references, hash references, objects, etc. to default values, you need to enclose them in sub {} for lazy evaluation.
 
-<h4> Define all accessors at once </ h4>
+<h4> Define all accessors at once </h4>
 
 <pre>
 has [qw / foo bar baz /],
     some => 1,
     other => sub {5};
-</ pre>
+</pre>
 
 You can also define all accessors at once.
 
-<h3> Inheritance sample </ h3>
+<h3> Inheritance sample </h3>
 
 This is a sample to create a Point3D class that inherits from the Point class.
 
@@ -111,36 +111,36 @@ use Point -base;
 has z => 0;
 
 sub clear {
-  my $ self = shift;
-  $ self-> SUPER :: clear ();
-  $ self-> z (0);
+  my $self = shift;
+  $self->SUPER::clear ();
+  $self->z(0);
 }
 
 1;
-</ pre>
+</pre>
 
-<h3> Constructor override </ h3>
+<h3> Constructor override </h3>
 
 The constructor new () can be overridden for object initialization and argument processing.
 
 <pre>
 #Override new () for object initialization
 sub new {
-  my $ self = shift-> SUPER :: new (@_);
+  my $self = shift->SUPER::new (@_);
   
   #Initialization
   
-  return $ self;
+  return $self;
 }
-</ pre>
+</pre>
 
 <pre>
 #Override new () for argument processing
 sub new {
-  my $ self = shift;
+  my $self = shift;
   
-  $ self-> SUPER :: new (x => $ _ [0], y => $ _ [1]);
+  $self->SUPER::new (x => $_ [0], y => $_ [1]);
   
-  return $ self;
+  return $self;
 }
-</ pre>
+</pre>

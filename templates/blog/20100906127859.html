@@ -1,4 +1,4 @@
-<h2> Deploy the Mojolicious (PSGI) app with Starman </ h2>
+<h2> Deploy the Mojolicious (PSGI) app with Starman </h2>
 
 
 
@@ -6,52 +6,52 @@ Try launching a Mojolicious application using a Perl prefolk server called Starm
 
 <pre>
 cpanm Starman
-</ pre>
+</pre>
 
-The following is a PSGI app (hello.pl) written in Mojolicious :: Lite. Please note that only comments should be placed between "app-> start" and "__DATA__".
+The following is a PSGI app (hello.pl) written in Mojolicious::Lite. Please note that only comments should be placed between "app->start" and "__DATA__".
 
 <pre>
 use strict;
 use warnings;
 
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' =>'index';
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
-<html> <body> Hello! </ Body> </ html>
-</ pre>
+@@index.html.ep
+<html> <body> Hello! </Body> </html>
+</pre>
 
 Start starman.
 
 <pre>
 starman hello.pl
-</ pre>
+</pre>
 
 Now you can see that the Mojolicious app is running by accessing the following:
 
 <pre>
 http: // localhost: 5000 /
-</ pre>
+</pre>
 
 Use the "--port" option to specify the port.
 
 <pre>
 starman --port = 3000 hello.pl
-</ pre>
+</pre>
 
-<h3> Production operation </ h3>
+<h3> Production operation </h3>
 
 For production operations, you'll want to run it in the background and run your application at the same time you start the server. In such a case, do the following. Run it as the root user.
 
 <pre>
 #Start the server
 su --kimoto -c'starman --port = 3000 --daemonize --pid = / home / kimoto / labo / pid /home/kimoto/labo/app1.pl'
-</ pre>
+</pre>
 
 I am changing the user and running it by using su's -c command. The office should be run by the owner of hello.pl. You can daemonize the server with the --daemonize option. The --pid option specifies the file to write the process ID of the server. This will be the information you need when you stop the server.
 
@@ -60,10 +60,10 @@ To stop the server, pass the process ID to the kill command. When combined with 
 <pre>
 #Server outage
 cat / home / kimoto / labo / pid | xargs kill
-</ pre>
+</pre>
 
 If you want to start the Mojolicious application when Linux starts, add the description of starting the server to the following file.
 
 <pre>
 /etc/rc.d/rc.local
-</ pre>
+</pre>

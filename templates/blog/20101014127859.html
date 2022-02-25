@@ -1,15 +1,15 @@
-<h2> Check the list of routes with Mojolicious :: Lite </ h2>
+<h2> Check the list of routes with Mojolicious::Lite </h2>
 
 
 
-As the definition of <strong> route </ strong> increases, it becomes difficult to see what kind of route exists. You can use the "routes" command to see what routes exist at such times.
+As the definition of <strong> route </strong> increases, it becomes difficult to see what kind of route exists. You can use the "routes" command to see what routes exist at such times.
 
 <pre>
 perl myapp.pl routes
-</ pre>
+</pre>
 
 Then you can see the list of routes as follows.
 <pre>
 / (?-xism: ^ (?: /)?)
 / hello /: date (?-xism: ^ / hello / ([^ \ / \.] +))
-</ pre>
+</pre>

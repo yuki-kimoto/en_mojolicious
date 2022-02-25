@@ -1,29 +1,29 @@
-<h2> Automatically generate routing by placing files --Mojolicious :: Plugin :: AutoRoute </ h2>
+<h2> Automatically generate routing by placing files --Mojolicious::Plugin::AutoRoute </h2>
 
 
 
-<strong> Mojolicious :: Plugin :: AutoRoute </ strong> is a plugin that automatically generates routes just by placing a file. </ Strong>
+<strong> Mojolicious::Plugin::AutoRoute </strong> is a plugin that automatically generates routes just by placing a file. </Strong>
 
 <blockquote>
-<a href="http://search.cpan.org/dist/Mojolicious-Plugin-AutoRoute/lib/Mojolicious/Plugin/AutoRoute.pm"> Mojolicious :: Plugin :: AutoRoute </a>
-</ blockquote>
+<a href="http://search.cpan.org/dist/Mojolicious-Plugin-AutoRoute/lib/Mojolicious/Plugin/AutoRoute.pm"> Mojolicious::Plugin::AutoRoute</a>
+</blockquote>
 
 You can create a web application just by placing the template as a file and writing it.
 
 It is perfect for those who think that it would be easier if it works just by placing a file like PHP.
 
-<h3> How to use </ h3>
+<h3> How to use </h3>
 
 <pre>
 #Mojolicious
-$ self-> plugin ('AutoRoute');
+$self->plugin('AutoRoute');
 
-#Mojolicious :: Lite
+#Mojolicious::Lite
 plugin'AutoRoute';
 
 #Option
-plugin'AutoRoute', route => $ r;
-</ pre>
+plugin'AutoRoute', route => $r;
+</pre>
 
 Create an "auto" directory inside the "templates" directory and place the templates in it.
 
@@ -35,49 +35,49 @@ templates / auto / index.html.ep # /
               /foo.html.ep # /foo
               /foo/bar.html.ep # /foo/bar
               /foo/bar/baz.html.ep # /foo/bar/baz
-</ pre>
+</pre>
 
-<h3> Options </ h3>
+<h3> Options </h3>
 
-<h4> route </ h4>
+<h4> route </h4>
 
 <pre>
-route => $ route;
-</ pre>
+route => $route;
+</pre>
 
-You can specify the parent route if desired. This is a Mojolicious :: Routes object. The default is <b> $ app-> routes </ b>.
+You can specify the parent route if desired. This is a Mojolicious::Routes object. The default is <b> $app->routes</b>.
 
-<h4> top_dir </ h4>
+<h4> top_dir </h4>
 
 <pre>
 top_dir =>'myauto'
-</ pre>
+</pre>
 
-The name of the top directory. The default is the <b> auto </ b> directory.
+The name of the top directory. The default is the <b> auto </b> directory.
 
-<h3> Sample </ h3>
+<h3> Sample </h3>
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 #AutoRoute
 plugin'AutoRoute';
 
-@@ auto / index.html.ep
+@@auto / index.html.ep
 / /
 
-@@ auto / foo.html.ep
+@@auto / foo.html.ep
 / foo
 
-@@ auto / bar.html.ep
+@@auto / bar.html.ep
 / bar
 
-@@ auto / foo / bar / baz.html.ep
+@@auto / foo / bar / baz.html.ep
 / foo / bar / baz
 
-@@ auto / json.html.ep
+@@auto / json.html.ep
 <%
-  $ self-> render (json => {foo => 1});
+  $self->render(json => {foo => 1});
   return;
 %>
-</ pre>
+</pre>

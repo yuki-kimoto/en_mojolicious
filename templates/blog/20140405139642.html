@@ -1,206 +1,206 @@
-<h2> How to use Mojolicious's "template" </ h2>
+<h2> How to use Mojolicious's "template" </h2>
 
 
 
-I would like to explain about <strong> templates </ strong>. Until now, I've only output simple text, but since it's a web application, I want to output HTML. You can output HTML by using a function called template of Mojolicious.
+I would like to explain about <strong> templates </strong>. Until now, I've only output simple text, but since it's a web application, I want to output HTML. You can output HTML by using a function called template of Mojolicious.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Specify template
-  $ self-> render ('index');
+  $self->render('index');
 };;
 
 get'/ company / info' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   #Specify template
-  $ self-> render ('company / info');
+  $self->render('company / info');
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> Index </ h1>
-  </ body>
-</ html>
+    <h1> Index </h1>
+  </body>
+</html>
 
-@@ company / info.html.ep
+@@company / info.html.ep
 <html>
   <head>
-    <title> Company Information </ title>
-  </ head>
+    <title> Company Information </title>
+  </head>
   <body>
     Company Information
-  </ body>
-</ html>
-</ pre>
+  </body>
+</html>
+</pre>
 
 Try launching the application and accessing "/" and "/ company / info". "Index" and "Company Informatiomn" are displayed in bold, respectively.
 
-<h3> How to specify a template </ h3>
+<h3> How to specify a template </h3>
 
-First, let's look at the specified part of the template. Templates can be specified with the <strong> render </ strong> method.
+First, let's look at the specified part of the template. Templates can be specified with the <strong> render </strong> method.
 
 <pre>
 #Specify template
-$ self-> render ('index');
-$ self-> render ('company / info');
-</ pre>
+$self->render('index');
+$self->render('company / info');
+</pre>
 
-You can also use "<b> / </ b>" to represent the directory hierarchy, as in the second example.
+You can also use "<b> / </b>" to represent the directory hierarchy, as in the second example.
 
-<h3> How to write a template </ h3>
+<h3> How to write a template </h3>
 
 Next, let's see how to write a template.
 
 <pre>
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> Index </ h1>
-  </ body>
-</ html>
+    <h1> Index </h1>
+  </body>
+</html>
 
-@@ company / info.html.ep
+@@company / info.html.ep
 <html>
   <head>
-    <title> Company Information </ title>
-  </ head>
+    <title> Company Information </title>
+  </head>
   <body>
-    <h1> Company Information </ h1>
-  </ body>
-</ html>
-</ pre>
+    <h1> Company Information </h1>
+  </body>
+</html>
+</pre>
 
-The template should be written below the line that says <storng> __DATA__ </ strong>. This part is called the data section.
+The template should be written below the line that says <storng> __DATA__ </strong>. This part is called the data section.
 
 Next, describe the template name in the following expression.
 
 <pre>
-@@ Template name.html.ep
-</ pre>
+@@Template name.html.ep
+</pre>
 
-Please note that a half-width space is required after "<b> @@ </ b>". The extension of the Mojolicious template name will be "<b> html.ep </ b>" unless you do something special.
+Please note that a half-width space is required after "<b> @@</b>". The extension of the Mojolicious template name will be "<b> html.ep </b>" unless you do something special.
 
 In this sample, there are two templates, but each has the following description.
 
 <pre>
-@@ index.html.ep
-@@ company / info.html.ep
-</ pre>
+@@index.html.ep
+@@company / info.html.ep
+</pre>
 
 Then write HTML after the template name.
 
 <pre>
-@@ index.html.ep
+@@index.html.ep
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> Index </ h1>
-  </ body>
-</ html>
-</ pre>
+    <h1> Index </h1>
+  </body>
+</html>
+</pre>
 
 This will be what you see.
 
-<h3> Perl can be written in the template </ h3>
+<h3> Perl can be written in the template </h3>
 
 You can write Perl in Mojolicious templates. It's convenient if you learn a little notation because you don't have to learn any special grammar.
 
-To write Perl, write "<b>% </ b>" at the beginning.
+To write Perl, write "<b>%</b>" at the beginning.
 
 <pre>
-% my $ name ='kimoto';
-</ pre>
+%my $name ='kimoto';
+</pre>
 
-You can also use the notation "<b> & lt; %% & gt; </ b>" when writing multiple Perls.
+You can also use the notation "<b> & lt; %%& gt; </b>" when writing multiple Perls.
 
 <pre>
 <%
-  my $ title ='kimoto';
-  my $ age = 19;
+  my $title ='kimoto';
+  my $age = 19;
 %>
-</ pre>
+</pre>
 
-<h4> Embedding values ​​</ h4>
+<h4> Embedding values ​​</h4>
 
-You can also use "<b>% = </ b>" or "<b> <% =%> </ b>" to embed the value directly in the HTML.
+You can also use "<b>%= </b>" or "<b> <%=%> </b>" to embed the value directly in the HTML.
 
 <pre>
-% = $ title;
-<% = $ title%>
-</ pre>
+%= $title;
+<%= $title%>
+</pre>
 
-<h4> Sample using Perl description </ h4>
+<h4> Sample using Perl description </h4>
 
 Now, let's actually write a sample using Perl in the template. In the sample, if statement and for statement are used.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  $ self-> render ('index');
+  $self->render('index');
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <%
-  my $ name ='kimoto';
-  my $ age = 19;
+  my $name ='kimoto';
+  my $age = 19;
   my @nums = (1, 2, 3);
 %>
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> Index </ h1>
-    % if ($ name eq'kimoto') {
+    <h1> Index </h1>
+    %if ($name eq'kimoto') {
       Kimoto
     %} else {
       Other Other
     %}
     <br>
-    He is <% = $ age%> years old. <br>
+    He is <%= $age%> years old. <br>
     
-    % for my $ num (@nums) {
-      <% = $ num%> <br>
+    %for my $num (@nums) {
+      <%= $num%> <br>
     %}
-  </ body>
-</ html>
-</ pre>
+  </body>
+</html>
+</pre>
 
 It's convenient because you can write Perl in the template like this.
 
-<h4> Values ​​are automatically HTML escaped </ h4>
+<h4> Values ​​are automatically HTML escaped </h4>
 
 <pre>
-% = Value
-<% = value%>
-</ pre>
+%= Value
+<%= value%>
+</pre>
 
 The values ​​embedded in the above description are automatically XML escaped. XML escaping is the process of replacing dangerous strings with safe characters in HTML. The following conversions are done:
 
@@ -210,28 +210,28 @@ The values ​​embedded in the above description are automatically XML escaped
 > => & gt;
 "=> & quot;
 '=> & # 39;
-</ pre>
+</pre>
 
-If "& lt;" etc. cannot be replaced, there is a risk that javascript will be executed if a string such as "<script> </ script>" is sent from the user. increase. Therefore, Mojolicious uses XML escaping by default to reduce this risk.
+If "& lt;" etc. cannot be replaced, there is a risk that javascript will be executed if a string such as "<script> </script>" is sent from the user. increase. Therefore, Mojolicious uses XML escaping by default to reduce this risk.
 
-If you don't want to do XML escaping, use the notation "<b> <% == </ b>" or "<b> <% ==%> </ b>".
+If you don't want to do XML escaping, use the notation "<b> <%== </b>" or "<b> <%==%> </b>".
 
 <pre>
-% == Value
-<% == value%>
-</ pre>
+%== Value
+<%== value%>
+</pre>
 
-<h3> Data is passed using a variable called stash </ h3>
+<h3> Data is passed using a variable called stash </h3>
 
 The controller and template share a variable called a stash. If you want to pass the data to the template side, you can set the value using the stash method.
 
 <pre>
 # Setting the stash value on the controller
-$ c-> stash ('name' =>'Kimoto');
+$c->stash('name' =>'Kimoto');
 
 #Get stash value with controller
-my $ name = $ c-> stash ('name')
-</ pre>
+my $name = $c->stash('name')
+</pre>
 
 You can also use the stash helper in the template to set and get values. Keep in mind that the functions available in the template are called helpers.
 
@@ -240,322 +240,322 @@ You can also use the stash helper in the template to set and get values. Keep in
 stash ('name' =>'Kimoto');
 
 #Get stash value in template
-my $ name = stash ('name');
-</ pre>
+my $name = stash ('name');
+</pre>
 
-It is also convenient to use the second and subsequent arguments of the <b> render </ b> method to set the stash value. You can write it short, so let's use this.
+It is also convenient to use the second and subsequent arguments of the <b> render </b> method to set the stash value. You can write it short, so let's use this.
 
 <pre>
 #render method
-$ c-> render ($ template,'name' =>'Kimoto','age' => 19);
+$c->render($template,'name' =>'Kimoto','age' => 19);
 
 # Same as this
-$ c-> stash ('name' =>'Kimoto');
-$ c-> stash ('age' => 19);
-$ c-> render ($ template);
-</ pre>
+$c->stash('name' =>'Kimoto');
+$c->stash('age' => 19);
+$c->render($template);
+</pre>
 
-<h4> Stash reserved words </ h4>
+<h4> Stash reserved words </h4>
 
 As stash keys, the following are reserved words, so don't use them if you want to save the value. If you use it, it will cause unexpected behavior and the correct processing will not be performed, so please be careful.
 
 <pre>
 action app cb controller data extends format handler json layout
 namespace partial path status template text variant
-</ pre>
+</pre>
 
-<h4> Sample using stash </ h4>
+<h4> Sample using stash </h4>
 
 I will write a sample using stash.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 #Controller
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   # Set a value for stash and draw index
-  $ self-> render ('index','name' =>'Kimoto', age => 19);
+  $self->render('index','name' =>'Kimoto', age => 19);
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <%
   #Get value from stash
-  my $ name = stash ('name');
-  my $ age = stash ('age');
+  my $name = stash ('name');
+  my $age = stash ('age');
 %>
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> <% = $ name%>: <% = $ age%> </ h1>
-  </ body>
-</ html>
-</ pre>
+    <h1> <%= $name%>: <%= $age%> </h1>
+  </body>
+</html>
+</pre>
 
 I'm using the render method in my controller to set the stash.
 
 <pre>
 # Set a value for stash and draw index
-$ self-> render ('index','name' =>'Kimoto', age => 19);
-</ pre>
+$self->render('index','name' =>'Kimoto', age => 19);
+</pre>
 
 I'm using the stash helper in the template to get the stash value.
 
 <pre>
 
-</ pre>
+</pre>
 
-<h3> Layout </ h3>
+<h3> Layout </h3>
 
-Next, I will explain the function called <strong> layout </ strong>. Let's take a look at the first sample again.
+Next, I will explain the function called <strong> layout </strong>. Let's take a look at the first sample again.
 
 <pre>
-@@ index.html.ep
+@@index.html.ep
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-    <h1> Index </ h1>
-  </ body>
-</ html>
+    <h1> Index </h1>
+  </body>
+</html>
 
-@@ company / info.html.ep
+@@company / info.html.ep
 <html>
   <head>
-    <title> Company Information </ title>
-  </ head>
+    <title> Company Information </title>
+  </head>
   <body>
     Company Information
-  </ body>
-</ html>
-</ pre>
+  </body>
+</html>
+</pre>
 
 The html tag and body tag are common to the two templates. The contents of the body are different, but the html tags and body tags that form the skeleton are the same. In such cases, you can avoid repeating the description by using a function called layout.
 
 Let's rewrite the first sample with a layout.
 
 <pre>
-@@ layouts / common.html.ep
+@@layouts / common.html.ep
 <html>
   <head>
-    <title> <% = stash ('title')%> </ title>
-  </ head>
+    <title> <%= stash ('title')%> </title>
+  </head>
   <body>
-    % = content;
-  </ body>
-</ html>
+    %= content;
+  </body>
+</html>
 
-@@ index.html.ep
-% layout'common', title =>'Index';
-  <h1> Index </ h1>
+@@index.html.ep
+%layout'common', title =>'Index';
+  <h1> Index </h1>
 
-@@ company / info.html.ep
-% layout'common', title =>'Company Information';
-  <h1> Company Information </ h1>
-</ pre>
+@@company / info.html.ep
+%layout'common', title =>'Company Information';
+  <h1> Company Information </h1>
+</pre>
 
-<h4> Layout name </ h4>
+<h4> Layout name </h4>
 
 Let's define the layout first. Look at the template name first.
 
 <pre>
 layouts / common.html.ep
-</ pre>
+</pre>
 
 It starts with "layouts /". This is the rule when creating a layout. It is followed by the layout name "common". And the extension is ".html.ep" which is the same as the template.
 
-<h4> Layout contents </ h4>
+<h4> Layout contents </h4>
 
 Next, let's take a look at the contents of the layout.
 
 <pre>
 <html>
   <head>
-    <title> <% = stash ('title')%> </ title>
-  </ head>
+    <title> <%= stash ('title')%> </title>
+  </head>
   <body>
-    % = content;
-  </ body>
-</ html>
-</ pre>
+    %= content;
+  </body>
+</html>
+</pre>
 
-Describe the part shared by all templates in the layout. I am writing an html tag and a body tag. The content to be embedded in the layout can be obtained with the <b> content helper </ b>. The content helper part replaces the actual content.
+Describe the part shared by all templates in the layout. I am writing an html tag and a body tag. The content to be embedded in the layout can be obtained with the <b> content helper </b>. The content helper part replaces the actual content.
 
 You can use stash in the layout, so you can pass data from the template to the layout through stash. With this, it's easy to change just the title.
 
-<h4> Call layout </ h4>
+<h4> Call layout </h4>
 
 Next, let's take a look at the description that calls the layout in the actual template.
 
 <pre>
-@@ index.html.ep
-% layout'common', title =>'Index';
-  <h1> Index </ h1>
-</ pre>
+@@index.html.ep
+%layout'common', title =>'Index';
+  <h1> Index </h1>
+</pre>
 
-You can call the layout using the <b> layout helper </ b>. Specify the layout name in the first argument. The values ​​after the second argument are set as stash values.
+You can call the layout using the <b> layout helper </b>. Specify the layout name in the first argument. The values ​​after the second argument are set as stash values.
 
 Actually this will be expanded to HTML like below.
 
 <pre>
 <html>
   <head>
-    <title> Index </ title>
-  </ head>
+    <title> Index </title>
+  </head>
   <body>
-      <h1> Index </ h1>
-  </ body>
-</ html>
-</ pre>
+      <h1> Index </h1>
+  </body>
+</html>
+</pre>
 
 Make sure that "& lt; h1 & gt; Index & lt; / h1 & gt;" is embedded in the layout you called. I think that layout is an essential function to use. Please remember.
 
-<h3> Include other templates </ h3>
+<h3> Include other templates </h3>
 
 Next, I will introduce the function that can "include" other templates. You can create and load common parts such as "headers" and "footers".
-Use the <strong> include </ strong> function to <strong> include </ strong> other <strong> templates </ strong>. It can be used to define and load components used in multiple parts as common parts.
+Use the <strong> include </strong> function to <strong> include </strong> other <strong> templates </strong>. It can be used to define and load components used in multiple parts as common parts.
 
-<h4> Description of included template </ h4>
+<h4> Description of included template </h4>
 
 Describes the template to be included. Name it component.html.ep.
 
 <pre>
 component
-% = $ name
-</ pre>
+%= $name
+</pre>
 
-Notice the part called $ name. This way, when you include the template, you can change only part of it.
+Notice the part called $name. This way, when you include the template, you can change only part of it.
 
-<h4> Template inclusion </ h4>
+<h4> Template inclusion </h4>
 
 Use the include function to include the template.
 <pre>
-% = include'component', name =>'Ken';
-</ pre>
+%= include'component', name =>'Ken';
+</pre>
 
 The first argument is the template name you want to include. ".Html.ep" can be omitted. After the second argument, you can specify the data you want to pass to the included template with a hash.
 
-<h3> Template externalization </ h3>
+<h3> Template externalization </h3>
 
-In the Mojolicious :: Lite sample, the template was written inside a file, but it can also be placed as a "file". If it grows larger, you can save it externally as a file for better visibility.
+In the Mojolicious::Lite sample, the template was written inside a file, but it can also be placed as a "file". If it grows larger, you can save it externally as a file for better visibility.
 
 Create a "templates" directory, place it in it, and Mojolicious will load it for you.
 
 <pre>
 templates / index.html.ep
           / list.html.ep
-</ pre>
+</pre>
 
-<h3> Techniques used in templates </ h3>
+<h3> Techniques used in templates </h3>
 
 Here are some techniques you often use in templates.
 
-<h4> Protect text from HTML escaping </ h4>
+<h4> Protect text from HTML escaping </h4>
 
-To protect the text from HTML escaping, convert the string to a Mojo :: ByteStream object and then pass it to the template.
-
-<pre>
-<% = Mojo :: ByteStream-> new ('<p> test </ p>')%>
-</ pre>
-
-If you don't want to HTML escape tags etc., convert it to a Mojo :: ByteStream object and pass it to the template.
-
-There is also a helper called <b> b </ b>, which can be used for a short time.
+To protect the text from HTML escaping, convert the string to a Mojo::ByteStream object and then pass it to the template.
 
 <pre>
-<% = b ('<p> test </ p>')%>
-</ pre>
+<%= Mojo::ByteStream->new('<p> test </p>')%>
+</pre>
 
-<h4> Get controller object </ h4>
+If you don't want to HTML escape tags etc., convert it to a Mojo::ByteStream object and pass it to the template.
 
-To get the controller object in the template, access the variable <strong> $ self </ strong>.
+There is also a helper called <b> b </b>, which can be used for a short time.
 
 <pre>
-% my $ controller = $ self;
-</ pre>
+<%= b ('<p> test </p>')%>
+</pre>
 
-$ self is a variable that is implicitly declared in the template. This is the Mojolicious :: Controller object.
+<h4> Get controller object </h4>
+
+To get the controller object in the template, access the variable <strong> $self </strong>.
+
+<pre>
+%my $controller = $self;
+</pre>
+
+$self is a variable that is implicitly declared in the template. This is the Mojolicious::Controller object.
 
 You can call methods of the controller class from this object.
 
 <pre>
 #Call a method of the controller class
-my $ req = $ self-> req;
-</ pre>
+my $req = $self->req;
+</pre>
 
-<h4> Create a template block </ h4>
+<h4> Create a template block </h4>
 
 You can create a "template block" in a template. Template blocks can be used as part of a reusable template.
 
 <pre>
 #Template block
-<% my $ div = begin%>
-  % my ($ id, $ text) = @_;
-  <div id = "<% = $ id%>">
-    % = $ text
-  </ div>
-<% end%>
-</ pre>
+<%my $div = begin%>
+  %my ($id, $text) = @_;
+  <div id = "<%= $id%>">
+    %= $text
+  </div>
+<%end%>
+</pre>
 
 The template block is essentially a subroutine reference, but the point is that you can write the HTML content as you would in a template. Template blocks start with begin and end with end.
 
 Template blocks can be used as a reference for Perl subroutines.
 
 <pre>
-<% = $ div-> ('foo','Hello')%>
-</ pre>
+<%= $div->('foo','Hello')%>
+</pre>
 
-Below is a sample from Mojolicious :: Lite.
+Below is a sample from Mojolicious::Lite.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 get'/' =>'index';
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
-<% my $ div = begin%>
-  % my ($ id, $ text) = @_;
-  <div id = "<% = $ id%>">
-    % = $ text
-  </ div>
-<% end%>
+@@index.html.ep
+<%my $div = begin%>
+  %my ($id, $text) = @_;
+  <div id = "<%= $id%>">
+    %= $text
+  </div>
+<%end%>
 
-<% = $ div-> ('foo','Hello')%>
-</ pre>
+<%= $div->('foo','Hello')%>
+</pre>
 
-<h4> Remove blanks before and after tags </ h4>
+<h4> Remove blanks before and after tags </h4>
 
 When using Mojolicious templates, you may want to remove the white space before and after the tag. If you want to remove the leading and trailing spaces, use the following special tags.
 
 <pre>
-<% = Content =%>
-</ pre>
+<%= Content =%>
+</pre>
 
-In the case of a normal tag, it is "<% = content%>". The point is that <b> = </ b> is attached before the% at the back.
+In the case of a normal tag, it is "<%= content%>". The point is that <b> = </b> is attached before the%at the back.
 
-<h4> Templates share function namespaces </ h4>
+<h4> Templates share function namespaces </h4>
 
-You are free to write Perl code in Mojolicious templates, but there is one caveat. That is, all <strong> templates </ strong> share the <strong> namespace </ strong> of the function.
+You are free to write Perl code in Mojolicious templates, but there is one caveat. That is, all <strong> templates </strong> share the <strong> namespace </strong> of the function.
 
 <pre>
 #Template A
 use Encode'encode';
-</ pre>
+</pre>
 
 <pre>
 #Template B
-encode ('UTF-8', $ str);
-</ pre>
+encode ('UTF-8', $str);
+</pre>
 
 Template B does not import the encode function, but template A imports it, so it can be used in template B. This is because Mojolicious creates all the templates in one namespace.
 
@@ -563,9 +563,9 @@ So if you don't want to get confused, it's safe to use the fully qualified name 
 
 <pre>
 use Encode ();
-Encode :: encode ('UTF-8', $ str);
-</ pre>
+Encode::encode ('UTF-8', $str);
+</pre>
 
-<h3> Summary </ h3>
+<h3> Summary </h3>
 
 It's great that you can use Perl for Mojolicious templates! Neither "if" nor "for" need to remember the syntax for templates. You can share the header and footer descriptions by using the "layout" and "include" descriptions. It's convenient because you don't have to copy and paste.

@@ -1,43 +1,43 @@
-<h2> Use reserved words such as colons (:) in URLs </ h2>
+<h2> Use reserved words such as colons (:) in URLs </h2>
 
 
 
-Mojolicious routers are very convenient because you can make detailed settings. However, when I try to use it, <b>: </ b>, <b> # </ b>, <b> * </ b> and <b>. </ B> are reserved words. You will notice.
+Mojolicious routers are very convenient because you can make detailed settings. However, when I try to use it, <b>: </b>, <b> # </b>, <b> * </b> and <b>. </B> are reserved words. You will notice.
 
 If I want to use these symbols in the URL, I have no choice but to give up (except because # has a meaning as a fragment in the URL). Parameters cannot be acquired correctly with the following specifications.
 
 <pre>
 #Wrong (/20101114: I can't get the parameters correctly in main)
 get'/ (: date): (: id)' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ date = $ self-> param ('date');
-  my $ id = $ self-> param ('id');
+  my $date = $self->param('date');
+  my $id = $self->param('id');
   
-  $ self-> render (text => "$ date $ id");
+  $self->render(text => "$date $id");
 };;
-</ pre>
+</pre>
 
 Since the colon is a reserved word, specifying a route like this doesn't work.
 
-<h3> Use regular expression constraints as a solution </ h3>
+<h3> Use regular expression constraints as a solution </h3>
 
-However, Mojolicious routers are so flexible that you can combine regular routers with <a href="/blog/20100827127859.html"> regular expressions </a>.
+However, Mojolicious routers are so flexible that you can combine regular routers with <a href="/blog/20100827127859.html"> regular expressions</a>.
 
 In other words, if you write a part that includes reserved words with a regular expression, it will not be neat, but it can be solved.
 
 <pre>
 #Correct (You can get the parameters correctly with / 20101114: main)
 get'/: date_id'=> [date_id => qr / [^:] +?: [^:] + /] => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ date_id = $ self-> param ('date_id');
-  my ($ date, $ id) = $ date_id = ~ / ([^:] +?) :( [^:] +) /;
+  my $date_id = $self->param('date_id');
+  my ($date, $id) = $date_id = ~ / ([^:] +?) :( [^:] +) /;
   
-  $ self-> render (text => "$ date $ id");
+  $self->render(text => "$date $id");
 };;
-</ pre>
+</pre>
 
-I've named the placeholder $ data_id and used a regular expression to describe the constraint. You have written a route that matches <b> / 20101114: main </ b>.
+I've named the placeholder $data_id and used a regular expression to describe the constraint. You have written a route that matches <b> / 20101114: main </b>.
 
 All you have to do now is split it using the same regular expression.

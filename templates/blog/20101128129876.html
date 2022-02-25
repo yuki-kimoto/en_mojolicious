@@ -1,9 +1,9 @@
 https')
-</ pre>
+</pre>
 
 By doing this, you can create a link to the SSL page.
 
-<h3> Generate SSH URL with url_for method </ h3>
+<h3> Generate SSH URL with url_for method </h3>
 
 The url_for method can be created not only for HTTP URLs, but for anything that has a URL structure.
 
@@ -11,12 +11,12 @@ Let's create the following SSH URL.
 
 <pre>
 ssh: //kimoto@somehost.com: 20000/foo/bar.git
-</ pre>
+</pre>
 
 Do the following:
 <pre>
-my $ url = url_for ('/foo/bar.git')-> to_abs-> scheme ('ssh')
-   -> userinfo ('kimoto')-> host ('somehost.com')-> port (20000);
-</ pre>
+my $url = url_for ('/foo/bar.git')->to_abs->scheme('ssh')
+   ->userinfo('kimoto')->host('somehost.com')->port(20000);
+</pre>
 
 First, convert it to an absolute URL with the to_abs method, then set the protocol with the scheme method, the user name with the userinfo method, the host name with the host method, and the port number with the port method.

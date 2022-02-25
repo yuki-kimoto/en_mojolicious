@@ -1,4 +1,4 @@
-<h2> Mojolicious's reverse proxy SSL detection method will change </ h2>
+<h2> Mojolicious's reverse proxy SSL detection method will change </h2>
 
 The way Mojolicious's reverse proxy detects SSL changes. Those who use a reverse proxy and operate with SSL should be careful about upgrading. When transferring the version, describe both, and after the version upgrade, delete the old specification method.
 
@@ -8,7 +8,7 @@ The way Mojolicious's reverse proxy detects SSL changes. Those who use a reverse
      <Proxy *>
        Order deny, allow
        Allow from all
-     </ Proxy>
+     </Proxy>
      ProxyRequests Off
      ProxyPreserveHost On
      ProxyPass / http: // localhost: 8080 / keepalive = On
@@ -19,5 +19,5 @@ The way Mojolicious's reverse proxy detects SSL changes. Those who use a reverse
 
      # New specification method
      RequestHeader set X-Forwarded-Proto "https"
-   </ VirtualHost>
-</ pre>
+   </VirtualHost>
+</pre>

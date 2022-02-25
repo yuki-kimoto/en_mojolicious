@@ -1,4 +1,4 @@
-<h2> Use static files such as CSS with Mojolicious </ h2>
+<h2> Use static files such as CSS with Mojolicious </h2>
 
 
 
@@ -8,7 +8,7 @@ This time, let's create a web application that uses static files. Place the stat
 #Directory structure
 app.cgi
 public / css / common.css
-</ pre>
+</pre>
 
 Below is the script that loaded the CSS. You can see that the heading is red.
 I'm loading CSS using the stylesheet function.
@@ -18,17 +18,17 @@ I'm loading CSS using the stylesheet function.
 
 Setting the library path to load #Mojolicious
 use FindBin;
-use lib "$ FindBin :: Bin / lib";
+use lib "$FindBin::Bin / lib";
 
-Using #Mojolicious :: Lite
-use Mojolicious :: Lite;
+Using #Mojolicious::Lite
+use Mojolicious::Lite;
 
 use utf8;
 
-# DBD :: SQLite version
-use DBD :: SQLite;
-my $ sqlite_unicode
-  = $ DBD :: SQLite :: VERSION> 1.26
+# DBD::SQLite version
+use DBD::SQLite;
+my $sqlite_unicode
+  = $DBD::SQLite::VERSION> 1.26
   ?'sqlite_unicode'
   :'unicode';
 
@@ -36,17 +36,17 @@ my $ sqlite_unicode
 use DBI;
 
 #Connect to database
-my $ database = app-> home-> rel_file ('app.db');
-my $ dbh = DBI-> connect (
-  "dbi: SQLite: dbname = $ database",
+my $database = app->home->rel_file('app.db');
+my $dbh = DBI->connect(
+  "dbi: SQLite: dbname = $database",
   undef,
   undef,
   {RaiseError => 1, PrintError => 0, AutoCommit => 1,
-  $ sqlite_unicode => 1}
+  $sqlite_unicode => 1}
 );
 
 #Create table
-$ dbh-> do (<< "EOS");
+$dbh->do(<< "EOS");
 create table if not exists entry (
   id INTEGER PRIMARY KEY, id INTEGER PRIMARY KEY,
   message message
@@ -55,74 +55,74 @@ EOS
 
 # top page
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ sth = $ dbh-> prepare (<< "EOS");
+  my $sth = $dbh->prepare(<< "EOS");
 select message from entry order by id desc;
 EOS
 
-  $ sth-> execute;
+  $sth->execute;
 
-  my $ rows = [];
-  while (my $ row = $ sth-> fetchrow_hashref) {
-    push @ $ rows, $ row;
+  my $rows = [];
+  while (my $row = $sth->fetchrow_hashref) {
+    push @$rows, $row;
   }
 
-  $ self-> render (rows => $ rows);
+  $self->render(rows => $rows);
 } =>'index';
 
 #Data registration
 post'/ register' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ param = $ self-> req-> params-> to_hash;
-  my $ message = $ param-> {message} ||'';
+  my $param = $self->req->params->to_hash;
+  my $message = $param->{message} ||'';
 
-  if ($ message) {
-    my $ sth = $ dbh-> prepare (<< "EOS");
+  if ($message) {
+    my $sth = $dbh->prepare(<< "EOS");
 insert into entry (message) values ​​(?);
 EOS
  
-    $ sth-> execute ($ message);
+    $sth->execute($message);
   }
     
-  $ self-> redirect_to ('/');
+  $self->redirect_to('/');
 };;
 
 #Start application
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <html>
   <head>
     <meta http-equiv = "Content-type" content = "text / html; charset = UTF-8">
-    <% = stylesheet'/css/common.css'%>
-    <title> Message board with just one word </ title>
-  </ head>
+    <%= stylesheet'/css/common.css'%>
+    <title> Message board with just one word </title>
+  </head>
   
-  <h1> Message board with just one word </ h1>
+  <h1> Message board with just one word </h1>
   <body>
-    <form method = "post" action = "<% = url_for'/ register'%>">
-      <div> message <input type = "text" name = "message"> </ div>
-      <div> <input type = "submit" value = "submit"> </ div>
-    </ form>
+    <form method = "post" action = "<%= url_for'/ register'%>">
+      <div> message <input type = "text" name = "message"> </div>
+      <div> <input type = "submit" value = "submit"> </div>
+    </form>
     <div>
-      % foreach my $ row (@ $ rows) {
-        <div> <% = $ row-> {message}%> </ div>
+      %foreach my $row (@$rows) {
+        <div> <%= $row->{message}%> </div>
         <hr>
       %}
-    </ div>
-  </ body>
-</ html>
-</ pre>
+    </div>
+  </body>
+</html>
+</pre>
 
-(Reference) <a href="/blog/20100524127696.html"> FindBin </a>
+(Reference) <a href="/blog/20100524127696.html"> FindBin</a>
 
-Using the <a href="/blog/20100123126425.html"> while statement </a>, we are fetching rows from the database table line by line.
+Using the <a href="/blog/20100123126425.html"> while statement</a>, we are fetching rows from the database table line by line.
 
-<h3> Performance issues </ h3>
+<h3> Performance issues </h3>
 
 When testing in a local environment, the built-in web server dispatches static files such as CSS so there are no performance issues. On the other hand, Sakura's rental server uses a protocol called CGI to start web applications. A protocol called CGI launches one process for one access. The process of starting a process is very time consuming, so dispatching static files with CGI will result in noticeable performance degradation.
 
@@ -132,14 +132,14 @@ To do this, use a file called .htaccess. First on Windows
 
 <pre>
 htaccess.txt
-</ pre>
+</pre>
 
 Please prepare the file. Next, write the rules for mod_rewrite.
 
 <pre>
 RewriteEngine on
-RewriteRule ^ (. *) / ([^ /] +). Cgi / (. *) \. ([0-9a-zA-Z] +) $$ 1 / public / $ 3. $ 4 [L]
-</ pre>
+RewriteRule ^ (. *) / ([^ /] +). Cgi / (. *) \. ([0-9a-zA-Z] +) $$1 / public / $3. $4 [L]
+</pre>
 
 This is a setting that considers files with extensions such as .css and .js as static files and dispatches static files under public to Apache.
 
@@ -147,7 +147,7 @@ Put this file under www of Sakura rental server
 
 <pre>
 .htaccess
-</ pre>
+</pre>
 
 Please change the file name to and place it. This prevented a significant performance drop when using static files.
 

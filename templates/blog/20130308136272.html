@@ -1,24 +1,24 @@
-<h2> Pass the required values for multiple controllers </ h2>
+<h2> Pass the required values for multiple controllers </h2>
 
 
 
-If you want to set the value globally, you can use the <b> defaults </ b> method. However, sometimes you may want to use the value with just multiple controllers.
+If you want to set the value globally, you can use the <b> defaults </b> method. However, sometimes you may want to use the value with just multiple controllers.
 
 In such cases, use the following techniques.
 
 <pre>
-my $ r = $ app-> routes-> to (val => $ val);
+my $r = $app->routes->to(val => $val);
 
 # The rest is the same
-$ r-> get ('/ foo');
-$ r-> get ('/ bar');
-</ pre>
+$r->get('/ foo');
+$r->get('/ bar');
+</pre>
 
-The point is to use <strong> to </ strong> when getting a router. The <b> to </ b> method is usually used to write a combination of controller and action, but in fact you can also set a default value for the controller.
+The point is to use <strong> to </strong> when getting a router. The <b> to </b> method is usually used to write a combination of controller and action, but in fact you can also set a default value for the controller.
 
 By doing this, the set value can be used on the controller side.
 
 <pre>
 #In the controller
-my $ val = $ c-> stash ('val');
-</ pre>
+my $val = $c->stash('val');
+</pre>

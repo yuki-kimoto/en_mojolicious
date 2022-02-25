@@ -1,69 +1,69 @@
-<h2> How to receive parameters </ h2>
+<h2> How to receive parameters </h2>
 
 
 
-Now let's add functionality to the basic application. This time I would like to explain how to receive <strong> parameters </ strong> in Mojolicious. Think of a parameter as the data sent by the user. There are three ways to receive the parameters.
+Now let's add functionality to the basic application. This time I would like to explain how to receive <strong> parameters </strong> in Mojolicious. Think of a parameter as the data sent by the user. There are three ways to receive the parameters.
 
 <ol>
   <li>
     Part of the URL
-  </ li>
+  </li>
   <li>
     Query string
-  </ li>
+  </li>
   <li>
     POST data
-  </ li>
-</ ol>
+  </li>
+</ol>
 
 This time, I would like to explain two of these, one is to receive it as a "part of the URL" and the other is to receive it as a "query string". I would like to explain how to send data as POST data again when explaining the use of forms. Keep in mind that there are three ways to do this for now.
 
-<h3> Receive parameters as part of the URL </ h3>
+<h3> Receive parameters as part of the URL </h3>
 
 First, I'll show you how to receive the parameters as part of the URL. For example, consider the following URL:
 
 <pre>
 / date / 20131016
 / date / 20140203
-</ pre>
+</pre>
 
 It contains the date as part of the URL. Let's see how to get the part of the date value when accessing with such a URL. Let's write the code.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Specifying a routing pattern
 get'/ date /: date' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Receiving parameters
-  my $ date = $ self-> param ('date');
+  my $date = $self->param('date');
 
-  $ self-> render (text => "Data: $ date");
+  $self->render(text => "Data: $date");
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 If you run this application and access it like "/ date / 20131016", you should see the date value.
 
-<h4> Specifying a routing pattern </ h4>
+<h4> Specifying a routing pattern </h4>
 
 In order to receive the parameters, you need to define a routing pattern.
 
 <pre>
 # Specifying a routing pattern
 get'/ date /: date' => sub {...};
-</ pre>
+</pre>
 
-Notice the ": date" part. If you want to make a part of the URL a parameter, write that part as ": name". If you write it like this, you can use the <strong> param </ strong> method to receive the value as a parameter.
+Notice the ": date" part. If you want to make a part of the URL a parameter, write that part as ": name". If you write it like this, you can use the <strong> param </strong> method to receive the value as a parameter.
 
 <pre>
 #Receiving parameters
-my $ date = $ self-> param ('date');
-</ pre>
+my $date = $self->param('date');
+</pre>
 
-<h4> Notes on the param method </ h4>
+<h4> Notes on the param method </h4>
 
 One thing to be careful about when using the param method. That's because the param method returns different results in the scalar context and the list context. In scalar context, the value of one parameter is returned. If the parameter has multiple values, the first value is returned. Multiple parameters are used, for example, when multiple values ​​are selected, such as in a checkbox on a form.
 
@@ -71,54 +71,54 @@ On the other hand, when received in the list context, if there are multiple valu
 
 <pre>
 #Scalar context
-my $ value = $ self-> param ('foo');
+my $value = $self->param('foo');
 
 #List context
-my @values ​​= $ self-> param ('foo');
-</ pre>
+my @values ​​= $self->param('foo');
+</pre>
 
 For this reason, if you try to use the value by calling the param method directly, you may get unexpected results. To prevent mistakes in advance, it is safe to assign to a variable before using it.
 
-<h3> Receive parameters as query string </ h3>
+<h3> Receive parameters as query string </h3>
 
-Next, I will explain how to receive the parameter as a <strong> query string </ strong>. The query string is the part that follows the URL and specifies the parameters. Please see the following URL.
+Next, I will explain how to receive the parameter as a <strong> query string </strong>. The query string is the part that follows the URL and specifies the parameters. Please see the following URL.
 
 <pre>
 / diary /? date = 20131016 & user = kimoto
 / diary /? date = 20121013 & user = kimoto
-</ pre>
+</pre>
 
 The query string starts after the "?". Parameter names and values ​​are separated by "=". You can concatenate multiple parameters by using "&". In the first URL, there are two parameter names, "date" and "user". The corresponding values ​​are "20131016" and "kimoto".
 
 Now let's get the value of the parameter.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Specifying a routing pattern
 get'/ diary' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Receiving parameters
-  my $ date = $ self-> param ('date');
-  my $ user = $ self-> param ('user');
+  my $date = $self->param('date');
+  my $user = $self->param('user');
 
-  $ self-> render (text => "Date: $ date, User: $ user");
+  $self->render(text => "Date: $date, User: $user");
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 When you start this application and access it with the URL "/ diary /? Date = 20131016 & user = kimoto", "Date: 20131016, User: kimoto" is displayed, and you can see that the parameters have been acquired.
 
-<h4> Get parameters </ h4>
+<h4> Get parameters </h4>
 
-Use <strong> param </ strong> to get the parameters. The param method is generically designed and parameters can be received as part of a URL or from a query string.
+Use <strong> param </strong> to get the parameters. The param method is generically designed and parameters can be received as part of a URL or from a query string.
 
 <pre>
 #Receiving parameters
-my $ date = $ self-> param ('date');
-my $ user = $ self-> param ('user');
-</ pre>
+my $date = $self->param('date');
+my $user = $self->param('user');
+</pre>
 
 These parameters allow the data sent by the user to be used in the program.

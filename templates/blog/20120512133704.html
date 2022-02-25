@@ -1,11 +1,11 @@
-<h2> Mojolicious templates can be dangerous to import functions </ h2>
+<h2> Mojolicious templates can be dangerous to import functions </h2>
 
 
 
 You may want to avoid importing functions in Mojolicious templates. For example, the following description.
 
 <pre>
-% use File :: Basename'dirname';
-</ pre>
+%use File::Basename'dirname';
+</pre>
 
-For Mojolicious templates, all templates are compiled into a class called Mojo :: Template :: Samdbox. Therefore, the description of importing a function in one template may be overwritten with the description of importing a function in another template.
+For Mojolicious templates, all templates are compiled into a class called Mojo::Template::Samdbox. Therefore, the description of importing a function in one template may be overwritten with the description of importing a function in another template.

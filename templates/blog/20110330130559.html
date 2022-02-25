@@ -1,4 +1,4 @@
-<h2> UTF-8 handling </ h2>
+<h2> UTF-8 handling </h2>
 
 
 
@@ -6,15 +6,15 @@ How to handle when using UTF-8 with Mojolicious.
 
 <ul>
   <li>
-    <a href="https://github.com/kraih/mojo/wiki/Utf-8-manipulation"> UTF-8 Manipulation </a>
-  </ li>
-</ ul>
+    <a href="https://github.com/kraih/mojo/wiki/Utf-8-manipulation"> UTF-8 Manipulation</a>
+  </li>
+</ul>
 
 The point is Mitsu. One is to enable the utf8 pragma when dealing with UTF-8 in scripts. Of course, save the file in UTF-8.
 
 <pre>
 use utf8;
-</ pre>
+</pre>
 
 (Currently Mojolicious automatically sets the utf8 pragma automatically, so you don't need to write it.)
 
@@ -24,16 +24,16 @@ The third is that when the template is drawn, it is converted from an internal s
 
 <pre>
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   # Converted to an internal string
-  my $ title = $ self-> param ('title');
+  my $title = $self->param('title');
     
   #Convert internal string to byte string when saving to database
 
    #Convert byte string to internal string when retrieving from database
 
   # Pass an internal string
-  $ self-> render (title => $ title);
+  $self->render(title => $title);
 }
-</ pre>
+</pre>

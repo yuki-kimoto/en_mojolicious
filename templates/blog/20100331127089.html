@@ -1,102 +1,102 @@
-<h2> Real-time clock </ h2>
+<h2> Real-time clock </h2>
 
 
 
-A real-time clock made with Mojolicious :: Lite. I am using WebSocket. It can be run on Chrome that natively supports WebSockets.
+A real-time clock made with Mojolicious::Lite. I am using WebSocket. It can be run on Chrome that natively supports WebSockets.
 
-<h3> Real-time clock </ h3>
+<h3> Real-time clock </h3>
 
 It is a real-time clock.
 
 [f: id: perlcodesample: 20100415220535p: image]
 
-<h3> Source code </ h3>
+<h3> Source code </h3>
 
 The source code of the real-time clock.
 
 <pre>
-use Mojolicious :: Lite;
-use Mojo :: IOLoop;
+use Mojolicious::Lite;
+use Mojo::IOLoop;
 
-my $ clients = {};
-my $ loop = Mojo :: IOLoop-> singleton;
+my $clients = {};
+my $loop = Mojo::IOLoop->singleton;
 
 websocket'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   #Client id
-  my $ cid = "$ self";
+  my $cid = "$self";
   
   #Controller
-  my $ controller = $ self;
+  my $controller = $self;
   
   #Send date and time
-  my $ datetime = localtime;
-  $ self-> send ($ datetime);
+  my $datetime = localtime;
+  $self->send($datetime);
   
   #Receive message;
-  $ self-> on ('message' => sub {
-    my ($ self, $ message) = @_;
+  $self->on('message' => sub {
+    my ($self, $message) = @_;
     
     #Start clock
-    if ($ message eq'Start') {
+    if ($message eq'Start') {
       
       #Shortcut
-      return if $ clients-> {$ cid} {running};
+      return if $clients->{$cid} {running};
       
       # Start
-      $ clients-> {$ cid} {running} = 1;
+      $clients->{$cid} {running} = 1;
       
       #Subroutine for sending date and time
-      my $ send_datetime;
-      $ send_datetime = sub {
+      my $send_datetime;
+      $send_datetime = sub {
 
         #Send date and time
-        my $ datetime = localtime;
-        $ controller-> send ($ datetime);
+        my $datetime = localtime;
+        $controller->send($datetime);
         
         #Timer
-        $ loop-> timer (1, $ send_datetime) if $ clients-> {$ cid} {running};
+        $loop->timer(1, $send_datetime) if $clients->{$cid} {running};
       };;
       
       #Send
-      $ send_datetime-> ();
+      $send_datetime->();
     }
     
     #Stop clock
-    else {$ clients-> {$ cid} {running} = 0}
+    else {$clients->{$cid} {running} = 0}
   });
   
   # on_finish
-  $ self-> on ('finish' => sub {
+  $self->on('finish' => sub {
     # Remove client
-    delete $ clients-> {$ cid};
+    delete $clients->{$cid};
   });
 };;
 
 get'/' =>'index';
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
-% my $ url = $ self-> req-> url-> to_abs-> scheme ($ self-> req-> is_secure?'wss':'ws')-> path ('/');
+@@index.html.ep
+%my $url = $self->req->url->to_abs->scheme($self->req->is_secure?'wss':'ws')->path('/');
 <! doctype html>
 <html>
 <head>
-  <title> Mojo Websocket Demo </ title>
+  <title> Mojo Websocket Demo </title>
 
   <script type = "text / javascript">
     // only load the flash fallback when needed
     if (! ('WebSocket' in window)) {
       document.write ([[
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / swfobject.js"> </ scr'+'ipt>',
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / FABridge.js"> </ scr'+'ipt>',
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / web_socket.js"> </ scr'+'ipt>'
-      ] .join (''));
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / swfobject.js"> </scr'+'ipt>',
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / FABridge.js"> </scr'+'ipt>',
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / web_socket.js"> </scr'+'ipt>'
+      ] .join(''));
     }
-  </ script>
+  </script>
   <script type = "text / javascript">
     if (WebSocket.__initialize) {
         // Set URL of your WebSocketMain.swf here:
@@ -109,7 +109,7 @@ __DATA__
     function init () {
       
       // Connect to Web Socket.
-      ws = new WebSocket ('<% = $ url%>');
+      ws = new WebSocket ('<%= $url%>');
       
       // Receive message
       ws.onmessage = function (e) {
@@ -130,10 +130,10 @@ __DATA__
     }
     
     window.onload = init;
-  </ script>
-</ head>
-  <span id = "clock"> </ span>
-  <button onclick = "onClockStart (); return false;"> Start </ button>
-  <button onclick = "onClockStop (); return false;"> Stop </ button>
-</ html>
-</ pre>
+  </script>
+</head>
+  <span id = "clock"> </span>
+  <button onclick = "onClockStart (); return false;"> Start </button>
+  <button onclick = "onClockStop (); return false;"> Stop </button>
+</html>
+</pre>

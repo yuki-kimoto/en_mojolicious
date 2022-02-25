@@ -1,4 +1,4 @@
-<h2> Creating a bulletin board </ h2>
+<h2> Creating a bulletin board </h2>
 
 (Writing)
 
@@ -6,7 +6,7 @@ I have explained in a hurry so far. Now, let's actually create a website this ti
 
 You can also register comments on the bulletin board and read the registered comments. In other words, if you can create a bulletin board, you can create any site.
 
-<h3> Creating a database </ h3>
+<h3> Creating a database </h3>
 
 First, create a database table. The name of the table is "message". Create columns "title" and "content" to store the title and content.
 
@@ -16,23 +16,23 @@ create table message (
   title not null default'',
   content not null default''''
 );
-</ pre>
+</pre>
 
-<h3> Bulletin board source code </ h3>
+<h3> Bulletin board source code </h3>
 
 Now let's write the source code.
 
 <pre>
-use Mojolicious :: Lite;
-use DBIx :: Connector;
+use Mojolicious::Lite;
+use DBIx::Connector;
 
 #Database file
-my $ db_file = app-> home-> rel_file ('bbs.db');
+my $db_file = app->home->rel_file('bbs.db');
 
 # Connection manager
-my $ conn = DBIx :: Connector-> new (
+my $conn = DBIx::Connector->new(
   #Data source name
-  "dbi: SQLite: dbname = $ db_file",
+  "dbi: SQLite: dbname = $db_file",
   # username
   undef,
   # password
@@ -47,56 +47,56 @@ my $ conn = DBIx :: Connector-> new (
 );
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Get database handle
-  my $ dbh = $ conn-> dbh;
+  my $dbh = $conn->dbh;
   
   #Get message
-my $ sth = $ dbi-> prepare ('select * from message');
-  $ sth-> execute;
-  my $ messages = [];
-  while (my $ row = $ sth-> fetchrow_hashref) {
-    push @ $ messages, $ row;
+my $sth = $dbi->prepare('select * from message');
+  $sth->execute;
+  my $messages = [];
+  while (my $row = $sth->fetchrow_hashref) {
+    push @$messages, $row;
   }
 
   #Drawing
-  $ self-> render ('index', messages => $ messages);
+  $self->render('index', messages => $messages);
 
 };;
 
 #Create entry
 post'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Form data
-  my $ title = $ self-> param ('title');
-  my $ message = $ self-> param ('message');
+  my $title = $self->param('title');
+  my $message = $self->param('message');
   
   #Error if title does not exist
-  my $ errors = [];
-  unless (length $ title) {
-    push @ $ errors,'Please enter a title. ';
+  my $errors = [];
+  unless (length $title) {
+    push @$errors,'Please enter a title. ';
   }
   #Error if message does not exist
-  unless (length $ message) {
-    push @ $ errors,'Please enter a message. ;
+  unless (length $message) {
+    push @$errors,'Please enter a message. ;
   }
   
   # If there is an error, return without registration
-  if (@ $ errors) {
-    $ self-> render ('index', errors => $ errors);
+  if (@$errors) {
+    $self->render('index', errors => $errors);
     return;
   }
   
   #Database handle
-  my $ dbh = $ conn-> dbh;
+  my $dbh = $conn->dbh;
   
   #Data registration
-  my $ sth = $ dbh-> prepare ('insert into message (title, content) values ​​(?,?)'); $ dbh-> execute ($ title, $ message);
+  my $sth = $dbh->prepare('insert into message (title, content) values ​​(?,?)'); $dbh->execute($title, $message);
   
   #Redirect
-  $ self-> redirect_to ('index');
+  $self->redirect_to('index');
 };;
 
 get'/ update' => sub {
@@ -107,53 +107,53 @@ post'/ update' => sub {
   ...
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ layouts / common.html.ep
-% my $ title = stash ('title');
+@@layouts / common.html.ep
+%my $title = stash ('title');
 <html>
   <head>
     <meta http-equiv = "Content-Type" content = "text / html; charset = UTF-8">
-    <title> <% = $ title%> </ title>
-  </ head>
+    <title> <%= $title%> </title>
+  </head>
   <body>
-    % = content
-  </ body>
-</ html>
+    %= content
+  </body>
+</html>
 
-@@ index.html.ep
+@@index.html.ep
 <%
-  my $ messages = stash ('messages');
-  my $ errors = stash ('errors');
+  my $messages = stash ('messages');
+  my $errors = stash ('errors');
 %>
-% layout'common';
+%layout'common';
 
-  <h1> Bulletin board </ h1>
-  <form action = "<% = url_for ('/') method =" post "%>">
+  <h1> Bulletin board </h1>
+  <form action = "<%= url_for ('/') method =" post "%>">
     <div>
       title
       <input type = "text" name = "title">
-    </ div>
-    <div> Message </ div>
+    </div>
+    <div> Message </div>
     <div>
-      <textarea name = "message" cols = "50" rows = "10"> </ textarea>
-    </ div>
+      <textarea name = "message" cols = "50" rows = "10"> </textarea>
+    </div>
     <div>
       <input type = "submit" value = "Post">
-    </ div>
-  </ form>
+    </div>
+  </form>
   <div>
-    % for my $ message (@ $ messages) {
+    %for my $message (@$messages) {
       <div>
         <hr>
-        <div> Title: <% = $ message-> {title}%> </ div>
-        <div> Message </ div>
-        <div> <% = $ message-> {content}%> </ div>
+        <div> Title: <%= $message->{title}%> </div>
+        <div> Message </div>
+        <div> <%= $message->{content}%> </div>
       <div>
     %}
-  </ div>
-</ pre>
+  </div>
+</pre>
 
-The <a href="/blog/20100123126425.html"> while statement </a> is used to read the rows of the database table in order.
+The <a href="/blog/20100123126425.html"> while statement</a> is used to read the rows of the database table in order.

@@ -1,14 +1,14 @@
-<h2> Handling of Japanese </ h2>
+<h2> Handling of Japanese </h2>
 
 
 
-I will explain <strong> Japanese handling </ strong> in Mojolicious. When using Perl, what you find difficult to learn is the handling of character codes. Handling character codes in Perl is quite easy, but I think many people are confused because they don't know the modern method.
+I will explain <strong> Japanese handling </strong> in Mojolicious. When using Perl, what you find difficult to learn is the handling of character codes. Handling character codes in Perl is quite easy, but I think many people are confused because they don't know the modern method.
 
-Aside from past history and theory, here we will focus on practical items. For a detailed explanation, please refer to "<a href="/blog/20091118124667.html"> Encode --Properly handle multibyte character strings such as Japanese / Perl module thorough explanation </a>".
+Aside from past history and theory, here we will focus on practical items. For a detailed explanation, please refer to "<a href="/blog/20091118124667.html"> Encode --Properly handle multibyte character strings such as Japanese / Perl module thorough explanation</a>".
 
-<h3> Byte string and internal string </ h3>
+<h3> Byte string and internal string </h3>
 
-In Perl, <b> internal string </ b> is used inside the program, and <b> byte string </ b> expressed by a specific character code is input to the outside of the program. Receive and output.
+In Perl, <b> internal string </b> is used inside the program, and <b> byte string </b> expressed by a specific character code is input to the outside of the program. Receive and output.
 
 Think of it as an internal string inside the program and a byte string outside the program.
 
@@ -16,43 +16,43 @@ Think of it as an internal string inside the program and a byte string outside t
 Inside the program-internal string
 
 External to program-byte string
-</ pre>
+</pre>
 
 If you know Java, just think of it as a string stream and a byte stream.
 
-This means that Perl requires conversion between internal and byte strings. The module that does this conversion is the <strong> Encode </ strong> module.
+This means that Perl requires conversion between internal and byte strings. The module that does this conversion is the <strong> Encode </strong> module.
 
 <pre>
 use Encode qw / encode decode /;
 
 #Decode (convert a byte string represented by a specific character code to an internal string)
-my $ str_internal = decode ('UTF-8', $ str_byte);
+my $str_internal = decode ('UTF-8', $str_byte);
 
 # Encoding (Converts an internal string to a byte string represented by a specific character code)
-my $ str_byte = encode ('UTF-6', $ str_internal);
-</ pre>
+my $str_byte = encode ('UTF-6', $str_internal);
+</pre>
 
 Use the encode and decode functions of the Encode module to convert between internal and byte strings.
 
-<h3> utf8 pragma </ h3>
+<h3> utf8 pragma </h3>
 
 Next, let's see how to use another utf8 pragma. If the source code was saved in UTF-8, the string in the source code is a UTF-8 byte string.
 
 <pre>
 # UTF-8 byte string
-my $ str_byte ='aiueo';
-</ pre>
+my $str_byte ='aiueo';
+</pre>
 
 When the utf8 pragma is enabled, strings in the source code are interpreted as internal strings.
 
 <pre>
 # Internal string
-my $ str_internal ='Aui Ueo';
-</ pre>
+my $str_internal ='Aui Ueo';
+</pre>
 
 When dealing with Japanese in the source code in Perl, be sure to enable utf8 and save the source code in UTF-8.
 
-<h3> Handling of Japanese in Mojolicious </ h3>
+<h3> Handling of Japanese in Mojolicious </h3>
 
 The Mojolicious framework has exactly the same idea as this modern Perl string handling. And it's very easy because it does all of them automatically. As a prerequisite, be sure to save the source code and template in UTF-8.
 
@@ -61,61 +61,61 @@ A framework called Mojolicious provides the following features:
 <ol>
   <li>
     The utf8 pragma is automatically enabled.
-  </ li>
+  </li>
   <li>
     When drawing to a template, the internal string is automatically converted to a UTF-8 byte string
-  </ li>
+  </li>
   <li>
     UTF-8 byte string is automatically converted to an internal string when received from the form
-  </ li>
-</ ol>
+  </li>
+</ol>
 
 I will explain one by one.
 
-<h4> utf8 pragma is automatically enabled </ h4>
+<h4> utf8 pragma is automatically enabled </h4>
 
-In Mojolicious, the utf8 pragma is automatically enabled for classes that inherit from the class Mojo :: Base. Whenever you use Mojolicious features, you will always use a class that inherits from Mojo :: Base, so the utf8 pragma will be automatically enabled for all classes and templates.
+In Mojolicious, the utf8 pragma is automatically enabled for classes that inherit from the class Mojo::Base. Whenever you use Mojolicious features, you will always use a class that inherits from Mojo::Base, so the utf8 pragma will be automatically enabled for all classes and templates.
 
 <pre>
 # Enabled automatically
 use utf8;
-</ pre>
+</pre>
 
 Therefore, all the strings described in the source code and template are internal strings.
 
-<h4> When drawing to a template, the internal string is automatically converted to a UTF-8 byte string </ h4>
+<h4> When drawing to a template, the internal string is automatically converted to a UTF-8 byte string </h4>
 
 When drawing to a template, the internal string is automatically converted to a UTF-8 byte string.
 
 <pre>
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ c-> render ('index', message =>'aiueo');
+  $c->render('index', message =>'aiueo');
 };;
 
-@@ index.html
+@@index.html
 <%
-  my $ message = stash ('message');
+  my $message = stash ('message');
 %>
 
 Write Japanese
-<% = $ message%>
-</ pre>
+<%= $message%>
+</pre>
 
 If you write it normally, it will be converted automatically, so you don't usually need to be aware of it.
 
-<h3> UTF-8 byte string is automatically converted to internal string when received from form </ h3>
+<h3> UTF-8 byte string is automatically converted to internal string when received from form </h3>
 
 When you receive a string from the form, it is automatically converted to an internal string.
 
 <pre>
 post'/' => sub {
-  my $ self = shift;
-  my $ message = $ self-> param ('message');
+  my $self = shift;
+  my $message = $self->param('message');
   ...
 }
-</ pre>
+</pre>
 
 The string received by the param method is automatically converted to an internal string.
 

@@ -1,8 +1,8 @@
-<h2> Routing basics </ h2>
+<h2> Routing basics </h2>
 
 
 
-Now let's take a closer look at <strong> routing </ strong>. Routing is a description of the correspondence between URLs and processing.
+Now let's take a closer look at <strong> routing </strong>. Routing is a description of the correspondence between URLs and processing.
 
 I've used simple routing before.
 
@@ -10,26 +10,26 @@ I've used simple routing before.
 get'/' => sub {...};
 get'/ info' => sub {...};
 get'/ date /: date' => sub {...};
-</ pre>
+</pre>
 
 Here's a little more detail about routing.
 
-<h3> Placeholder </ h3>
+<h3> Placeholder </h3>
 
 First, I will explain about placeholders.
 
-<h4> Regular placeholder </ h4>
+<h4> Regular placeholder </h4>
 
 I explained that if you add a colon at the beginning, that part can be obtained as a parameter.
 
 <pre>
 get'/ date /: date' => sub {
-  my $ self = shift;
-  my $ date = $ self-> param ('date');
+  my $self = shift;
+  my $date = $self->param('date');
 };;
-</ pre>
+</pre>
 
-In Mojolicious, this is called a <strong> placeholder </ strong>. Please note that this placeholder matches values ​​other than "<b> / </ b>" and "<b>. </ B>".
+In Mojolicious, this is called a <strong> placeholder </strong>. Please note that this placeholder matches values ​​other than "<b> / </b>" and "<b>. </B>".
 
 For example, let's say you access with the URL "/ date / 20131015 / hello". This will result in unsuccessful routing. Instead of successfully routing and receiving "20131015 / hello" on "date", the routing itself does not succeed and the page cannot be found.
 
@@ -39,35 +39,35 @@ Placeholders can also use "()" to distinguish that part is a placeholder.
 
 <pre>
 get'/date/(:date).json'=> sub {...};
-</ pre>
+</pre>
 
 If you access with "/date/20130213.json", the routing is successful and you can receive "20130213" in the parameter "date".
 
-<h4> Relax Placeholder </ h4>
+<h4> Relax Placeholder </h4>
 
 Normal placeholders match other than "/" and ".", But relax placeholders can be used to match other than ".". Relax placeholders start with a "#".
 
 <pre>
 get'/ date / # date' => sub {...};
-</ pre>
+</pre>
 
 If you access with "/date/20130213.json", the routing will be successful and you will receive "20130213.json" in the parameter "date". You can get the part including ".".
 
 The feature of Relax Placeholder is that you can also receive the part including "." As a parameter.
 
-<h4> Wildcard Placeholder </ h4>
+<h4> Wildcard Placeholder </h4>
 
 Use wildcard placeholders to match all characters, including "/" and ".". Wildcard placeholders start with a "*".
 
 <pre>
 get'/ date / * date' => sub {...};
-</ pre>
+</pre>
 
 If you access with "/ date / 20130123 / hello", the routing will be successful and you will receive "20130213 / hello" for the parameter "date". You can get the part including "/".
 
 The feature of the wildcard placeholder is that the part including "/" can be received as a parameter like this.
 
-<h3> HTTP method </ h3>
+<h3> HTTP method </h3>
 
 Next, I would like to explain the HTTP method. The HTTP method is what you specify when sending an HTTP request. In general usage, the GET method is used to get the contents of the page, the POST method is used to send data by form, and the HEAD method is used to check the existence of the page.
 
@@ -75,44 +75,44 @@ Next, I would like to explain the HTTP method. The HTTP method is what you speci
   <tr>
     <td>
       Method name
-    </ td>
+    </td>
     <td>
       Usage
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       GET
-    </ td>
+    </td>
     <td>
       Get the contents of the page
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       POST
-    </ td>
+    </td>
     <td>
       Send data by form etc.
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       HEAD
-    </ td>
+    </td>
     <td>
       Confirm the existence of the page
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
-</ table>
+</table>
 
 There are other methods such as PUT method, DELETE method and PATCH method, but please remember these three here. Especially if you remember GET and POST, you will not have any trouble creating a website.
 
-In Mojolicious :: Lite, the following functions can be used corresponding to the above HTTP method.
+In Mojolicious::Lite, the following functions can be used corresponding to the above HTTP method.
 
 <pre>
 get'/' => sub {...};
@@ -121,85 +121,85 @@ head'/' => sub {...};
 put'/' => sub {...};
 del'/' => sub {...};
 patch'/' => sub {...};
-</ pre>
+</pre>
 
-<h4> Match all HTTP methods </ h4>
+<h4> Match all HTTP methods </h4>
 
-I think there are many cases where you want to receive both get and post at the same URL. In that case, use the <strong> any </ strong> function. Matches all HTTP methods.
+I think there are many cases where you want to receive both get and post at the same URL. In that case, use the <strong> any </strong> function. Matches all HTTP methods.
 
 <pre>
 any'/' => sub {...};
-</ pre>
+</pre>
 
-<h4> Get HTTP method name </ h4>
+<h4> Get HTTP method name </h4>
 
-If you receive it with the <b> any </ b> function, you may want to know which HTTP method the user used to access it. In such a case, you can get the Mojo :: Message :: Request object that expresses the HTTP request with the <b> req </ b> method, and get the HTTP method with the <b> method </ b> method.
+If you receive it with the <b> any </b> function, you may want to know which HTTP method the user used to access it. In such a case, you can get the Mojo::Message::Request object that expresses the HTTP request with the <b> req </b> method, and get the HTTP method with the <b> method </b> method.
 
 <pre>
-my $ http_method = $ c-> req-> method;
-</ pre>
+my $http_method = $c->req->method;
+</pre>
 
-<h3> Handle if the page is not found </ h3>
+<h3> Handle if the page is not found </h3>
 
-In the case of a date, for example, I would like to write a process that the page cannot be found unless it is 8 digits. This is because it has no meaning if the number is other than 8 digits. In such cases, it's a good idea to let them know that it doesn't exist. You can use <strong> reply-> not_found </ strong> to draw the page "404 Not Found" yourself.
+In the case of a date, for example, I would like to write a process that the page cannot be found unless it is 8 digits. This is because it has no meaning if the number is other than 8 digits. In such cases, it's a good idea to let them know that it doesn't exist. You can use <strong> reply->not_found</strong> to draw the page "404 Not Found" yourself.
 
 <pre>
 get'/ date /: date' => sub {
-  my $ self = shift;
-  my $ date = $ self-> param ('date');
+  my $self = shift;
+  my $date = $self->param('date');
   
   # Draw "404 Not Found" if not in date format
-  unless ($ date = ~ / ^ [0-9] {8} $ /) {
-    $ self-> reply-> not_found;
+  unless ($date = ~ / ^ [0-9] {8} $/) {
+    $self->reply->not_found;
     return;
   }
 
-  $ self-> render ('date', date => $ date);
+  $self->render('date', date => $date);
 };;
-</ pre>
+</pre>
 
-You can also use <strong> reply-> exception </ strong> instead to get a "500 error message" indicating an error.
+You can also use <strong> reply->exception</strong> instead to get a "500 error message" indicating an error.
 
 <pre>
-$ c-> reply-> exception ('Error');
-</ pre>
+$c->reply->exception('Error');
+</pre>
 
-<h3> Preprocessing common to all routings </ h3>
+<h3> Preprocessing common to all routings </h3>
 
 You may want to write a pre-process that is common to all routes. For example, you may want to redirect to a page called "/ login" if you are not logged in.
 
-In such cases, you can use the <strong> under </ strong> function to write preprocessing that is common to all routings. The sample below shows that you can get the stash value in a subroutine passed to the under function and use it in two different routes, "/ some1" and "some2".
+In such cases, you can use the <strong> under </strong> function to write preprocessing that is common to all routings. The sample below shows that you can get the stash value in a subroutine passed to the under function and use it in two different routes, "/ some1" and "some2".
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Preprocessing
 under sub {
-  my $ self = shift;
+  my $self = shift;
   
-  $ self-> stash ('name' =>'Kimoto');
+  $self->stash('name' =>'Kimoto');
 
   return 1;
 };;
 
 get'/ some1' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ name = $ self-> stash ('name');
+  my $name = $self->stash('name');
 
-  $ self-> render (text => $ name);
+  $self->render(text => $name);
 };;
 
 get'/ some2' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ name = $ self-> stash ('name');
+  my $name = $self->stash('name');
 
-  $ self-> render (text => $ name);
+  $self->render(text => $name);
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 In the above sample, 1 is returned as "return 1" in the under function, but this is necessary if you want to process the continuation that follows. If you do not want to continue processing after under, write "return" and return the undefined value.
 
@@ -207,37 +207,37 @@ If you change under as shown below, you can see that "Access deny" is displayed 
 
 <pre>
 under sub {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ continue = 0;
+  my $continue = 0;
   
   # When not performing continuous processing
-  unless ($ continue) {
-    $ self-> render (text =>'Access deny');
+  unless ($continue) {
+    $self->render(text =>'Access deny');
     return;
   }
 
   return 1;
 };;
-</ pre>
+</pre>
 
-<h3> Routing sample </ h3>
+<h3> Routing sample </h3>
 
 Let's write some sample code to understand routing.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Preprocessing
 under sub {
-  my $ self = shift;
+  my $self = shift;
   
   # Do not allow if user is admin
-  my $ user = $ self-> url_for-> path-> parts-> [0] //'';
-  if ($ user eq'admin') {
+  my $user = $self->url_for->path->parts->[0] //'';
+  if ($user eq'admin') {
     
-    $ self-> res-> code (403);
-    $ self-> render (text =>'Forbidden');
+    $self->res->code(403);
+    $self->render(text =>'Forbidden');
     return
   }
   
@@ -247,59 +247,59 @@ under sub {
 # / Username / Project name / Directory name
 # Or / user name / project name
 get'/: user /: project / * dir' => {dir => undef} => sub {
-  my $ self = shift;#Parameter
-  my $ user = $ self-> param ('user');
-  my $ project = $ self-> param ('project');
-  my $ dir = $ self-> param ('dir') //'Nothing';
+  my $self = shift;#Parameter
+  my $user = $self->param('user');
+  my $project = $self->param('project');
+  my $dir = $self->param('dir') //'Nothing';
   
   #Drawing
-  $ self-> render (
+  $self->render(
     'index',
-    user => $ user,
-    project => $ project,
-    dir => $ dir
+    user => $user,
+    project => $project,
+    dir => $dir
   );
 };;
 
 any'/ http-method' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   #Get HTTP method
-  my $ http_method = $ self-> req-> method;
+  my $http_method = $self->req->method;
 
-  $ self-> render (text => "HTTP Method: $ http_method");
+  $self->render(text => "HTTP Method: $http_method");
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <%
-  my $ user = stash ('user');
-  my $ project = stash ('project');
-  my $ dir = stash ('dir');
+  my $user = stash ('user');
+  my $project = stash ('project');
+  my $dir = stash ('dir');
 %>
 <html>
   <head>
-    <title> Routing </ title>
-  </ head>
+    <title> Routing </title>
+  </head>
   <body>
-    User: <% = $ user%> <br>
-    Project: <% = $ project%> <br>
-    Directory: <% = $ dir%> </ br>
-  </ body>
-</ html>
-</ pre>
+    User: <%= $user%> <br>
+    Project: <%= $project%> <br>
+    Directory: <%= $dir%> </br>
+  </body>
+</html>
+</pre>
 
-<h4> Application description </ h4>
+<h4> Application description </h4>
 
 This application can be accessed at the following URL:
 
 <pre>
 / Username / project name / directory name
 / Username / Project name
-</ pre>
+</pre>
 
 If you access it with "/kimoto/dog/dir1/readme.txt", it will be displayed as follows.
 
@@ -307,7 +307,7 @@ If you access it with "/kimoto/dog/dir1/readme.txt", it will be displayed as fol
 User: kimoto
 Project: dog
 Directory: dir1 / readme.txt
-</ pre>
+</pre>
 
 If you access it with "/ kimoto / dog", it will be displayed as follows.
 
@@ -315,33 +315,33 @@ If you access it with "/ kimoto / dog", it will be displayed as follows.
 User: kimoto
 Project: dog
 Directory: Nothing
-</ pre>
+</pre>
 
 This is because the routing is defined as follows:
 
 <pre>
 get'/: user /: project / * dir' => {dir => undef} => sub {...};
-</ pre>
+</pre>
 
 If you access it with "/admin/dog/dir1/readme.txt", "Forbidden" will be displayed. This is because the following preprocessing is described.
 
 <pre>
 # Preprocessing
 under sub {
-  my $ self = shift;
+  my $self = shift;
   
   # Do not allow if user is admin
-  my $ user = $ self-> url_for-> path-> parts-> [0] //'';
-  if ($ user eq'admin') {
+  my $user = $self->url_for->path->parts->[0] //'';
+  if ($user eq'admin') {
     
-    $ self-> res-> code (403);
-    $ self-> render (text =>'Forbidden');
+    $self->res->code(403);
+    $self->render(text =>'Forbidden');
     return
   }
   
   return 1;
 };;
-</ pre>
+</pre>
 
 If the first part of the URL path is "admin", I'm trying to set the status code to "403" and return the text "Forbidden".
 
@@ -349,10 +349,10 @@ I will explain a little.
 
 <pre>
 #Get the first part of the URL path
-my $ user = $ self-> url_for-> path-> parts-> [0] //'';
-</ pre>
+my $user = $self->url_for->path->parts->[0] //'';
+</pre>
 
-First, use the <b> url_for </ b> method to get the accessed URL. You will get a Mojo :: URL object. To get the path part of this URL below, use the <b> path </ b> method of the Mojo :: URL class. You will get a Mojo :: Path object. Then each part of the path is saved as an array, which can be obtained by the <b> parts </ b> method of the Mojo :: Path class.
+First, use the <b> url_for </b> method to get the accessed URL. You will get a Mojo::URL object. To get the path part of this URL below, use the <b> path </b> method of the Mojo::URL class. You will get a Mojo::Path object. Then each part of the path is saved as an array, which can be obtained by the <b> parts </b> method of the Mojo::Path class.
 
 "//" is a perl "defined-or operator" that allows you to assign the right side if the left side is an undefined value.
 
@@ -362,21 +362,21 @@ Next is the part to check with the user.
 
 <pre>
 #If the user is admin, set the status code to 403 to display Forbidden
-if ($ user eq'admin') {
+if ($user eq'admin') {
   
-  $ self-> res-> code (403);
-  $ self-> render (text =>'Forbidden');
+  $self->res->code(403);
+  $self->render(text =>'Forbidden');
   return
 }
-</ pre>
+</pre>
 
-You can get the response object by using the <b> res </ b> method of the controller class. This is a Mojo :: Message :: Response object. You can set the status code using the <b> code </ b> method of the Mojo :: Message :: Response class.
+You can get the response object by using the <b> res </b> method of the controller class. This is a Mojo::Message::Response object. You can set the status code using the <b> code </b> method of the Mojo::Message::Response class.
 
 The next part gets the HTTP method name.
 
 <pre>
 #Get HTTP method
-my $ http_method = $ self-> req-> method;
-</ pre>
+my $http_method = $self->req->method;
+</pre>
 
 When you access "/ http-method", "HTTP Method: GET" is displayed.

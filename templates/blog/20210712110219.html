@@ -1,40 +1,40 @@
-<h2> Get the size of the uploaded file </ h2>
+<h2> Get the size of the uploaded file </h2>
 
-Let's get the size of the uploaded file. To get the size of the uploaded file, use the size method of the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo :: Upload </a> class. To do.
+Let's get the size of the uploaded file. To get the size of the uploaded file, use the size method of the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo::Upload</a> class. To do.
 
 <pre>
-my $ size = $ upload-> size;
-</ pre>
+my $size = $upload->size;
+</pre>
 
-When uploading a file from a form, set the "enctype" attribute of the "form" element to "multipart / form-data" on the form and use the file field (file_field) to <a href="https: // en". Uploaded using the <a href="/blog/20110501130707.html"> param </a> method of the .mojodoc.perlzemi.com/Mojolicious :: Controller.html "> Mojo :: Controller </a> class You can get the file as a <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo :: Upload </a> object.
+When uploading a file from a form, set the "enctype" attribute of the "form" element to "multipart / form-data" on the form and use the file field (file_field) to <a href="https: // en". Uploaded using the <a href="/blog/20110501130707.html"> param</a> method of the .mojodoc.perlzemi.com/Mojolicious::Controller.html "> Mojo::Controller</a> class You can get the file as a <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo::Upload</a> object.
 
-<b> HTML side </ b>
+<b> HTML side </b>
 
 <pre>
 <form method = "POST" enctype = "multipart / form-data">
-  <% = file_field'image_file'%>
-</ form>
-</ pre>
+  <%= file_field'image_file'%>
+</form>
+</pre>
 
-<b> Program side </ b>
+<b> Program side </b>
 
 <pre>
 # Uploaded file
-my $ image_file = $ c-> param ('image_file');
-</ pre>
+my $image_file = $c->param('image_file');
+</pre>
 
-<h3> Check if the file has been uploaded </ h3>
+<h3> Check if the file has been uploaded </h3>
 
-One thing to note is that uploading from a form will generate a Mojo :: Upload object even if the file wasn't uploaded. Therefore, it is not possible to check whether the file has been uploaded with the <a href="https://en.perlzemi.com/blog/20100219126425.html"> defined function </a>. You need to check the file size.
+One thing to note is that uploading from a form will generate a Mojo::Upload object even if the file wasn't uploaded. Therefore, it is not possible to check whether the file has been uploaded with the <a href="https://en.perlzemi.com/blog/20100219126425.html"> defined function</a>. You need to check the file size.
 
 <pre>
 #Check for correct upload
-if ($ image_file-> size> 0) {
+if ($image_file->size> 0) {
   
 }
 
 # Check for wrong uploads
-if (defined $ image_file) {
+if (defined $image_file) {
   
 }
-</ pre>
+</pre>

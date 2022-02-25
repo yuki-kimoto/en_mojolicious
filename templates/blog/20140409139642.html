@@ -1,82 +1,82 @@
-<h2> Application and controller functions </ h2>
+<h2> Application and controller functions </h2>
 
 
 
 Mojolicious has a lot of useful features for creating web applications. Among them, I would like to introduce the ones that are frequently used. If you remember these first, you won't have to worry about what to do.
 
-<h3> Application object </ h3>
+<h3> Application object </h3>
 
-You can get the object that represents the body of the application with the <strong> app </ strong> function. The app function is automatically imported when you load Mojolicious :: Lite.
+You can get the object that represents the body of the application with the <strong> app </strong> function. The app function is automatically imported when you load Mojolicious::Lite.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 #Application object
-my $ app = app;
-</ pre>
+my $app = app;
+</pre>
 
-The application object belongs to the Mojolicious class and you can call the methods of the Mojolicious class. See <a href="https://en.mojodoc.perlzemi.com/mojo-api-reference.html"> Mojolicious API Reference </a> for a list of methods.
+The application object belongs to the Mojolicious class and you can call the methods of the Mojolicious class. See <a href="https://en.mojodoc.perlzemi.com/mojo-api-reference.html"> Mojolicious API Reference</a> for a list of methods.
 
-<h4> Home object </ h4>
+<h4> Home object </h4>
 
-First, you can get a <strong> home </ strong> object that represents Mojolicious's home directory using the <b> home </ b> method. Home objects belong to the Mojo :: Home class.
+First, you can get a <strong> home </strong> object that represents Mojolicious's home directory using the <b> home </b> method. Home objects belong to the Mojo::Home class.
 
 <pre>
 #Get home object
-my $ home = $ app-> home;
-</ pre>
+my $home = $app->home;
+</pre>
 
-From the home object, you can call the methods of the Mojo :: Home class. Mojo :: Home has a method called <b> rel_file </ b>, which converts the path specified by the relative path from the home directory to the absolute path.
+From the home object, you can call the methods of the Mojo::Home class. Mojo::Home has a method called <b> rel_file </b>, which converts the path specified by the relative path from the home directory to the absolute path.
 
 <pre>
-my $ path_abs = $ home-> rel_file ('db / myapp.db');
-</ pre>
+my $path_abs = $home->rel_file('db / myapp.db');
+</pre>
 
 This is useful when getting the path to a database file, etc.
 
-<h3> Log file </ h3>
+<h3> Log file </h3>
 
-Mojolicious has a mechanism to output logs. Try creating a directory called <b> log </ b> in the same directory as your application.
+Mojolicious has a mechanism to output logs. Try creating a directory called <b> log </b> in the same directory as your application.
 
 <pre>
 myapp.pl
 log log
-</ pre>
+</pre>
 
-Then, a file called <b> development.log </ b> will be created in this directory, and the application log will be output here.
+Then, a file called <b> development.log </b> will be created in this directory, and the application log will be output here.
 
 <pre>
 log / development.log
-</ pre>
+</pre>
 
-You can output it to this log file yourself, but to do so, use the <b> log </ b> method from the application object to get the log object.
-
-<pre>
-my $ log = $ app-> log;
-</ pre>
-
-Log objects belong to the Mojo :: Log class. The Mojo :: Log class can output logs according to the level. You can output the log according to the level using the following method.
+You can output it to this log file yourself, but to do so, use the <b> log </b> method from the application object to get the log object.
 
 <pre>
-$ log-> debug ($ messgae);
-$ log-> info ($ messgae);
-$ log-> warn ($ messgae);
-$ log-> error ($ messgae);
-$ log-> fatal ($ messgae);
-</ pre>
+my $log = $app->log;
+</pre>
 
-Information that you want to output only when debugging is output with <b> debug </ b>. Normally, the <b> info </ b> method outputs information, and in the case of warnings, errors, and fatal errors, the <b> warn </ b> method, <b> error </ b> method, You may want to use the <b> fatal </ b> method.
+Log objects belong to the Mojo::Log class. The Mojo::Log class can output logs according to the level. You can output the log according to the level using the following method.
+
+<pre>
+$log->debug($messgae);
+$log->info($messgae);
+$log->warn($messgae);
+$log->error($messgae);
+$log->fatal($messgae);
+</pre>
+
+Information that you want to output only when debugging is output with <b> debug </b>. Normally, the <b> info </b> method outputs information, and in the case of warnings, errors, and fatal errors, the <b> warn </b> method, <b> error </b> method, You may want to use the <b> fatal </b> method.
 
 It is up to each programmer to decide what is an error and what is a warning.
 
-<h3> Configuration file </ h3>
+<h3> Configuration file </h3>
 
-Mojolicious makes it easy to write configuration files. Create a file with the same name as the script and the extension <b> conf </ b> in the same directory as the script.
+Mojolicious makes it easy to write configuration files. Create a file with the same name as the script and the extension <b> conf </b> in the same directory as the script.
 
 <pre>
 myapp.pl
 myapp.conf
-</ pre>
+</pre>
 
 This configuration file can be written in Perl.
 
@@ -85,210 +85,210 @@ This configuration file can be written in Perl.
   name =>'kimoto',
   age => 19
 }
-</ pre>
+</pre>
 
 Note that you write a hash reference. If you use Japanese, save the file in UTF-8.
 
-<h4> Read the configuration file </ h4>
+<h4> Read the configuration file </h4>
 
 The configuration file can be read by using the Config plugin. A plugin is a mechanism to add Mojolicious functions, and a Config plugin is a plugin that is easy from the beginning to read a configuration file.
 
-To use a plugin, call the plugin method from a <b> plugin </ b> function or application object.
+To use a plugin, call the plugin method from a <b> plugin </b> function or application object.
 
 <pre>
 plugin ('Config');
-$ app-> plugin ('Config');
-</ pre>
+$app->plugin('Config');
+</pre>
 
-Now the config file is loaded and you can get the config with the <b> config </ b> method.
+Now the config file is loaded and you can get the config with the <b> config </b> method.
 
 <pre>
 # Get one by one
-my $ name = $ app-> config ('name');
-my $ age = $ app-> config ('age');
+my $name = $app->config('name');
+my $age = $app->config('age');
 
 # Get all
-my $ config = $ app-> config;
-</ pre>
+my $config = $app->config;
+</pre>
 
 It is also possible to make settings on the application.
 
 <pre>
 # Setting
-$ app-> config ('name' =>'Ken');
-</ pre>
+$app->config('name' =>'Ken');
+</pre>
 
-<h3> Get application object with controller </ h3>
+<h3> Get application object with controller </h3>
 
-To get the application object from the controller, use the <b> app </ b> method from the controller object.
+To get the application object from the controller, use the <b> app </b> method from the controller object.
 
 <pre>
-my $ app = $ c-> app;
-</ pre>
+my $app = $c->app;
+</pre>
 
-For example, you can get: If you can get the application object, you can also call <b> home </ b> or <b> log </ b> from here.
+For example, you can get: If you can get the application object, you can also call <b> home </b> or <b> log </b> from here.
 
 <pre>
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ app = $ self-> app;
-  $ app-> log-> info ('Info');
+  my $app = $self->app;
+  $app->log->info('Info');
 };;
-</ pre>
+</pre>
 
-<h3> Placement of static files </ h3>
+<h3> Placement of static files </h3>
 
-If you want to use static files such as CSS, JavaScript and images, create a <b> public </ b> directory in the same directory as your application.
+If you want to use static files such as CSS, JavaScript and images, create a <b> public </b> directory in the same directory as your application.
 
 <pre>
 myapp.pl
 public
-</ pre>
+</pre>
 
 And place a static file such as CSS in this.
 
 <pre>
 public / css / common.css
 public / js / common.js
-</ pre>
+</pre>
 
 Static files are automatically dispatched by Mojolicious. You can get these files by accessing them at the following URL:
 
 <pre>
 http: //localhost:3000/css/common.css
 http: //localhost:3000/js/common.js
-</ pre>
+</pre>
 
-<h3> Template external file </ h3>
+<h3> Template external file </h3>
 
-Mojolicious :: Lite used to write templates in one file, but as your application grows, you'll want to write it in an external file.
+Mojolicious::Lite used to write templates in one file, but as your application grows, you'll want to write it in an external file.
 
 Take a look at the following application.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ self-> render ('info');
+  $self->render('info');
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ info.html.ep
+@@info.html.ep
 Information
-</ pre>
+</pre>
 
-<b> info.html.ep </ b> is written in the data section, but let's convert this template to an external file.
+<b> info.html.ep </b> is written in the data section, but let's convert this template to an external file.
 
-First, create a directory called <b> templates </ b> in the same directory as the script.
+First, create a directory called <b> templates </b> in the same directory as the script.
 
 <pre>
 myapp.pl
 templates templates
-</ pre>
+</pre>
 
 Place the template file in this.
 
 <pre>
 templates / info.html.ep
-</ pre>
+</pre>
 
 And the data section will be deleted.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ self-> render ('info');
+  $self->render('info');
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 Externalizing the template file in this way is convenient because it makes it easier to understand the line number where the syntax error occurred.
 
-<h3> Redirection </ h3>
+<h3> Redirection </h3>
 
-A redirect is the ability to forward to another URL. You can redirect using the <strong> redirect_to </ strong> method of the Mojolicious :: Controller class.
+A redirect is the ability to forward to another URL. You can redirect using the <strong> redirect_to </strong> method of the Mojolicious::Controller class.
 
 <pre>
-$ c-> redirect_to ('/ other');
-</ pre>
+$c->redirect_to('/ other');
+</pre>
 
-<h3> Samples using these functions </ h3>
+<h3> Samples using these functions </h3>
 
 Finally, let's create a sample using the functions introduced here.
 
-<h4> myapp.pl </ h4>
+<h4> myapp.pl </h4>
 
 First, write the body of the application.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 #Read configuration file
 plugin ('Config');
 
 #Output to log
-app-> log-> info ('Start application');
+app->log->info('Start application');
 
 #Get the path of the database file
-my $ db_file = app-> home-> rel_file ('db / myapp.db');
+my $db_file = app->home->rel_file('db / myapp.db');
 
 Access to # /
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   # application
-  my $ app = $ self-> app;
+  my $app = $self->app;
 
   # Output to log
-  $ app-> log-> info ('Access infomation');
+  $app->log->info('Access infomation');
   
   #Get the path of the database file
-  my $ db_file = $ app-> home-> rel_file ('db / myapp.db');
+  my $db_file = $app->home->rel_file('db / myapp.db');
 
   #Get from config file
-  my $ name = $ app-> config ('name');
-  my $ age = $ app-> config ('age');
+  my $name = $app->config('name');
+  my $age = $app->config('age');
 
   #Drawing a template
-  $ self-> render (
+  $self->render(
     'info',
-    name => $ name,
-    age => $ age,
-    db_file => $ db_file
+    name => $name,
+    age => $age,
+    db_file => $db_file
   );
 };;
 
 #Redirect
 get'/ some' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ self-> redirect_to ('/ other');
+  $self->redirect_to('/ other');
 };;
 
 get'/ other' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  $ self-> render (text =>'Other');
+  $self->render(text =>'Other');
 };;
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
-<h3> log </ h3>
+<h3> log </h3>
 
 Create a log directory for the log files.
 
-<h4> myapp.conf </ h4>
+<h4> myapp.conf </h4>
 
 This is a configuration file. Place it in the same directory as myapp.pl.
 
@@ -297,9 +297,9 @@ This is a configuration file. Place it in the same directory as myapp.pl.
   name =>'Kimoto',
   age => 32
 }
-</ pre>
+</pre>
 
-<h4> public / css / common.css </ h4>
+<h4> public / css / common.css </h4>
 
 It is a style sheet. Create a public directory and place it in it.
 
@@ -307,35 +307,35 @@ It is a style sheet. Create a public directory and place it in it.
 body {
   background: #FFFFEE;
 }
-</ pre>
+</pre>
 
-<h4> templates / info.html.ep </ h4>
+<h4> templates / info.html.ep </h4>
 
 This is a template file. Create a templates directory and place it in it.
 
 <pre>
 <%
-  my $ name = stash ('name');
-  my $ age = stash ('age');
-  my $ db_file = stash ('db_file');
+  my $name = stash ('name');
+  my $age = stash ('age');
+  my $db_file = stash ('db_file');
 %>
 
 <html>
   <head>
-    <title> Information </ title>
-    % = stylesheet'/ css / common';
-  </ head>
+    <title> Information </title>
+    %= stylesheet'/ css / common';
+  </head>
   <body>
-    <b> Name </ b>: <% = $ name%> <br>
-    <b> Age </ b>: <% = $ age%> <br>
-    <b> Database file </ b>: <% = $ db_file%> <br>
-  </ body>
-</ html>
-</ pre>
+    <b> Name </b>: <%= $name%> <br>
+    <b> Age </b>: <%= $age%> <br>
+    <b> Database file </b>: <%= $db_file%> <br>
+  </body>
+</html>
+</pre>
 
 The stylesheet function isn't covered here, but it's a template helper for loading stylesheets.
 
-<h4> Run application </ h4>
+<h4> Run application </h4>
 
 Check if the directory structure is as follows.
 
@@ -345,7 +345,7 @@ myapp.conf
 templates / info.html.ep
 public / css / common.css
 log log
-</ pre>
+</pre>
 
 If you run the application and access the "/", you will get the following results:
 
@@ -353,10 +353,10 @@ If you run the application and access the "/", you will get the following result
 Name: Kimoto
 Age: 32
 Database file: /home/kimoto/labo/db/myapp.db
-</ pre>
+</pre>
 
 If you access "/ some", you will be redirected to "/ other" and the contents of "/ other" will be displayed.
 
 <pre>
 Other Other
-</ pre>
+</pre>

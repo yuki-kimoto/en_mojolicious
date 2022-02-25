@@ -1,72 +1,72 @@
-<h2> Get the content type of the uploaded file </ h2>
+<h2> Get the content type of the uploaded file </h2>
 
-To get the content type of the uploaded file, use the headers method of the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo :: Upload </a> class. Use it to get the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Headers.html"> Mojo :: Headers </a> object and call the content_type method.
+To get the content type of the uploaded file, use the headers method of the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo::Upload</a> class. Use it to get the <a href="https://en.mojodoc.perlzemi.com/Mojo ::Headers.html"> Mojo::Headers</a> object and call the content_type method.
 
 <pre>
 # Get the content type of the uploaded file
-my $ content_type = $ upload-> headers-> content_type;
-</ pre>
+my $content_type = $upload->headers->content_type;
+</pre>
 
-<h3> Content type and extension </ h3>
+<h3> Content type and extension </h3>
 
 Describes common image content types and PDF extensions.
 
-<h4> PNG </ h4>
+<h4> PNG </h4>
 
 <pre>
 # Extension content type
 png image / png
-</ pre>
+</pre>
 
-<h4> JPEG </ h4>
+<h4> JPEG </h4>
 
 <pre>
 # Extension content type
 jpeg image / jpeg
 jpg image / jpeg
-</ pre>
+</pre>
 
-<h4> GIF </ h4>
+<h4> GIF </h4>
 
 <pre>
 # Extension content type
 gif image / gif
-</ pre>
+</pre>
 
-<h4> PDF </ h4>
+<h4> PDF </h4>
 
 <pre>
 # Extension content type
 pdf application / pdf
-</ pre>
+</pre>
 
-<h3> Determine the extension from the content type </ h3>
+<h3> Determine the extension from the content type </h3>
 
-If you want to save an uploaded file, you may want to create file extensibility, depending on the type of content type. Here is a sample of such logic. Judgment is made using <a href="https://en.perlzemi.com/blog/20100827127859.html"> regular expression </a>.
+If you want to save an uploaded file, you may want to create file extensibility, depending on the type of content type. Here is a sample of such logic. Judgment is made using <a href="https://en.perlzemi.com/blog/20100827127859.html"> regular expression</a>.
 
 <pre>
-my $ content_type ='image / png';
-my $ ext;
+my $content_type ='image / png';
+my $ext;
 
 #PNG
-if ($ content_type = ~ m | \ bimage / png \ b |) {
-  $ ext ='png';
+if ($content_type = ~ m | \ bimage / png \ b |) {
+  $ext ='png';
 }
 #JPEG
-elsif ($ content_type = ~ m | \ bimage / jpeg \ b |) {
-  $ ext ='jpg';
+elsif ($content_type = ~ m | \ bimage / jpeg \ b |) {
+  $ext ='jpg';
 }
 #GIF
-elsif ($ content_type = ~ m | \ bimage / gif \ b |) {
-  $ ext ='gif';
+elsif ($content_type = ~ m | \ bimage / gif \ b |) {
+  $ext ='gif';
 }
 #PDF
-elsif ($ content_type = ~ m | \ bapplication / pdf \ b |) {
-  $ ext ='pdf';
+elsif ($content_type = ~ m | \ bapplication / pdf \ b |) {
+  $ext ='pdf';
 }
 else {
   #Unexpected content type
 }
 
-print "$ ext \ n";
-</ pre>
+print "$ext\n";
+</pre>

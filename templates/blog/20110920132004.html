@@ -1,19 +1,19 @@
-<h2> Use EV to speed up the event loop </ h2>
+<h2> Use EV to speed up the event loop </h2>
 
 
 
 
-Mojolicious uses IO :: Poll for IO monitoring by default, but you can also take advantage of faster EVs. Mojolicious will automatically use EV for IO monitoring when EV is installed, improving performance. EVs can be installed just like any other CPAN module.
+Mojolicious uses IO::Poll for IO monitoring by default, but you can also take advantage of faster EVs. Mojolicious will automatically use EV for IO monitoring when EV is installed, improving performance. EVs can be installed just like any other CPAN module.
 
 <pre>
 cpan EV
-</ pre>
+</pre>
 
 Make sure you can see the EV from Mojolicious.
 
 <pre>
 mojo Version
-</ pre>
+</pre>
 
 If EV is installed as follows, it is successful.
 
@@ -24,7 +24,7 @@ CORE
 
 OPTIONAL
    EV (4.03)
-   IO :: Socket :: IP (not installed)
-   IO :: Socket :: SSL (1.44)
-   Net :: Rendezvous :: Publish (not installed)
-</ pre>
+   IO::Socket::IP (not installed)
+   IO::Socket::SSL (1.44)
+   Net::Rendezvous::Publish (not installed)
+</pre>

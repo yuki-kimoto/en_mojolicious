@@ -1,28 +1,28 @@
-<h2> Write a form </ h2>
+<h2> Write a form </h2>
 
-The <strong> form_for </ strong> helper makes it easy to write a form.
+The <strong> form_for </strong> helper makes it easy to write a form.
 
 <pre>
-<% = form_for login => (method =>'post') => begin%>
-  <% = text_field'first_name'%>
-  <% = submit_button%>
-<% end%>
+<%= form_for login => (method =>'post') => begin%>
+  <%= text_field'first_name'%>
+  <%= submit_button%>
+<%end%>
 
-<% = form_for login => {foo =>'bar'} => (method =>'post') => begin%>
-  <% = text_field'first_name'%>
-  <% = submit_button%>
-<% end%>
+<%= form_for login => {foo =>'bar'} => (method =>'post') => begin%>
+  <%= text_field'first_name'%>
+  <%= submit_button%>
+<%end%>
 
-<% = form_for'/ login' => (method =>'post') => begin%>
-  <% = text_field'first_name'%>
-  <% = submit_button%>
-<% end%>
+<%= form_for'/ login' => (method =>'post') => begin%>
+  <%= text_field'first_name'%>
+  <%= submit_button%>
+<%end%>
 
-<% = form_for'http://kraih.com/login'=> (method =>'post') => begin%>
-  <% = text_field'first_name'%>
-  <% = submit_button%>
-<% end%>
-</ pre>
+<%= form_for'http://kraih.com/login'=> (method =>'post') => begin%>
+  <%= text_field'first_name'%>
+  <%= submit_button%>
+<%end%>
+</pre>
 
 It expands to tags like the following:
 
@@ -30,23 +30,23 @@ It expands to tags like the following:
 <form action = "/ path / to / login" method = "post">
   <input name = "first_name" />
   <input value = "Ok" type = "submit" />
-</ form>
+</form>
 
 <form action = "/ path / to / login / bar" method = "post">
   <input name = "first_name" />
   <input value = "Ok" type = "submit" />
-</ form>
+</form>
 
 <form action = "/ login" method = "post">
   <input name = "first_name" />
   <input value = "Ok" type = "submit" />
-</ form>
+</form>
 
 <form action = "http://kraih.com/login" method = "post">
   <input name = "first_name" />
   <input value = "Ok" type = "submit" />
-</ form>
-</ pre>
+</form>
+</pre>
 
 <hr>
-<a href="/blog/20110402130560.html"> Go to Mojolicious Reference </a>
+<a href="/blog/20110402130560.html"> Go to Mojolicious Reference</a>

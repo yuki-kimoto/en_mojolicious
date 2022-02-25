@@ -1,14 +1,14 @@
-<h2> morbo --Mojolicious development server </ h2>
+<h2> morbo --Mojolicious development server </h2>
 
 
 
-<b> morbo </ b> is the development server that comes with Mojolicious by default. Web development is very convenient because it automatically detects file changes and restarts the server automatically.
+<b> morbo </b> is the development server that comes with Mojolicious by default. Web development is very convenient because it automatically detects file changes and restarts the server automatically.
 
 <pre>
 morbo app.pl
-</ pre>
+</pre>
 
-<h4> morbo doesn't work on Windows </ h4>
+<h4> morbo doesn't work on Windows </h4>
 
 morbo does not detect the file and restart successfully on Windows. (As of April 27, 2018)
 
@@ -18,23 +18,23 @@ I created a batch file called winmorbo to solve this problem, so please use it.
 
 <ul>
   <li>
-    <a href="/blog/20180430152504.html"> Tools to run morbo on Windows --winmorbo </a>
-  </ li>
-</ ul>
+    <a href="/blog/20180430152504.html"> Tools to run morbo on Windows --winmorbo</a>
+  </li>
+</ul>
 
-<h4> Specify the port number </ h4>
+<h4> Specify the port number </h4>
 
 When you start the test server on morbo, the application usually starts on port number 3000.
 
-This can be changed with the <b> --listen </ b> option.
+This can be changed with the <b> --listen </b> option.
 
 <pre>
 morbo --listen = http: //*:3001 myapp.pl
-</ pre>
+</pre>
 
-It can also be specified by setting the <b> MOJO_LISTEN </ b> environment variable.
+It can also be specified by setting the <b> MOJO_LISTEN </b> environment variable.
 
 <pre>
 export MOJO_LISTEN = http: // *: 3001
 morbo a.pl
-</ pre>
+</pre>

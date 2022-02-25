@@ -1,4 +1,4 @@
-<h2> How to manage Mojolicious applications from the root user </ h2>
+<h2> How to manage Mojolicious applications from the root user </h2>
 
 
 
@@ -8,7 +8,7 @@ In other words, the hypnotoad command usually needs to be executed by a general 
 
 Also, if you are using perlbrew, you may end up using the default Perl if you run it from root, and you may run with root privileges.
 
-<h3> Set user and group in the config file </ h3>
+<h3> Set user and group in the config file </h3>
 
 I don't want to run it with root privileges, so let's set user and group in the hypnotoad config file. This allows child processes running in hypnotoad to run with user privileges.
 
@@ -16,15 +16,15 @@ I don't want to run it with root privileges, so let's set user and group in the 
 [hypnotoad]
 user = kimoto
 group = kimoto
-</ blockquote>
+</blockquote>
 
-<h3> Set PATH if you are using perlbrew </ h3>
+<h3> Set PATH if you are using perlbrew </h3>
 
 If you're using perlbrew, you'll need to set the PATH environment variable because your perl isn't visible to root. So you need to wrap your application in a shell script and run it.
 
 <pre>
 #! / bin / sh
 
-PATH = "perl path: $ PATH"
+PATH = "perl path: $PATH"
 hypnotoad application path
-</ pre>
+</pre>

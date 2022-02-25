@@ -1,20 +1,20 @@
-<h2> Mojolicious template helper </ h2>
+<h2> Mojolicious template helper </h2>
 
 
 
-I would like to explain the <b> helper </ b> that is useful in templates. Think of a helper as a function that you can call in a template. The layout helper and stash helper have already been explained, so I will explain the other helpers.
+I would like to explain the <b> helper </b> that is useful in templates. Think of a helper as a function that you can call in a template. The layout helper and stash helper have already been explained, so I will explain the other helpers.
 
-<h3> Embedding stylesheets </ h3>
+<h3> Embedding stylesheets </h3>
 
-If you want to write a stylesheet in the template, use the <strong> stylesheet </ strong> tag helper. Write the style sheet in the part surrounded by <b> begin </ b> and <b> end </ b>.
+If you want to write a stylesheet in the template, use the <strong> stylesheet </strong> tag helper. Write the style sheet in the part surrounded by <b> begin </b> and <b> end </b>.
 
 <pre>
-% = stylesheet begin
+%= stylesheet begin
   body {
     background: blue;
   }
-% end
-</ pre>
+%end
+</pre>
 
 You can write it using the style tag in the usual way, but this is more concise and convenient because it expands to a versatile tag. It will be expanded to the following tags.
 
@@ -25,32 +25,32 @@ You can write it using the style tag in the usual way, but this is more concise 
     background: blue;
   }
 
-/ *]]> * / </ style>
-</ pre>
+/ *]]> * / </style>
+</pre>
 
 You can also load stylesheets in public directories with the stylesheet tag helper.
 
 <pre>
-% = stylesheet'/css/common.css';
-</ pre>
+%= stylesheet'/css/common.css';
+</pre>
 
 It expands as follows:
 
 <pre>
 <link href = "/ css / common.css" rel = "stylesheet" />
-</ pre>
+</pre>
 
-Helpers that can insert tags are called tag helpers. See <a href="/blog/20110616130993.html"> Mojolicious Tag Helpers List </a> for available tag helpers.
+Helpers that can insert tags are called tag helpers. See <a href="/blog/20110616130993.html"> Mojolicious Tag Helpers List</a> for available tag helpers.
 
-<h3> JavaScript embedding </ h3>
+<h3> JavaScript embedding </h3>
 
-If you want to write JavaScript in the template, use the <strong> stylesheet </ strong> helper. Write JavaScript in the part surrounded by <b> begin </ b> and <b> end </ b>.
+If you want to write JavaScript in the template, use the <strong> stylesheet </strong> helper. Write JavaScript in the part surrounded by <b> begin </b> and <b> end </b>.
 
 <pre>
-% = javascript begin
+%= javascript begin
   alert ('Hello');
-% end
-</ pre>
+%end
+</pre>
 
 You can write it using the script tag in the usual way, but this is more concise and convenient because it expands to a versatile tag. It will be expanded to the following tags.
 
@@ -59,73 +59,73 @@ You can write it using the script tag in the usual way, but this is more concise
 
   alert ('Hello');
 
-//]]> </ script>
-</ pre>
+//]]> </script>
+</pre>
 
 You can also load JavaScript in the public directory with the javascript helper.
 
 <pre>
-% = javascript'/js/common.js';
-</ pre>
+%= javascript'/js/common.js';
+</pre>
 
 It expands as follows:
 
 <pre>
-<script src = "/ js / common.js"> </ script>
-</ pre>
+<script src = "/ js / common.js"> </script>
+</pre>
 
-<h3> Get application object </ h3>
+<h3> Get application object </h3>
 
-Use the <b> app </ b> helper to get the application object.
-
-<pre>
-% my $ app = app;
-</ pre>
-
-
-<h3> Get controller object </ h3>
-
-You can refer to the controller object by the name <b> $ self </ b> in the template.
+Use the <b> app </b> helper to get the application object.
 
 <pre>
-% my $ c = $ self
-</ pre>
+%my $app = app;
+</pre>
+
+
+<h3> Get controller object </h3>
+
+You can refer to the controller object by the name <b> $self </b> in the template.
+
+<pre>
+%my $c = $self
+</pre>
 
 You can use this to get HTTP methods in the template, etc.
 
 <pre>
-% my $ http_method = $ self-> req-> method;
-</ pre>
+%my $http_method = $self->req->method;
+</pre>
 
-<h3> Data dump </ h3>
+<h3> Data dump </h3>
 
-There is a <b> dumper </ b> method for dumping the contents of the data. This is functionally the same as the Dumper function in the Data :: Dumper module.
-
-<pre>
-% warn dumper $ date;
-</ pre>
-
-<h3> Import other templates </ h3>
-
-You can use the <strong> include </ strong> helper to include other templates.
+There is a <b> dumper </b> method for dumping the contents of the data. This is functionally the same as the Dumper function in the Data::Dumper module.
 
 <pre>
-% = include'/include/header.html.ep
-</ pre>
+%warn dumper $date;
+</pre>
 
-Headers and footers are often common to all sites, so it is convenient to create them and load them from multiple templates. <b> include </ b> You can set the stash value by using the second and subsequent arguments of the helper.
+<h3> Import other templates </h3>
 
-<pre>
-% = include'/include/header.html.ep, name =>'kimoto', age => 34;
-</ pre>
-
-<h3> URL representation </ h3>
-
-When expressing the internal URL of an application in Mojolicious, be sure to use the <strong> url_for </ strong> helper except for applications where performance is important. For example, if you want to express the URL "/ date / 20131215", write as follows.
+You can use the <strong> include </strong> helper to include other templates.
 
 <pre>
-<a href="<%=url_for('/date/20131215')%>"> 2013/12/15 </a>
-</ pre>
+%= include'/include/header.html.ep
+</pre>
+
+Headers and footers are often common to all sites, so it is convenient to create them and load them from multiple templates. <b> include </b> You can set the stash value by using the second and subsequent arguments of the helper.
+
+<pre>
+%= include'/include/header.html.ep, name =>'kimoto', age => 34;
+</pre>
+
+<h3> URL representation </h3>
+
+When expressing the internal URL of an application in Mojolicious, be sure to use the <strong> url_for </strong> helper except for applications where performance is important. For example, if you want to express the URL "/ date / 20131215", write as follows.
+
+<pre>
+<a href="<%=url_for('/date/20131215')%>"> 2013/12/15</a>
+</pre>
 
 The url_for method is used to make the application versatile. If you write it like this, the URL will be generic regardless of whether you start it as CGI or as a server.
 
@@ -133,63 +133,63 @@ It expands as follows:
 
 <pre>
 # For CGI
-<a href="/myapp.cgi/date/20131215"> 2013/12/15 </a>
+<a href="/myapp.cgi/date/20131215"> 2013/12/15</a>
 
 #When started as a server
-<a href="/date/20131215"> 2013/12/15 </a>
-</ pre>
+<a href="/date/20131215"> 2013/12/15</a>
+</pre>
 
-<h4> Mojo :: URL object </ h4>
+<h4> Mojo::URL object </h4>
 
-The url_for helper gets the Mojo :: URL object. The Mojo :: URL class is a class for handling URLs.
+The url_for helper gets the Mojo::URL object. The Mojo::URL class is a class for handling URLs.
 
-To stringify a Mojo :: URL object, use the <b> to_strong </ b> method or evaluate it as a string.
-
-<pre>
-% my $ url_str = url_for-> to_string;
-% my $ url_str = "". url_for;
-</ pre>
-
-In the first example, "<% =%>" is simply evaluated as a string.
+To stringify a Mojo::URL object, use the <b> to_strong </b> method or evaluate it as a string.
 
 <pre>
-<% = url_for ('/ some')%>
-</ pre>
+%my $url_str = url_for->to_string;
+%my $url_str = "". url_for;
+</pre>
+
+In the first example, "<%=%>" is simply evaluated as a string.
+
+<pre>
+<%= url_for ('/ some')%>
+</pre>
 
 Just write, and the URL will be expanded as a string.
 
-<h4> Get the current URL </ h4>
-If you don't specify any arguments with the <strong> url_for </ strong> helper, you can get the current URL.
+<h4> Get the current URL </h4>
+If you don't specify any arguments with the <strong> url_for </strong> helper, you can get the current URL.
 
 <pre>
-% my $ current_url = url_for
-</ pre>
+%my $current_url = url_for
+</pre>
 
-<h3> Query string </ h3>
+<h3> Query string </h3>
 
-One thing to keep in mind with the url_for helper is that if you want to get the current URL with no arguments, you can get the URL of the part excluding the query string. If you want to get the URL including the query string, use the <string> url_with </ strong> helper.
+One thing to keep in mind with the url_for helper is that if you want to get the current URL with no arguments, you can get the URL of the part excluding the query string. If you want to get the URL including the query string, use the <string> url_with </strong> helper.
 
 <pre>
-<% = url_with%>
-</ pre>
+<%= url_with%>
+</pre>
 
 For example, if you access the URL "/ some? Name = kimoto & age = 30", the url_for helper will get "/ some", but the url_with helper will get "/ some? Name = kimoto & age = 30".
 
-The query part is stored in the Mojo :: Parameters object. This can be obtained with the <b> query </ b> method of the Mojo :: URL class.
+The query part is stored in the Mojo::Parameters object. This can be obtained with the <b> query </b> method of the Mojo::URL class.
 
 <pre>
-my $ query = url_with-> query;
-</ pre>
+my $query = url_with->query;
+</pre>
 
 The query method also has the ability to set the query string. There are three ways to set the query string: Suppose the first query string was "title = perl & name = ken".
 
-<h4> Replace query string </ h4>
+<h4> Replace query string </h4>
 
 To replace the query string, pass it in list format as follows:
 
 <pre>
-$ url-> query (name =>'taro', price => 1900);
-</ pre>
+$url->query(name =>'taro', price => 1900);
+</pre>
 
 In the case of the above example, it is replaced as follows.
 
@@ -199,14 +199,14 @@ title = perl & name = ken
 
 # After
 name = taro & price = 1900
-</ pre>
+</pre>
 
-<h4> Merge query strings </ h4>
+<h4> Merge query strings </h4>
 
 To merge the query strings, pass it as an array reference.
 <pre>
-$ url-> query ([name =>'taro', price => 1900]);
-</ pre>
+$url->query([name =>'taro', price => 1900]);
+</pre>
 
 It will be merged as follows: Those with the same value will be replaced.
 
@@ -216,14 +216,14 @@ title = perl & name = ken
 
 # After
 title = perl & name = taro & price = 1900
-</ pre>
+</pre>
 
-<h4> Add query string </ h4>
+<h4> Add query string </h4>
 
 Pass it as a hash reference to add the query string.
 <pre>
-$ url-> query ({name =>'taro', price => 1900});
-</ pre>
+$url->query({name =>'taro', price => 1900});
+</pre>
 
 It will be added as follows.
 
@@ -233,72 +233,72 @@ title = perl & name = ken
 
 # After
 title = perl & name = ken & name = taro & price = 1900
-</ pre>
+</pre>
 
 I think there is a strong demand for replacing only page numbers in web applications. In that case, it's a good idea to use the query merge feature.
 
 <pre>
-<% = url_with-> query ([page => $ page])%>
-</ pre>
+<%= url_with->query([page => $page])%>
+</pre>
 
-<h3> Sample using template helper </ h3>
+<h3> Sample using template helper </h3>
 
 Let's write a sample code using the template helper explained this time.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 get'/ person' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Parameter
-  my $ name = $ self-> param ('name');
-  my $ age = $ self-> param ('age');
+  my $name = $self->param('name');
+  my $age = $self->param('age');
   
   #Drawing
-  $ self-> render ('index', name => $ name, age => $ age);
+  $self->render('index', name => $name, age => $age);
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <%
   #Stash value
-  my $ name = stash ('name');
-  my $ age = stash ('age');
+  my $name = stash ('name');
+  my $age = stash ('age');
   
   #Get log
-  app-> log-> info ('Template Helper');
+  app->log->info('Template Helper');
   
   #HTTP method
-  my $ http_method = $ self-> req-> method;
+  my $http_method = $self->req->method;
   
   #Data dump
-  my $ data = [1, 2, 3];
-  warn dumper $ data;
+  my $data = [1, 2, 3];
+  warn dumper $data;
 %>
 <html>
   <head>
-    <title> Template Helper </ title>>
-    % = stylesheet'/css/common.css';
-    % = javascript'/js/common.js';
-  </ head>
+    <title> Template Helper </title>>
+    %= stylesheet'/css/common.css';
+    %= javascript'/js/common.js';
+  </head>
   <body>
-    % = include'/ include / header';
+    %= include'/ include / header';
     
-    Name: <% = $ name%> <br>
-    Age: <% = $ age%> <br>
-    Current URL: <% = url_with%> <br>
-    Current URL with some change: <% = url_with-> query ([name =>'ken'])%>
-    % = include'/ include / footer';
-  </ body>
-</ html>
-</ pre>
+    Name: <%= $name%> <br>
+    Age: <%= $age%> <br>
+    Current URL: <%= url_with%> <br>
+    Current URL with some change: <%= url_with->query([name =>'ken'])%>
+    %= include'/ include / footer';
+  </body>
+</html>
+</pre>
 
 
-<h4> public / css / common.css </ h4>
+<h4> public / css / common.css </h4>
 
 Place your CSS file in the "public" directory. Save it as "public / css / common.css". Settings such as changing the font color are written.
 
@@ -313,37 +313,37 @@ Place your CSS file in the "public" directory. Save it as "public / css / common
   border-top: 1px solid gray;
   text-align: center;
 }
-</ pre>
+</pre>
 
-<h4> public / js / common.js </ h4>
+<h4> public / js / common.js </h4>
 
 Place your JavaScript files in the "public" directory. Please put it in the position of "public / js / common.js". JavaScript that executes a dialog that displays "Hello".
 
 <pre>
 alert ('Hello');
-</ pre>
+</pre>
 
-<h4> Header and footer </ h4>
+<h4> Header and footer </h4>
 
 Let's make a header and footer. Save it as "templates / include / header.html.ep" and "templates / include / footer.html.ep" in the "templates" directory.
 
-<b> templates / include / header.html.ep </ b>
+<b> templates / include / header.html.ep </b>
 
 <pre>
 <div id = "header">
-<h1> Template Helper </ h1>
-</ div>
-</ pre>
+<h1> Template Helper </h1>
+</div>
+</pre>
 
-<b> templates / include / footer.html.ep </ b>
+<b> templates / include / footer.html.ep </b>
 
 <pre>
 <div id = "footer">
 Author kimoto
-</ div>
-</ pre>
+</div>
+</pre>
 
-<h4> Run application </ h4>
+<h4> Run application </h4>
 
 Run this application and try accessing it with "/ person? Name = kimoto & age = 32". The header and footer are inserted at the top. The following is displayed as the content.
 
@@ -353,4 +353,4 @@ Age: 32
 HTTP Method: GET
 Current URL: / person? name=kimoto&age=32
 Current URL with some change: / person? age = 32 & name = ken
-</ pre>
+</pre>

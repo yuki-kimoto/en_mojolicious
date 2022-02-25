@@ -1,101 +1,101 @@
-<h2> Validation of multiple file uploads </ h2>
+<h2> Validation of multiple file uploads </h2>
 
 Let's write validation for multiple file uploads.
 
-<b> HTML side </ b>
+<b> HTML side </b>
 
 This is a file upload form on the HTML side. There are four file upload fields. It corresponds to error display and deletion.
 
 <pre>
-<form action = <% = url_for%> method = "POST", enctype = "multipart / form-data">
-  % = hidden_field op =>'update';
-  % = hidden_field id => $ id;
+<form action = <%= url_for%> method = "POST", enctype = "multipart / form-data">
+  %= hidden_field op =>'update';
+  %= hidden_field id => $id;
   <ul>
     <li>
-      Image 1. <% = file_field'image1'%>
-      <div class = "error"> <% = $ errors-> {'image1'}? $ errors-> {'image1'}:''%> </ div>
-      Delete <% = check_box'image1_delete'%>
-    </ li>
+      Image 1. <%= file_field'image1'%>
+      <div class = "error"> <%= $errors->{'image1'}? $errors->{'image1'}:''%> </div>
+      Delete <%= check_box'image1_delete'%>
+    </li>
     <li>
-      Image 2. <% = file_field'image2'%>
-      <div class = "error"> <% = $ errors-> {'image2'}? $ errors-> {'image2'}:''%> </ div>
-      Delete <% = check_box'image2_delete'%>
-    </ li>
+      Image 2. <%= file_field'image2'%>
+      <div class = "error"> <%= $errors->{'image2'}? $errors->{'image2'}:''%> </div>
+      Delete <%= check_box'image2_delete'%>
+    </li>
     <li>
-      Image 3. <% = file_field'image3'%>
-      <div class = "error"> <% = $ errors-> {'image3'}? $ errors-> {'image3'}:''%> </ div>
-      Delete <% = check_box'image3_delete'%>
-    </ li>
+      Image 3. <%= file_field'image3'%>
+      <div class = "error"> <%= $errors->{'image3'}? $errors->{'image3'}:''%> </div>
+      Delete <%= check_box'image3_delete'%>
+    </li>
     <li>
-      Image 4. <% = file_field'image4'%>
-      <div class = "error"> <% = $ errors-> {'image4'}? $ errors-> {'image4'}:''%> </ div>
-      Delete <% = check_box'image4_delete'%>
-    </ li>
-  </ ul>
-</ form>
-</ pre>
+      Image 4. <%= file_field'image4'%>
+      <div class = "error"> <%= $errors->{'image4'}? $errors->{'image4'}:''%> </div>
+      Delete <%= check_box'image4_delete'%>
+    </li>
+  </ul>
+</form>
+</pre>
 
-<b> Program side </ b>
+<b> Program side </b>
 
-This is a sample code on the program side. What you get with the parameters will be a <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo :: Upload </a> object. The image information is created by taking the values ​​of multiple file fields and used as <a href="https://en.perlzemi.com/blog/20180214151861.html"> array reference </a>.
+This is a sample code on the program side. What you get with the parameters will be a <a href="https://en.mojodoc.perlzemi.com/Mojo ::Upload.html"> Mojo::Upload</a> object. The image information is created by taking the values ​​of multiple file fields and used as <a href="https://en.perlzemi.com/blog/20180214151861.html"> array reference</a>.
 
 If there is a file size, the file type is determined.
 
 <pre>
 <%
-  my $ op = param ('op') //'';
-  my $ id = param ('id');
+  my $op = param ('op') //'';
+  my $id = param ('id');
 
-  my $ errors = {};
-  if ($ self-> req-> method eq'POST') {
-    if ($ op eq'update') {
+  my $errors = {};
+  if ($self->req->methodeq'POST') {
+    if ($op eq'update') {
 
       #Get parameters
-      my $ images = [];
-      my $ image_count = 4;
-      for (my $ number = 1; $ number <= $ image_count; $ number ++) {
+      my $images = [];
+      my $image_count = 4;
+      for (my $number = 1; $number <= $image_count; $number ++) {
         
-        my $ image_upload = param ("image $ number");
+        my $image_upload = param ("image $number");
         
-        my $ image = {
-          upload => $ image_upload,
-          number => $ number,
+        my $image = {
+          upload => $image_upload,
+          number => $number,
         };;
         
-        push @ $ images, $ image;
+        push @$images, $image;
       }
 
       #Validation
-      for my $ image (@ $ images) {
-        my $ image_upload = $ image-> {upload};
+      for my $image (@$images) {
+        my $image_upload = $image->{upload};
         
-        if ($ image_upload-> size> 0) {
+        if ($image_upload->size> 0) {
           #Content type
-          my $ image_content_type = $ image_upload-> headers-> content_type;
+          my $image_content_type = $image_upload->headers->content_type;
           
           # extension
-          my $ ext;
+          my $ext;
 
           #PNG
-          if ($ image_content_type = ~ m | \ bimage / png \ b |) {
-            $ ext ='png';
+          if ($image_content_type = ~ m | \ bimage / png \ b |) {
+            $ext ='png';
           }
           #JPEG
-          elsif ($ image_content_type = ~ m | \ bimage / jpeg \ b |) {
-            $ ext ='jpg';
+          elsif ($image_content_type = ~ m | \ bimage / jpeg \ b |) {
+            $ext ='jpg';
           }
           #GIF
-          elsif ($ image_content_type = ~ m | \ bimage / gif \ b |) {
-            $ ext ='gif';
+          elsif ($image_content_type = ~ m | \ bimage / gif \ b |) {
+            $ext ='gif';
           }
           #PDF
-          elsif ($ image_content_type = ~ m | \ bapplication / pdf \ b |) {
-            $ ext ='pdf';
+          elsif ($image_content_type = ~ m | \ bapplication / pdf \ b |) {
+            $ext ='pdf';
           }
           
-          unless (defined $ ext) {
-            my $ number = $ image-> {number};
-            $ errors-> {"image $ number"} = "The file type of image $ image-> {number} is invalid.";
+          unless (defined $ext) {
+            my $number = $image->{number};
+            $errors->{"image $number"} = "The file type of image $image->{number} is invalid.";
           }
         }
       }
@@ -103,4 +103,4 @@ If there is a file size, the file type is determined.
   }
 }
 %>
-</ pre>
+</pre>

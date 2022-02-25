@@ -1,4 +1,4 @@
-<h2> Real-time chat (Mojolicious :: Lite) </ h2>
+<h2> Real-time chat (Mojolicious::Lite) </h2>
 
 
 
@@ -6,66 +6,66 @@ This is a sample of real-time chat using WebSocket. Even if you open multiple sc
 
 [f: id: perlcodesample: 20100418234248p: image]
 
-<h3> Source code </ h3>
+<h3> Source code </h3>
 
 <pre>
 use strict;
 use warnings;
 
-use Mojolicious :: Lite;
-my $ clients = {};
+use Mojolicious::Lite;
+my $clients = {};
 
 websocket'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
   #Client id
-  my $ cid = "$ self";
+  my $cid = "$self";
   
   #Resistance controller
-  $ clients-> {$ cid} {controller} = $ self;
+  $clients->{$cid} {controller} = $self;
   
   #Receive message
-  $ self-> on ('message' => sub {
-    my ($ self, $ message) = @_;
+  $self->on('message' => sub {
+    my ($self, $message) = @_;
     
     #Send message to all clients
-    foreach my $ cid (keys% $ clients) {
-      $ clients-> {$ cid} {controller}-> send ($ message);
+    foreach my $cid (keys%$clients) {
+      $clients->{$cid} {controller}->send($message);
     }
   });
   
   # Finish
-  $ self-> on ('finish' => sub {
+  $self->on('finish' => sub {
       
     # Remove client
-    delete $ clients-> {$ cid};
+    delete $clients->{$cid};
   });
 };;
 
 get'/' =>'index';
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
-% my $ url = $ self-> req-> url-> to_abs-> scheme ($ self-> req-> is_secure?'Wss':'ws')-> path ('/');
+@@index.html.ep
+%my $url = $self->req->url->to_abs->scheme($self->req->is_secure?'Wss':'ws')->path('/');
 <! doctype html>
 <html>
 <head>
   <meta http-equiv = "Content-Type" content = "text / html; charset = UTF-8">
-  <title> Mojo Websocket Demo </ title>
+  <title> Mojo Websocket Demo </title>
 
   <script type = "text / javascript">
     // only load the flash fallback when needed
     if (! ('WebSocket' in window)) {
       document.write ([[
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / swfobject.js"> </ scr'+'ipt>',
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / FABridge.js"> </ scr'+'ipt>',
-        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / web_socket.js"> </ scr'+'ipt>'
-      ] .join (''));
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / swfobject.js"> </scr'+'ipt>',
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / FABridge.js"> </scr'+'ipt>',
+        '<scr' +'ipt type = "text / javascript" src = "web-socket-js / web_socket.js"> </scr'+'ipt>'
+      ] .join(''));
     }
-  </ script>
+  </script>
   <script type = "text / javascript">
     if (WebSocket.__initialize) {
       // Set URL of your WebSocketMain.swf here:
@@ -78,7 +78,7 @@ __DATA__
     function init () {
       
       // Connect to Web Socket.
-      ws = new WebSocket ('<% = $ url%>');
+      ws = new WebSocket ('<%= $url%>');
       
       // Receive message
       ws.onmessage = function (e) {
@@ -100,18 +100,18 @@ __DATA__
     }
     
     window.onload = init;
-  </ script>
-</ head>
-<div id = "display" style = "width: 500px; height: 200px; border: 1px solid black"> </ div>
+  </script>
+</head>
+<div id = "display" style = "width: 500px; height: 200px; border: 1px solid black"> </div>
 
 <form onsubmit = "sendChatMessage (); return false;">
   <input size = "60" type = "text" id = "message-box">
   <input type = "submit" onclick = "sendChatMessage (); return false;" value = Send>
-</ form>
-</ html>
-</ pre>
+</form>
+</html>
+</pre>
 
-<h3> Real-time chat version using Redis that also supports production environment + WebSocket reverse proxy </ h3>
+<h3> Real-time chat version using Redis that also supports production environment + WebSocket reverse proxy </h3>
 
 I will also introduce the logic of the real-time chat of the version using Redis that also supports the production environment WebSocket reverse proxy.
 
@@ -125,37 +125,37 @@ Please modify the path part from "/" to the required one if necessary. Please al
 use strict;
 use warnings;
 
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 websocket'/' => sub {
-  my $ self = shift;
+  my $self = shift;
 
-  my $ tx = $ self-> tx;
-  my $ redis = Mojo :: Redis-> new;
-  my $ pub = $ redis-> pubsub;
+  my $tx = $self->tx;
+  my $redis = Mojo::Redis->new;
+  my $pub = $redis->pubsub;
   
   # message from Redis
-  my $ sub = $ pub-> listen ('messages', sub {
-    my ($ sub, $ message) = @_; # $ channel == messages
-    $ tx-> send ($ message);
+  my $sub = $pub->listen('messages', sub {
+    my ($sub, $message) = @_; # $channel == messages
+    $tx->send($message);
   });
  
   # message from websocket
-  $ self-> on (message => sub {
-    my ($ self, $ message) = @_;
-    $ pub-> notify (messages => $ message);
+  $self->on(message => sub {
+    my ($self, $message) = @_;
+    $pub->notify(messages => $message);
   });
  
   #need to clean up after websocket close
-  $ self-> on (finish => sub {
-    undef $ redis;
-    undef $ pub;
-    undef $ sub;
-    undef $ tx;
+  $self->on(finish => sub {
+    undef $redis;
+    undef $pub;
+    undef $sub;
+    undef $tx;
   });
 };;
 
 get'/' =>'index';
 
-app-> start;
-</ pre>
+app->start;
+</pre>

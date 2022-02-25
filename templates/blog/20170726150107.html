@@ -1,24 +1,24 @@
-<h2> Perl's Mojolicious is 56.6% faster than the fastest C ++ in the 2017 Web Framework Benchmark </ h2>
+<h2> Perl's Mojolicious is 56.6%faster than the fastest C ++ in the 2017 Web Framework Benchmark </h2>
 
-In the 2017 web framework benchmark, Perl's Mojolicious is 56.6% faster than the fastest C ++.
+In the 2017 web framework benchmark, Perl's Mojolicious is 56.6%faster than the fastest C ++.
 
 <blockquote>
-<a href="https://www.techempower.com/benchmarks/#section=data-r14&hw=ph&test=query&d=1l"> Web Framework Benchmarks 2017-05-10 Round 14 --Responses per second at 20 queries per request </a>
-</ blockquote>
+<a href="https://www.techempower.com/benchmarks/#section=data-r14&hw=ph&test=query&d=1l"> Web Framework Benchmarks 2017-05-10 Round 14 --Responses per second at 20 queries per request</a>
+</blockquote>
 
 [f: id: perlcodesample: 20170726221337p: image]
 
 [f: id: perlcodesample: 20170726221331p: image]
 
-This benchmark seems to show "Responses per second at 20 queries per request". It's like a benchmark that looks at performance against multiple queries. <a href="https://irclog.perlgeek.de/mojo/"> Mojolicious's irc </a> was posted, so I will introduce it.
+This benchmark seems to show "Responses per second at 20 queries per request". It's like a benchmark that looks at performance against multiple queries. <a href="https://irclog.perlgeek.de/mojo/"> Mojolicious's irc</a> was posted, so I will introduce it.
 
-It's a bit small and hard to see, but Mojoliciosu seems to be able to return 5,353 responses per second. 56.6% faster than the fastest C ++ framework. It's 1.76 times faster than C ++.
+It's a bit small and hard to see, but Mojoliciosu seems to be able to return 5,353 responses per second. 56.6%faster than the fastest C ++ framework. It's 1.76 times faster than C ++.
 
 In this benchmark, a single query isn't that fast, but multiple queries seem to be pretty fast. I'm not very familiar with web performance, so I can't say for sure, but I think the benchmark for multiple queries is closer to reality.
 
 Perl is said to be 20 to 100 times slower than C / C ++, but the benchmark for multiple queries on the Web is 1.76 times slower than C ++.
 
-<h3> Why is it 1.76 times larger than C ++? </ H3>
+<h3> Why is it 1.76 times larger than C ++? </H3>
 
 I'm not very familiar with it, so I'll guess. The Web is an HTTP request and string processing, and Perl is strong in processing a large amount of strings. Memory usage can be kept small even for parallel access. Response performance is high because Full GC does not occur.
 

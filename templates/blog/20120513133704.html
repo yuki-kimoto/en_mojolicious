@@ -1,57 +1,57 @@
-<h2> Save content on the web as a file with Mojo :: UserAgent </ h2>
+<h2> Save content on the web as a file with Mojo::UserAgent </h2>
 
 
 
 
-Let's get the file from the web with Mojo :: UserAgent and save it. Write as follows.
+Let's get the file from the web with Mojo::UserAgent and save it. Write as follows.
 
 <pre>
-use Mojo :: UserAgent;
+use Mojo::UserAgent;
 
-my $ ua = Mojo :: UserAgent-> new;
-my $ file ='google.html';
-my $ url ='http://www.google.co.jp/';
-$ ua-> get ($ url)-> res-> content-> asset-> move_to ($ file);
-</ pre>
+my $ua = Mojo::UserAgent->new;
+my $file ='google.html';
+my $url ='http://www.google.co.jp/';
+$ua->get($url)->res->content->asset->move_to($file);
+</pre>
 
-Mojo :: UserAgent doesn't have a method to download, so you have to do your best on your own.
+Mojo::UserAgent doesn't have a method to download, so you have to do your best on your own.
 
 <ol>
   <li>
-    Issue an HTTP request with the <b> get </ b> method. The return value is a <b> Mojo :: Transaction :: HTTP </ b> object.
-  </ li>
+    Issue an HTTP request with the <b> get </b> method. The return value is a <b> Mojo::Transaction::HTTP </b> object.
+  </li>
   <li>
-    Get HTTP response with <b> res </ b> method. The return value is a <b> Mojo :: Message :: Request </ b> object.
-  </ li>
+    Get HTTP response with <b> res </b> method. The return value is a <b> Mojo::Message::Request </b> object.
+  </li>
   <li>
-    Get the content with the <b> content </ b> method. The return value is a <b> Mojo :: Content :: Single </ b> object.
-  </ li>
+    Get the content with the <b> content </b> method. The return value is a <b> Mojo::Content::Single </b> object.
+  </li>
   <li>
-    Get what the content actually has with the <b> asset </ b> method. The return value is a <b> Mojo :: Asset :: Memory </ b> object or a <b> Mojo :: Asset :: File </ b> object.
-  </ li>
+    Get what the content actually has with the <b> asset </b> method. The return value is a <b> Mojo::Asset::Memory </b> object or a <b> Mojo::Asset::File </b> object.
+  </li>
   <li>
-    Save to a file with the <b> move_to </ b> method.
-  </ li>
-</ ol>
+    Save to a file with the <b> move_to </b> method.
+  </li>
+</ol>
 
 It will be the flow. Is it a little complicated?
 
-<h3> When saving a file from Test :: Mojo. </ h3>
+<h3> When saving a file from Test::Mojo. </h3>
 
 When testing Mojolicious, you may want to download a file. In such a case, write as follows. I also included a description of the temporary directory.
 
 <pre>
-use Test :: Mojo;
-use File :: Temp'tempdir';
+use Test::Mojo;
+use File::Temp'tempdir';
 use YourApp;
 
-my $ app = YourApp-> new;
-my $ t = Test :: Mojo-> new ($ app);
-my $ tmpdir = tempdir (CLEANUP => 1);
-my $ tmpfile = "$ tmpdir / tmp.tar.gz";
+my $app = YourApp->new;
+my $t = Test::Mojo->new($app);
+my $tmpdir = tempdir (CLEANUP => 1);
+my $tmpfile = "$tmpdir / tmp.tar.gz";
 
-$ t-> get_ok ('http://somehost.com');
-  -> tx-> res-> content-> asset-> move_to ($ tmpfile);
-</ pre>
+$t->get_ok('http://somehost.com');
+  ->tx->res->content->asset->move_to($tmpfile);
+</pre>
 
-The mechanism is the same, except that the <b> Mojo :: Transaction :: HTTP </ b> is obtained from Test :: Mojo using the <b> tx </ b> method.
+The mechanism is the same, except that the <b> Mojo::Transaction::HTTP </b> is obtained from Test::Mojo using the <b> tx </b> method.

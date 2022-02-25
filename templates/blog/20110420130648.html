@@ -1,47 +1,47 @@
-<h2> Get HTTP method </ h2>
+<h2> Get HTTP method </h2>
 
 
 
-To get the HTTP method, use the <strong> method </ strong> method of the Mojo :: Message :: Request class.
-
-<pre>
-my $ method = $ req-> method;
-</ pre>
-
-The following is an example with Mojolicious :: Lite. You can access the Mojo :: Message :: Request object using the req method of the Mojolicious :: Controller object.
+To get the HTTP method, use the <strong> method </strong> method of the Mojo::Message::Request class.
 
 <pre>
-#Mojolicious :: Lite
+my $method = $req->method;
+</pre>
+
+The following is an example with Mojolicious::Lite. You can access the Mojo::Message::Request object using the req method of the Mojolicious::Controller object.
+
+<pre>
+#Mojolicious::Lite
 get'/' => sub {
-   my $ self = shift;
-   my $ method = $ self-> req-> method;
+   my $self = shift;
+   my $method = $self->req->method;
 };;
-</ pre>
+</pre>
 
 The following is an example from Mojolicious.
 
 <pre>
 #Mojolicious
-package MyApp :: Picture;
+package MyApp::Picture;
 
-use Mojo :: Base'Mojolicious :: Controller';
+use Mojo::Base'Mojolicious::Controller';
 
 use utf8;
 
 # Login screen
 sub list {
-   my $ self = shift;
-   my $ method = $ self-> req-> method;
+   my $self = shift;
+   my $method = $self->req->method;
 }
-</ pre>
+</pre>
 
 When branching by the HTTP method, it is better to make a judgment after making it lowercase with the lc function as follows.
 
 <pre>
-if (lc $ self-> req-> method eq'post') {
+if (lc $self->req->methodeq'post') {
    ...
 }
 else {
    ...
 }
-</ pre>
+</pre>

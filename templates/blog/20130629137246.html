@@ -1,31 +1,31 @@
-<h2> How to automatically dispatch files in the template directory </ h2>
-The process of automatically dispatching files in the <strong> template directory </ strong> can be written as follows.
+<h2> How to automatically dispatch files in the template directory </h2>
+The process of automatically dispatching files in the <strong> template directory </strong> can be written as follows.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Manually create a route
 get'/ foo' =>'foo';
 
 #Create an automatic route
 any'/ (* Path)' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ path = $ self-> param ('Path');
+  my $path = $self->param('Path');
   
-  $ self-> render (template => $ path);
+  $self->render(template => $path);
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ foo.html.ep
+@@foo.html.ep
 foo
 
-@@ bar / baz.html.ep
+@@bar / baz.html.ep
 bar / baz
-</ pre>
+</pre>
 
 The path structure accessed using the wildcard placeholder (*) is used as the template directory structure. The capital letter Path is used because path is a reserved word.
 
@@ -35,44 +35,44 @@ However, this method seems to be good, and there is one problem: when the templa
 
 There is a loophole. However, since it is not an official method, it is unknown whether it will be supported or not, and it is vulnerable to specification changes.
 
-<h3> How to get around (Mojolicious 4.0 or later) </ h3>
+<h3> How to get around (Mojolicious 4.0 or later) </h3>
 
 Render the template with render_maybe and check mojo.finised.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # Manually create a route
 get'/ foo' => sub {
-  my $ self = shift;
-  $ self-> render_maybe ('foo');
-  $ self-> stash ('mojo.finished')? undef: $ self-> reply-> not_found;
+  my $self = shift;
+  $self->render_maybe('foo');
+  $self->stash('mojo.finished')? undef: $self->reply->not_found;
 };;
 
 #Create an automatic route
 any'/ (* Path)' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ path = $ self-> param ('Path');
-  $ self-> render_maybe ($ path);
-  $ self-> stash ('mojo.finished')? undef: $ self-> reply-> not_found;
+  my $path = $self->param('Path');
+  $self->render_maybe($path);
+  $self->stash('mojo.finished')? undef: $self->reply->not_found;
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ foo.html.ep
+@@foo.html.ep
 <%
-  $ self-> render (json => {path =>'foo'});
+  $self->render(json => {path =>'foo'});
   return;
 %>
 
-@@ bar / baz.html.ep
+@@bar / baz.html.ep
 <%
-  $ self-> render (json => {path =>'/ bar / baz'});
+  $self->render(json => {path =>'/ bar / baz'});
   return;
 %>
-</ pre>
+</pre>
 
 With this description, you can call JSON or render_exception in the template to draw the exception.

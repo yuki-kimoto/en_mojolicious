@@ -1,14 +1,14 @@
-<h2> Use Mojolicious and AnyEvent at the same time </ h2>
+<h2> Use Mojolicious and AnyEvent at the same time </h2>
 
 
 
 
-Mojolicious has its own IO loop called Mojo :: IOLoop. This can be used at the same time as AnyEvent.
+Mojolicious has its own IO loop called Mojo::IOLoop. This can be used at the same time as AnyEvent.
 
 <ul>
    <li>
-     <a href="https://github.com/kraih/mojo/wiki/Mojolicious-and-anyevent"> Mojolicious and anyevent </a>
-   </ li>
-</ ul>
+     <a href="https://github.com/kraih/mojo/wiki/Mojolicious-and-anyevent"> Mojolicious and anyevent</a>
+   </li>
+</ul>
 
-You can use a method called recurring to register a callback that Mojo :: IOLoop will execute once a week. So, every time Mojo :: IOLoop does a week, you can execute the AnyEvent event once using the one_event method.
+You can use a method called recurring to register a callback that Mojo::IOLoop will execute once a week. So, every time Mojo::IOLoop does a week, you can execute the AnyEvent event once using the one_event method.

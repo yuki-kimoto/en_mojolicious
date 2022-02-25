@@ -1,41 +1,41 @@
-<h2> In the Mojolicious :: Lite app, don't end with "1;". </ h2>
+<h2> In the Mojolicious::Lite app, don't end with "1;". </h2>
 
 
 
-With Mojolicious, you can start development by starting a server called <a href="/blog/20120406133367.html"> morbo </a> that automatically detects file changes.
+With Mojolicious, you can start development by starting a server called <a href="/blog/20120406133367.html"> morbo</a> that automatically detects file changes.
 
 <pre>
 morbo myapp.pl
-</ pre>
+</pre>
 
 But there is one thing I want you to be careful about. Actually, the following applications do not work properly.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
-get'/' => sub {shift-> render (text =>'aaa')};
+get'/' => sub {shift->render(text =>'aaa')};
 
-app-> start;
+app->start;
 
 1;
-</ pre>
+</pre>
 
 It looks correct as Perl source code. However, when I execute it with the morbo command, the following error occurs.
 
 <pre>
 "myapp.pl" is not a valid application.
-</ pre>
+</pre>
 
-Actually, the last line <b> 1; </ b> is the problem. Actually, the script needs to be finished with app-> start. If there is a __DATA__ section, there should be no space between app-> start and __DATA__.
+Actually, the last line <b> 1; </b> is the problem. Actually, the script needs to be finished with app->start. If there is a __DATA__ section, there should be no space between app->startand __DATA__.
 
 If you modify it as follows, it will work correctly.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
-get'/' => sub {shift-> render (text =>'aaa')};
+get'/' => sub {shift->render(text =>'aaa')};
 
-app-> start;
-</ pre>
+app->start;
+</pre>
 
 Keep in mind that the same is true when running an application with PSGI.

@@ -1,16 +1,16 @@
-<h2> hypnotoad server timeout issue </ h2>
+<h2> hypnotoad server timeout issue </h2>
 
 The hypnotoad server is a prefolk server used for deployment in Mojolicious production environments.
 
-If you are developing with <a href="/blog/20120406133367.html"> morbo </a> in your development environment and you want to run your application in production, you need to be aware of timeouts.
+If you are developing with <a href="/blog/20120406133367.html"> morbo</a> in your development environment and you want to run your application in production, you need to be aware of timeouts.
 
 hypnotoad is a pre-fork server that has a mechanism to stop child processes that have not responded for a certain period of time.
 
 Therefore, if you execute an HTTP request that takes more than 30 seconds, it will not be possible to execute it.
 
-<h3> Time-out mechanism </ h3>
+<h3> Time-out mechanism </h3>
 
-<h4> Heartbeat </ h4>
+<h4> Heartbeat </h4>
 
 The hynotoad parent process monitors the survival of child processes. By default, if there is a process that has not responded for 5 seconds, the child process is instructed to stop as soon as the request is completed.
 
@@ -23,7 +23,7 @@ If hypnotoad has a file called hypnotoad.conf in the same directory, it will be 
 <pre>
 # hypnotoad.conf
 {heartbeat_timeout => 60}
-</ pre>
+</pre>
 
 <hr>
-<a href="/blog/20110402130560.html"> Go to Mojolicious Reference </a>
+<a href="/blog/20110402130560.html"> Go to Mojolicious Reference</a>

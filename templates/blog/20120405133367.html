@@ -1,4 +1,4 @@
-<h2> Operate Mojolicious in a subdirectory </ h2>
+<h2> Operate Mojolicious in a subdirectory </h2>
 
 
 
@@ -14,7 +14,7 @@ First is the Apache configuration file.
     <Proxy *>
       Order deny, allow
       Allow from all
-    </ Proxy>
+    </Proxy>
     ProxyRequests Off
     ProxyPreserveHost On
 
@@ -26,25 +26,25 @@ First is the Apache configuration file.
 
     RequestHeader set X-ProxyPassReverse-UsePrefix "On"
     RequestHeader set X-Forwarded-HTTPS "0"
-  </ VirtualHost>
-</ pre>
+  </VirtualHost>
+</pre>
 
 The reverse proxy is set for each subdirectory. X-ProxyPassReverse-UsePrefix is ​​an application-specific HTTP header.
 
 Below is the application. I am rewriting the URL using before_dispatch. This is necessary for methods such as Mojolicious's router and url_for to recognize the correct URL.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
-app-> hook (before_dispatch => sub {
-  my $ self = shift;
+app->hook(before_dispatch => sub {
+  my $self = shift;
   
-  my $ use_prefix
-    = $ self-> req-> headers-> header ('X-ProxyPassReverse-UsePrefix');
+  my $use_prefix
+    = $self->req->headers->header('X-ProxyPassReverse-UsePrefix');
   
-  if (defined $ use_prefix && lc $ use_prefix eq'on') {
-    my $ prefix = shift @ {$ self-> req-> url-> path-> parts};
-    $ self-> req-> url-> base-> path-> parse ("/ $ prefix");
+  if (defined $use_prefix && lc $use_prefix eq'on') {
+    my $prefix = shift @{$self->req->url->path->parts};
+    $self->req->url->base->path->parse("/ $prefix");
   }
 });
 
@@ -52,17 +52,17 @@ get'/' =>'index';
 
 get'/ foo' =>'foo';
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 
-URL: <a href="<%=url_for'/foo'%> "> Foo </a>
+URL: <a href="<%=url_for'/foo'%> "> Foo</a>
 
-@@ foo.html.ep
+@@foo.html.ep
 
 Foo
-</ pre>
+</pre>
 
 If you write the application in this way, you can operate it in a subdirectory.

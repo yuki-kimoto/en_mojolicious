@@ -1,95 +1,95 @@
-<h2> Ported ASKA BBS from Kent Web to an implementation using Mojolicious. </ h2>
+<h2> Ported ASKA BBS from Kent Web to an implementation using Mojolicious. </h2>
 
 
 
 Ported ASKA BBS from Kent Web to an implementation using Mojolicious.
 
 <blockquote>
-<a href="https://github.com/yuki-kimoto/kent-aska-mojo"> ASKA BBS (Mojoliciosu version) </a>
-</ blockquote>
+<a href="https://github.com/yuki-kimoto/kent-aska-mojo"> ASKA BBS (Mojoliciosu version)</a>
+</blockquote>
 
 The original ASKA BBS page and sample are here.
 
 <blockquote>
-<a href="http://www.kent-web.com/bbs/aska.html"> ASKA BBS </a>
-<a href="http://www.kent-web.com/bbs/aska/aska.cgi"> Samples </a>
-</ blockquote>
+<a href="http://www.kent-web.com/bbs/aska.html"> ASKA BBS</a>
+<a href="http://www.kent-web.com/bbs/aska/aska.cgi"> Samples</a>
+</blockquote>
 
 This is the program usage policy. It inherits the one from Kent Web.
 
 <blockquote>
-<a href="http://www.kent-web.com/pubc/kitei.html"> Program Terms of Use </a>
-</ blockquote>
+<a href="http://www.kent-web.com/pubc/kitei.html"> Program Terms of Use</a>
+</blockquote>
 The ported version of ASKA BBS has the following features.
 
-<h3> Features </ h3>
+<h3> Features </h3>
 
 The features are as follows.
 
 <ul>
   <li>
     Implementation of bulletin boards using the web framework Mojolicious
-  </ li>
+  </li>
   <li>
     cpanm is used internally, and setup is completed with one command.
-  </ li>
+  </li>
   <li>
     The only requirement is Perl 5.10.1 or higher.
-  </ li>
+  </li>
   <li>
     Can be run with CGI and an embedded web server. For example, you can run it on Sakura Rental Server Standard.
-  </ li>
-</ ul>
+  </li>
+</ul>
  
 The specific improvements in the internal implementation are:
 
 <ul>
   <li>
     Use Mojolicious as a web framework.
-  </ li>
+  </li>
   <li>
     -HTTP request analysis, parameter reception, cookie acquisition processing
-  </ li>
+  </li>
   <li>
     -Improved URL routing, improved template description, headers and footers as parts
-  </ li>
+  </li>
   <li>
     Use lexical variables instead of global filehandles
-  </ li>
+  </li>
   <li>
     Use cpanm as a system for installing required modules
-  </ li>
+  </li>
   <li>
-    Simplified using MIME :: Lite to send emails
-  </ li>
+    Simplified using MIME::Lite to send emails
+  </li>
   <li>
-    Data :: Page and Data :: Page :: Navigation were used to simplify the page feed process.
-  </ li>
+    Data::Page and Data::Page::Navigation were used to simplify the page feed process.
+  </li>
   <li>
     Use the Encode module to encode the character code. Removed the use of JCode.
-  </ li>
+  </li>
   <li>
     Improved by standardizing the logic of encoding processing when saving data
-  </ li>
+  </li>
   <li>
     It can be started with an embedded web server in addition to CGI, so it is extremely fast and scalable.
-  </ li>
+  </li>
   <li>
     With the development server available, development has become much easier.
-  </ li>
-</ ul>
+  </li>
+</ul>
 
-<h3> Purpose </ h3>
+<h3> Purpose </h3>
 
 The purpose of this project is to rewrite the good old Perl / CGI in a modern way. It is a modern description of a completed web application that can be easily run on a rental server.
 
 By showing a sample, you can rewrite it as a model to learn modern Perl descriptions. By comparing it to the good old Perl description, you'll understand what's concise and improved.
 
-<h3> Details of improvements </ h3>
+<h3> Details of improvements </h3>
 
 Here are a few more improvements in this project.
 
-<h4> Scalability </ h4>
+<h4> Scalability </h4>
 
 First of all, the biggest problem with CGI is its lack of scalability. Since CGI starts the process every time, performance becomes a bottleneck when the number of accesses increases to some extent.
 
@@ -99,7 +99,7 @@ This is often the advantage of PHP. First of all, it is installed with PHP / CGI
 
 The downside of CGI is that you can't scape up so easily, but with this improved CGI you can scape up.
 
-<h4> Use CPAN </ h4>
+<h4> Use CPAN </h4>
 
 CPAN is inseparable from Perl. One of the great advantages of Perl is that you can take advantage of the existence of CPAN, a treasure trove of Perl libraries.
 
@@ -109,9 +109,9 @@ In modern Perl, you can easily use the modules on CPAN by using a tool called cp
 
 A list of modules is described in the cpanfile. You can then easily install these modules under your project's directory using a tool called cpanm.
 
-In this project, for example, MIME :: Lite is used to simplify the description of sending an email, and a module called Data :: Page is used to briefly describe the page feed.
+In this project, for example, MIME::Lite is used to simplify the description of sending an email, and a module called Data::Page is used to briefly describe the page feed.
 
-<h3> Character code is UTF-8, module to be used is Encode </ h3>
+<h3> Character code is UTF-8, module to be used is Encode </h3>
 
 In the good old Perl era, UTF-8 did not exist yet, so the character codes were EUC-jp and Shift_JIS.
 
@@ -121,7 +121,7 @@ However, in modern Perl writing, it is best to use UTF-8 for the character code 
 
 By doing so, you can handle strings in a unified way, and regular expressions will work perfectly correctly.
 
-<h3> Routing and templates in a web framework </ h3>
+<h3> Routing and templates in a web framework </h3>
 
 Routing and templates are done in a web framework called Mojolicious.
 

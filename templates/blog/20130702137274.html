@@ -1,12 +1,12 @@
-<h2> How to switch to a general user and execute commands while you are the root user </ h2>
+<h2> How to switch to a general user and execute commands while you are the root user </h2>
 
 
 
-To switch to a <strong> general user </ strong> and execute <strong> commands </ strong> while you are a <strong> root user </ strong>, <strong> su <strong> su < Use the <strong> -c </ strong> option of / strong.
+To switch to a <strong> general user </strong> and execute <strong> commands </strong> while you are a <strong> root user </strong>, <strong> su <strong> su < Use the <strong> -c </strong> option of / strong.
 
 <pre>
 su --username -c command
-</ pre>
+</pre>
 
 I've been writing web applications lately, but recently I've been wondering what is the best way to switch from a root user to a regular user and run the application. This is because I want the web application to run automatically when the server starts and I want to manage the web application from the root user.
 
@@ -18,7 +18,7 @@ As a sample, write the following shell.
 #! / bin / sh
 
 PERL_BIN = / home / gitprep / perl5 / perlbrew / perls / perl-5.16.3 / bin
-su --gitprep -c "PATH = $ PERL_BIN: $ PATH / home / gitprep / webapp / gitprep / gitprep $ *"
-</ pre>
+su --gitprep -c "PATH = $PERL_BIN: $PATH / home / gitprep / webapp / gitprep / gitprep $*"
+</pre>
 
 The point is that you need to set the PATH properly. Because I am not logged in to the terminal, the .bashrc that is editing the PATH is not loaded. Which Perl to use must be specified if the default Perl is not used.

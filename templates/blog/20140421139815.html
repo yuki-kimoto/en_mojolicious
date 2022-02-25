@@ -1,75 +1,75 @@
-<h2> Using forms </ h2>
+<h2> Using forms </h2>
 
 
 
-Use <strong> forms </ strong> to receive data from users. Learn how to use forms.
+Use <strong> forms </strong> to receive data from users. Learn how to use forms.
 
-<h3> Simple form </ h3>
+<h3> Simple form </h3>
 
 First, let's create a simple form. Let's create a program that receives and displays values ​​by asking them to enter values ​​in text boxes, radio buttons, and text areas.
 
 <pre>
-use Mojolicious :: Lite;
+use Mojolicious::Lite;
 
 # top page
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  $ self-> render ('index');
+  $self->render('index');
 };;
 
 #Receive and process data
 post'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
   #Get parameters
-  my $ name = $ self-> param ('name');
-  my $ private = $ self-> param ('private');
-  my $ message = $ self-> param ('message');
+  my $name = $self->param('name');
+  my $private = $self->param('private');
+  my $message = $self->param('message');
 
   # Display the top page if there is no message
-  unless (length $ message) {
-    $ self-> render ('index', error =>'Message is empty');
+  unless (length $message) {
+    $self->render('index', error =>'Message is empty');
     return;
   }
   #Save to flash
-  $ self-> flash (name => $ name);
-  $ self-> flash (private => $ private);
-  $ self-> flash (message => $ message);
+  $self->flash(name => $name);
+  $self->flash(private => $private);
+  $self->flash(message => $message);
   
-  $ self-> redirect_to ('/');
+  $self->redirect_to('/');
 };;
 
-app-> start;
+app->start;
 
 __DATA__
 
-@@ index.html.ep
+@@index.html.ep
 <%
-  my $ error = stash ('error');
+  my $error = stash ('error');
 %>
 
-% if ($ error) {
+%if ($error) {
   <div style = "color: red">
-    <% = $ error%>
-  </ div>
+    <%= $error%>
+  </div>
 %}
 
-<form action = "<% = url_for%>" method = "post" style = "border: 1px solid gray">
-  <b> Form </ b> <br>
-  <b> Name: </ b> <% = text_field'name'%> <br>
-  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0, checked =>'checked'%> <br>
-  <b> Message: </ b> <br>
-  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
+<form action = "<%= url_for%>" method = "post" style = "border: 1px solid gray">
+  <b> Form </b> <br>
+  <b> Name: </b> <%= text_field'name'%> <br>
+  <b> Private: </b> Yes <%= radio_button private => 1%> / No <%= radio_button private => 0, checked =>'checked'%> <br>
+  <b> Message: </b> <br>
+  <%= text_area'message', style => "width: 400px; height: 100px"%> <br>
   <input type = "submit" value = "Post">
-</ form>
+</form>
 
 <div>
-  <b> Name </ b>: <% = flash ('name') //''%> <br>
-  <b> Private </ b>: <% = flash ('private') //''%> <br>
-  <b> Message </ b>: <% = flash ('message') //''%>
-</ div>
-</ pre>
+  <b> Name </b>: <%= flash ('name') //''%> <br>
+  <b> Private </b>: <%= flash ('private') //''%> <br>
+  <b> Message </b>: <%= flash ('message') //''%>
+</div>
+</pre>
 
 Run this program, enter a value in the form and press the Post button to see what you have entered on the screen. The bottom part of the screen should look like this:
 
@@ -77,7 +77,7 @@ Run this program, enter a value in the form and press the Post button to see wha
 Name: kimoto
 Private: 0
 Message: Hello
-</ pre>
+</pre>
 
 This program is a sample program. The data normally received from the user is stored in the database. I haven't explained about the database yet, so I'm using a program that displays the data as it is without saving it.
 
@@ -86,90 +86,90 @@ I will explain each part of the program.
 <pre>
 # top page
 get'/' => sub {
-  my $ self = shift;
+  my $self = shift;
   
-  $ self-> render ('index');
+  $self->render('index');
 };;
-</ pre>
+</pre>
 
 This is a description of the routing that displays the top page. The description is as usual. Write the form on this page.
 
-<h4> Form description </ h4>
+<h4> Form description </h4>
 
 The form looks like this:
 
 <pre>
-<form action = "<% = url_for%>" method = "post" style = "border: 1px solid gray">
-  <b> Form </ b> <br>
-  <b> Name: </ b> <% = text_field'name'%> <br>
-  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0, checked =>'checked'%> <br>
-  <b> Message: </ b> <br>
-  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
+<form action = "<%= url_for%>" method = "post" style = "border: 1px solid gray">
+  <b> Form </b> <br>
+  <b> Name: </b> <%= text_field'name'%> <br>
+  <b> Private: </b> Yes <%= radio_button private => 1%> / No <%= radio_button private => 0, checked =>'checked'%> <br>
+  <b> Message: </b> <br>
+  <%= text_area'message', style => "width: 400px; height: 100px"%> <br>
   <input type = "submit" value = "Post">
-</ form>
-</ pre>
+</form>
+</pre>
 
-There are attributes <b> action </ b>, <b> method </ b> and <b> style </ b> in the form tag. The style attribute sets the stylesheet and sets the frame that surrounds the form.
+There are attributes <b> action </b>, <b> method </b> and <b> style </b> in the form tag. The style attribute sets the stylesheet and sets the frame that surrounds the form.
 
-When submitting data in a form, you typically specify <b> post </ b> for method. If you specify post, you can send even the largest amount of data. If get is specified, the form value will be sent as a query string in the URL, but if post is specified, it will be written in a part called the HTTP body and sent.
+When submitting data in a form, you typically specify <b> post </b> for method. If you specify post, you can send even the largest amount of data. If get is specified, the form value will be sent as a query string in the URL, but if post is specified, it will be written in a part called the HTTP body and sent.
 
 For action, specify the URL to process. This time I used the same URL. It is easy to keep the same URL.
 
-I use the <strong> text_field </ strong> helper, <strong> radio_button </ strong> helper, and <strong> text_area </ strong> helper where I use the parts of the form.
+I use the <strong> text_field </strong> helper, <strong> radio_button </strong> helper, and <strong> text_area </strong> helper where I use the parts of the form.
 
 <pre>
-  <b> Name: </ b> <% = text_field'name'%> <br>
-  <b> Private: </ b> Yes <% = radio_button private => 1%> / No <% = radio_button private => 0%> <br>
-  <b> Message: </ b> <br>
-  <% = text_area'message', style => "width: 400px; height: 100px"%> <br>
-</ pre>
+  <b> Name: </b> <%= text_field'name'%> <br>
+  <b> Private: </b> Yes <%= radio_button private => 1%> / No <%= radio_button private => 0%> <br>
+  <b> Message: </b> <br>
+  <%= text_area'message', style => "width: 400px; height: 100px"%> <br>
+</pre>
 
-These are called tag helpers. See <a href="/blog/20110616130993.html"> "List of Mojolicious Tag Helpers </a>" for available tag helpers.
+These are called tag helpers. See <a href="/blog/20110616130993.html"> "List of Mojolicious Tag Helpers</a>" for available tag helpers.
 
 The tag helper expands to the actual tag, such as:
 
 <pre>
 <form action = "/" method = "post" style = "border: 1px solid gray">
-  <b> Form </ b> <br>
-  <b> Name: </ b> <input name = "name" type = "text" /> <br>
-  <b> Private: </ b> Yes <input name = "private" type = "radio" value = "1" /> / No <input name = "private" type = "radio" value = "0" /> <br>
-  <b> Message: </ b> <br>
-  <textarea name = "message" style = "width: 400px; height: 100px"> </ textarea> <br>
+  <b> Form </b> <br>
+  <b> Name: </b> <input name = "name" type = "text" /> <br>
+  <b> Private: </b> Yes <input name = "private" type = "radio" value = "1" /> / No <input name = "private" type = "radio" value = "0" /> <br>
+  <b> Message: </b> <br>
+  <textarea name = "message" style = "width: 400px; height: 100px"> </textarea> <br>
   <input type = "submit" value = "Post">
-</ form>
-</ pre>
+</form>
+</pre>
 
 The main reason why tag helpers are useful is that they restore the form's values ​​even after you submit the form.
 
 This time, if no message is entered, an error message is displayed, but even in that case, the value of the form is saved.
 
-<h4> Form processing </ h4>
+<h4> Form processing </h4>
 
 Next is the part that processes the form. In the form, I specified post as method. This request can be received using the post function.
 
 <pre>
 #Receive and process data
 post'/' => sub {...};
-</ pre>
+</pre>
 
 Let's take a look at the process. First, it receives the value passed from the form as a parameter. The param method can receive a value, whether it is an HTTP GET method or a POST method.
 
 <pre>
 #Get parameters
-my $ name = $ self-> param ('name');
-my $ private = $ self-> param ('private');
-my $ message = $ self-> param ('message');
-</ pre>
+my $name = $self->param('name');
+my $private = $self->param('private');
+my $message = $self->param('message');
+</pre>
 
 If there is no message next, the process is in error. Draw the index by setting a value of stash error. If you want to exit the process in the middle, return return.
 
 <pre>
   # Display the top page if there is no message
-  unless (length $ message) {
-    $ self-> render ('index', error =>'Message is empty');
+  unless (length $message) {
+    $self->render('index', error =>'Message is empty');
     return;
   }
-</ pre>
+</pre>
 
 Originally, the data is saved in the database etc., but this time I have not written about the database processing yet, so I save it in the flash.
 
@@ -177,15 +177,15 @@ Flash is data stored on the client side and is stored until the next screen tran
 
 <pre>
   #Save to flash
-  $ self-> flash (name => $ name);
-  $ self-> flash (private => $ private);
-  $ self-> flash (message => $ message);
-</ pre>
+  $self->flash(name => $name);
+  $self->flash(private => $private);
+  $self->flash(message => $message);
+</pre>
 
 Finally, redirect to display the first page.
 
 <pre>
-  $ self-> redirect_to ('/');
-</ pre>
+  $self->redirect_to('/');
+</pre>
 
 You can use the form in this way to receive the user's data.

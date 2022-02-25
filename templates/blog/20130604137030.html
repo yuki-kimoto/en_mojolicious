@@ -1,13 +1,13 @@
-<h2> Non-blocking IO understands which part is non-blocking </ h2>
+<h2> Non-blocking IO understands which part is non-blocking </h2>
 
 
 The web server that Mojolicious has supports non-blocking IO. However, when it comes to non-blocking, I think that each person has various images, and I feel that there are many misunderstandings, so I will explain briefly.
 
-<h3> The non-blocking part is the part that reads and writes the HTTP request </ h3>
+<h3> The non-blocking part is the part that reads and writes the HTTP request </h3>
 
 What makes Mojolicious non-blocking is the part that reads and writes HTTP requests. So, for example, if you want to return multiple 10MB files as a response, you can process them in parallel. Also, when uploading multiple 10MB files as a request, they can be processed in parallel.
 
-<h3> Database access is not non-blocking </ h3>
+<h3> Database access is not non-blocking </h3>
 
 Database access is generally not non-blocking. Accessing MySQL and SQLite is a blocking process.
 
@@ -22,17 +22,17 @@ hypnotoad => {
   clients => 1,
   workers => 10
 }
-</ pre>
+</pre>
 
 When using Mojolicious, keep in mind that if there is a long blocking process in the process, the default settings will cause subsequent processing to stop.
 
-<h3> How to make database access non-blocking </ h3>
+<h3> How to make database access non-blocking </h3>
 
 This is a difficult problem and cannot be easily solved by common methods. In terms of architecture, there is no choice but to incorporate the processing in one IO loop used internally by the framework, but this is very difficult and each database module must support it. I have.
 
 The easiest way is to use the module provided by the author of Mojolicious to access MongoDB called Mango (still experimental). With the combination of Mojolicious + MongoDB, it is relatively easy to do all the processing non-blocking.
 
-<h3> The process of reading a file is not non-blocking </ h3>
+<h3> The process of reading a file is not non-blocking </h3>
 
 Normally, when writing a process to read a file in Perl, it is not a non-blocking process but a blocking process. Therefore, if you want to write a content distribution server that requires a large amount of processing, you are not writing normal file input / output processing.
 

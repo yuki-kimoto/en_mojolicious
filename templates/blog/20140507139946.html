@@ -1,24 +1,24 @@
-<h2> Database basics </ h2>
+<h2> Database basics </h2>
 
 
 
-Next, let's learn <strong> how to use the database </ strong> to store the data. For web applications, try to store your data in a database. In the past, it was often saved in a file, but considering the file locking mechanism and the amount of access, it is best to use a database.
+Next, let's learn <strong> how to use the database </strong> to store the data. For web applications, try to store your data in a database. In the past, it was often saved in a file, but considering the file locking mechanism and the amount of access, it is best to use a database.
 
 Databases include SQLite, MySQL, PostgreSQL, etc., but this time we will use the simplest SQLite. SQLite is easy, but it has limited functionality, so MySQL or PostgreSQL is the best choice when actually creating a website. I would like to deal with MySQL in the advanced version.
 
 Rather than explain the database in detail, this time we will focus on how to use it. First, let's learn the basics of database operations using sqlite3, an application that utilizes SQLite databases.
 
-<h3> Install sqlite3 </ h3>
+<h3> Install sqlite3 </h3>
 
 First, install sqlite3, which is a tool for operating SQLite.
 
-<h4> Installing sqlite3 on Windows </ h4>
+<h4> Installing sqlite3 on Windows </h4>
 
 If you are using Windows, follow the steps below to download sqlite3. Please download sqlite3 from the following site.
 
 <blockquote>
-<a href="http://www.sqlite.org/download.html"> SQLite.org Download </a> → <a href="http://www.sqlite.org/2014/sqlite-shell- win32-x86-3080403.zip "> sqlite-shell-win32-x86-3080403.zip </a>
-</ blockquote>
+<a href="http://www.sqlite.org/download.html"> SQLite.org Download</a> → <a href="http://www.sqlite.org/2014/sqlite-shell- win32-x86-3080403.zip "> sqlite-shell-win32-x86-3080403.zip</a>
+</blockquote>
 
 The zip file will be downloaded, so unzip it. Make sure you have a file called "sqlite3.exe". This is an application for working with SQLite databases. You need to place it somewhere in your application's path.
 
@@ -28,7 +28,7 @@ Then launch a command prompt and execute the following command.
 
 <pre>
 sqlite3 test.db
-</ pre>
+</pre>
 
 Installation is complete when sqlite3 starts as shown below.
 
@@ -36,21 +36,21 @@ Installation is complete when sqlite3 starts as shown below.
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</ pre>
+</pre>
 
 Type .q to exit and press Enter.
 
 <pre>
 .q
-</ pre>
+</pre>
 
-<h4> Installing sqlite3 on Mac OS X </ h4>
+<h4> Installing sqlite3 on Mac OS X </h4>
 
 Mac OS X comes with sqlite3 installed from the beginning, so no special work is required. Let's start sqlite3 from the terminal.
 
 <pre>
 sqlite3 test.db
-</ pre>
+</pre>
 
 Let's check if sqlite3 starts as follows.
 
@@ -58,33 +58,33 @@ Let's check if sqlite3 starts as follows.
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</ pre>
+</pre>
 
 Type .q to exit and press Enter.
 
 <pre>
 .q
-</ pre>
+</pre>
 
-<h4> Installing sqlite3 on Linux </ h4>
+<h4> Installing sqlite3 on Linux </h4>
 
 For CentOS, Redhat Linux, Fedora, install sqlite3 with the yum command.
 
 <pre>
 yum -y install sqlite
-</ pre>
+</pre>
 
 For Ubuntu, use the apt-get command to install sqlite3 and sqlite3.
 
 <pre>
 sudo apt-get install -y sqlite3
-</ pre>
+</pre>
 
 Then run the following command from the shell:
 
 <pre>
 sqlite3 test.db
-</ pre>
+</pre>
 
 Installation is complete when sqlite3 starts as shown below.
 
@@ -92,21 +92,21 @@ Installation is complete when sqlite3 starts as shown below.
 SQLite version 3.8.4.3 2014-04-03 16:53:12
 Enter ".help" for usage hints.
 sqlite>
-</ pre>
+</pre>
 
 Type .q to exit and press Enter.
 
 <pre>
 .q
-</ pre>
+</pre>
 
-<h3> Create table </ h3>
+<h3> Create table </h3>
 
 SQLite saves the data in a file. Let's create a database with a file named test.db.
 
 <pre>
 sqlite3 test.db
-</ pre>
+</pre>
 
 Create the table first when sqlite3 starts. Use the "create table" syntax to create a table. The language that gives instructions to the database is called SQL. "Create table" is also one of SQL.
 
@@ -118,43 +118,43 @@ create table book (
   title not null default'',
   author not null default''''
 );
-</ pre>
+</pre>
 
 The column definition is in the form "column name (type) (optional)".
 
 <pre>
 Column name (type) (optional)
-</ pre>
+</pre>
 
 Column names are required. SQLite does not require you to specify a data type. If you do not specify the data type, it will be treated as a character string.
 
-Let's specify the id that represents the primary key for each table. This is to uniquely identify the row. Put a <b> primary key </ b> constraint on the primary key. The primary key constraint is to ensure that each row is unique and to prevent duplicate primary keys from being registered.
+Let's specify the id that represents the primary key for each table. This is to uniquely identify the row. Put a <b> primary key </b> constraint on the primary key. The primary key constraint is to ensure that each row is unique and to prevent duplicate primary keys from being registered.
 
-Make sure to put <b> not null </ b> constraints on the other columns. A not null constraint is a constraint that prevents a row from being set to the value null. When not null constraint is performed, it is necessary to set <b> default </ b>, so set it as well.
+Make sure to put <b> not null </b> constraints on the other columns. A not null constraint is a constraint that prevents a row from being set to the value null. When not null constraint is performed, it is necessary to set <b> default </b>, so set it as well.
 
 It's a good practice to avoid using nulls as much as possible, so put a not null constraint on all columns. It's a good idea to design your database on the assumption that it is not null.
 
-<h4> Display table list </ h4>
+<h4> Display table list </h4>
 
-After creating the table, let's see what kind of table exists. Use the <strong> .tables </ strong> command to display the table list.
+After creating the table, let's see what kind of table exists. Use the <strong> .tables </strong> command to display the table list.
 
 <pre>
 .tables
-</ pre>
+</pre>
 
 A list of tables is displayed.
 
 <pre>
 book
-</ pre>
+</pre>
 
-<h4> Check the table definition </ h4>
+<h4> Check the table definition </h4>
 
-Let's check the definition of the table created by the create table statement. Use the "<strong> .schema </ strong>" command.
+Let's check the definition of the table created by the create table statement. Use the "<strong> .schema </strong>" command.
 
 <pre>
 .schema book
-</ pre>
+</pre>
 
 The table definition is displayed.
 
@@ -164,55 +164,55 @@ CREATE TABLE book (CREATE TABLE book
   title not null default'',
   author not null default''''
 );
-</ pre>
+</pre>
 
-<h3> Insert line --insert statement </ h3>
+<h3> Insert line --insert statement </h3>
 
-Now let's insert a line. Use the <strong> insert statement </ strong> to insert a row into the database.
+Now let's insert a line. Use the <strong> insert statement </strong> to insert a row into the database.
 
 <pre>
 # how to use
 insert into table name (column name 1, column name 2, ...) values ​​(value 1, value 2, value 3);
-</ pre>
+</pre>
 
 Let's actually insert the data. Insert the data that "id" is "00000001", "title" is "Perl", and "author" is "kimoto" into the database. The string must be enclosed in single quotes.
 
 <pre>
 insert into book (id, title, author) values ​​('00000001','Perl','kimoto');
-</ pre>
+</pre>
 
 Let's use the select statement to see what kind of row was inserted. The select statement will be explained in detail later.
 
 <pre>
 select * from book;
-</ pre>
+</pre>
 
 It will be displayed in the following manner.
 
 <pre>
 00000001 | Perl | kimoto
-</ pre>
+</pre>
 
-It's a little hard to see because the column names aren't displayed. You can display the column names by executing the <strong> .header </ strong> command.
+It's a little hard to see because the column names aren't displayed. You can display the column names by executing the <strong> .header </strong> command.
 
 <pre>
 .header on
-</ pre>
+</pre>
 
 Try executing the select statement again. The rows are displayed, including the column names, as shown below.
 
 <pre>
 id | title | author
 00000001 | Perl | kimoto
-</ pre>
+</pre>
 
-<h3> Line update --update statement </ h3>
+<h3> Line update --update statement </h3>
 
-Now let's update the line. Use the <strong> update </ strong> statement to update the row.
+Now let's update the line. Use the <strong> update </strong> statement to update the row.
 
 <pre>
 update table name set column name 1 = value 1, column name 2 = value 2, ... where condition
-</ pre>
+</pre>
 
 In the update statement, the condition is specified using the where clause, and the row that matches the condition is updated. Note that if you do not specify the where clause, all rows will be updated.
 
@@ -220,27 +220,27 @@ Now let's use the update statement to change the string "Perl" in the "title" co
 
 <pre>
 update book set title ='Ruby' where id = '00000001';
-</ pre>
+</pre>
 
 Let's confirm that the value has been changed in the select statement.
 
 <pre>
 select * from book;
-</ pre>
+</pre>
 
 It will be displayed in the following manner.
 
 <pre>
 00000001 | Ruby | kimoto
-</ pre>
+</pre>
 
-<h3> Delete line --delete statement </ h3>
+<h3> Delete line --delete statement </h3>
 
-Now let's delete the line. Use the <strong> delete </ strong> statement to delete a row.
+Now let's delete the line. Use the <strong> delete </strong> statement to delete a row.
 
 <pre>
 delete from table name where condition
-</ pre>
+</pre>
 
 In the delete statement, the condition is specified using the where clause, and the row that matches the condition is deleted. Note that if you do not specify a where clause, all lines will be deleted.
 
@@ -248,17 +248,17 @@ Now let's delete the line using the delete statement. Specify the value of "id" 
 
 <pre>
 delete from book where id = '00000001';
-</ pre>
+</pre>
 
 Let's confirm that the value has been changed in the select statement.
 
 <pre>
 select * from book;
-</ pre>
+</pre>
 
 Because the line has been deleted, Nothing is displayed.
 
-<h3> Select row --select statement </ h3>
+<h3> Select row --select statement </h3>
 
 I've written a select statement to get a row, but I'll explain it in a little more detail. First, in order to try the select statement, insert a row with the following SQL.
 
@@ -266,9 +266,9 @@ I've written a select statement to get a row, but I'll explain it in a little mo
 insert into book (id, title, author) values ​​('00000001','Perl Tutorial','kimoto');
 insert into book (id, title, author) values ​​('00000002','Perl advantage','ken');
 insert into book (id, title, author) values ​​('00000003','Ruby Tutorial','yosuke');
-</ pre>
+</pre>
 
-<h4> Column selection </ h4>
+<h4> Column selection </h4>
 
 If you specify "*" in the select statement, you can get all columns. You can also specify the column name to get only the target column.
 
@@ -281,15 +281,15 @@ select id from book;
 
 #id and title
 #select id, title book;
-</ pre>
+</pre>
 
-<h4> Condition-where clause </ h4>
+<h4> Condition-where clause </h4>
 
 The select statement is often used by specifying the condition in the where clause.
 
 <pre>
 select column name from table name where condition
-</ pre>
+</pre>
 
 The conditional operators are:
 
@@ -297,107 +297,107 @@ The conditional operators are:
   <tr>
     <td>
       operator
-    </ td>
+    </td>
     <td>
       meaning
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       = =
-    </ td>
+    </td>
     <td>
       equal
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       & lt; & gt;
-    </ td>
+    </td>
     <td>
       Not equal
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Greater than
-    </ td>
+    </td>
     <td>
       & gt
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Greater than or equal to
-    </ td>
+    </td>
     <td>
       & gt =
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Less than
-    </ td>
+    </td>
     <td>
       & lt
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Less than or equal to
-    </ td>
+    </td>
     <td>
       & lt =
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Including
-    </ td>
+    </td>
     <td>
       like
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       null
-    </ td>
+    </td>
     <td>
       is null
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
   <tr>
     <td>
       Not null
-    </ td>
+    </td>
     <td>
       is not null
-    </ td>
-  </ tr>
+    </td>
+  </tr>
 
-</ table>
+</table>
 
 The operators can be used as follows:
 
 <pre>
 # "Id" is equal to "00000002"
 select * from book where id = '00000002';
-</ pre>
+</pre>
 
 The usage of the like operator is a little different, so I will explain it. If you use the like operator, you can use "%" as a wildcard in the string. You can get only the lines that contain "Perl" in "title" by writing as follows.
 
 <pre>
 # Includes "Perl" in "title"
-select * from book where title like'% Perl%';
-</ pre>
+select * from book where title like'%Perl%';
+</pre>
 
 You have now mastered the minimum knowledge you need to store and retrieve data in the database.

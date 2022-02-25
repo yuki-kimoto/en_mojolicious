@@ -1,38 +1,38 @@
-<h2> Write select tag easily </ h2>
+<h2> Write select tag easily </h2>
 
-The <strong> select_field </ strong> helper makes it easy to write select and option tags.
+The <strong> select_field </strong> helper makes it easy to write select and option tags.
 
 <pre>
-<% = select_field country => [qw / Germany Japan /]%>
-<% = select_field country => [['Germany'=>'de'], ['Japan' =>'ja']]%>
-</ pre>
+<%= select_field country => [qw / Germany Japan /]%>
+<%= select_field country => [['Germany'=>'de'], ['Japan' =>'ja']]%>
+</pre>
 
 It will be expanded to the following HTML.
 
 <pre>
 <select name = "country">
-  <option value = "Germany"> Germany </ option>
-  <option value = "Japan"> Japan </ option>
-</ select>
+  <option value = "Germany"> Germany </option>
+  <option value = "Japan"> Japan </option>
+</select>
 
 <select name = "country">
-  <option value = "de"> Germany </ option>
-  <option value = "ja"> Japan </ option>
-</ select>
-</ pre>
+  <option value = "de"> Germany </option>
+  <option value = "ja"> Japan </option>
+</select>
+</pre>
 
 You can also describe the attributes of the select tag.
 
 <pre>
-<% = select_field country => [qw / Germany Japan /], size => 40%>
-</ pre>
+<%= select_field country => [qw / Germany Japan /], size => 40%>
+</pre>
 
 If you want to select a specific item, you can set any item by setting the value using the param function. (This specification seems a little strange, so it may change)
 
 <pre>
-<% param (country =>'Germany');%>
-<% = select_field country => [qw / Germany Japan /], size => 40%>
-</ pre>
+<%param (country =>'Germany');%>
+<%= select_field country => [qw / Germany Japan /], size => 40%>
+</pre>
 
 <hr>
-<a href="/blog/20110402130560.html"> Go to Mojolicious Reference </a>
+<a href="/blog/20110402130560.html"> Go to Mojolicious Reference</a>

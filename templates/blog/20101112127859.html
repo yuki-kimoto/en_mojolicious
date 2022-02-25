@@ -1,4 +1,4 @@
-<h2> Underwrite the process to be executed before all processes in Mojolicious </ h2>
+<h2> Underwrite the process to be executed before all processes in Mojolicious </h2>
 
 
 
@@ -7,35 +7,35 @@ For example, when performing authentication, I would like to check if I am logge
 
 <pre>
 sub startup {
-  my $ self = shift;
+  my $self = shift;
   
-  my $ r = $ self-> routes;
+  my $r = $self->routes;
 
   # certification
-  $ r = $ r-> under (sub {
-    my $ self = shift;
+  $r = $r->under(sub {
+    my $self = shift;
     
-    if ($ self-> session ('login_name')) {
+    if ($self->session('login_name')) {
       return 1;
     }
     else {
-      my $ url = $ self-> req-> url-> to_string;
-      if ($ url = ~ m # login $ #) {
+      my $url = $self->req->url->to_string;
+      if ($url = ~ m # login $#) {
         return 1;
       }
       else {
-        $ self-> render ('denied');
+        $self->render('denied');
         return;
       }
     }
   });
 
-  $ r-> get ('/')-> name ('index');
+  $r->get('/')->name('index');
 }
-</ pre>
+</pre>
 
-It looks a little strange, but I think the above writing is concise because the to method returns the under itself. It shares the unders with all routes, so it overwrites $ r itself. If the session ID is not issued and you access other than the URL for logging in, authentication will draw a template to notify you of refusal.
+It looks a little strange, but I think the above writing is concise because the to method returns the under itself. It shares the unders with all routes, so it overwrites $r itself. If the session ID is not issued and you access other than the URL for logging in, authentication will draw a template to notify you of refusal.
 
-<h3> Changes from Mojolicious 6 </ h3>
+<h3> Changes from Mojolicious 6 </h3>
 
 Starting with Mojolicious 6, the bridge method that creates a bridge has been integrated into the under method. The functionality is the same, so be sure to use the under method.
